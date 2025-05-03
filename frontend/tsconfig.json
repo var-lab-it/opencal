@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "strict": true,
+    "jsx": "preserve",
+    "types": ["vite/client"],
+    "allowJs": true
+  },
+  "include": ["src/**/*.ts", "src/**/*.vue"]
+}
