@@ -2,7 +2,9 @@
   <div class="login-container">
     <form @submit.prevent="handleLogin">
       <div class="form-group mb-3">
-        <label for="email">E-Mail</label>
+        <label for="email">
+          {{ $t('login.email') }}
+        </label>
         <input
           id="email"
           v-model="email"
@@ -12,7 +14,9 @@
         >
       </div>
       <div class="form-group mb-4">
-        <label for="password">Passwort</label>
+        <label for="password">
+          {{ $t('login.password') }}
+        </label>
         <input
           id="password"
           v-model="password"
@@ -25,7 +29,7 @@
         type="submit"
         class="btn btn-primary w-100"
       >
-        Einloggen
+        {{ $t('login.button') }}
       </button>
     </form>
     <p

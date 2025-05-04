@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import type { RouteLocationNormalized, NavigationGuardNext } from 'vue-router';
 import Login from '../components/Login.vue';
 import { isAuthenticated } from '../services/auth';
 import StartPage from "../components/StartPage.vue";
@@ -11,7 +12,11 @@ const routes = [
     {
         path: '/dashboard',
         component: UserDashboard,
-        beforeEnter: (to, from, next) => {
+        beforeEnter: (
+            to: RouteLocationNormalized,
+            from: RouteLocationNormalized,
+            next: NavigationGuardNext
+        ) => {
             if (isAuthenticated()) {
                 next();
             } else {

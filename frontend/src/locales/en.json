@@ -1,0 +1,9 @@
+{
+  "login.email": "Email address",
+  "login.password": "Password",
+  "login.button": "Login",
+
+  "header.nav.dashboard": "Dashboard",
+  "header.nav.appointments": "Appointments",
+  "header.nav.logout": "Logout"
+}
