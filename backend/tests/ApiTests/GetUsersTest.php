@@ -8,11 +8,17 @@ use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 
 class GetUsersTest extends ApiTestCase
 {
+    use RetrieveTokenTrait;
+
     public function testGetUsers(): void
     {
         $client = static::createClient();
 
-        $client->request('GET', '/users');
+        $token = $this->retrieveToken();
+
+        $client->request('GET', '/users', [
+            'auth_bearer' => $token,
+        ]);
 
         self::assertResponseIsSuccessful();
     }
