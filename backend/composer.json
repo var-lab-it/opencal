@@ -1,0 +1,162 @@
+{
+  "license": "proprietary",
+  "type": "project",
+  "require": {
+    "php": ">=8.1",
+    "ext-ctype": "*",
+    "ext-iconv": "*",
+    "api-platform/core": "^4.1",
+    "doctrine/doctrine-bundle": "^2.14",
+    "doctrine/doctrine-migrations-bundle": "^3.4",
+    "lexik/jwt-authentication-bundle": "^3.1",
+    "symfony/asset": "^7.2",
+    "symfony/console": "^7.2",
+    "symfony/doctrine-messenger": "^7.2",
+    "symfony/dotenv": "^7.2",
+    "symfony/event-dispatcher": "^7.2",
+    "symfony/flex": "^2.5",
+    "symfony/framework-bundle": "^7.2",
+    "symfony/mailer": "^7.2",
+    "symfony/messenger": "^7.2",
+    "symfony/runtime": "^7.2",
+    "symfony/security-bundle": "^7.2",
+    "symfony/translation": "^7.2",
+    "symfony/twig-bundle": "^7.2",
+    "symfony/validator": "^7.2",
+    "symfony/yaml": "^7.2",
+    "thecodingmachine/safe": "^3.1",
+    "twig/extra-bundle": "^3.21",
+    "twig/twig": "^3.21"
+  },
+  "require-dev": {
+    "dama/doctrine-test-bundle": "^8.3",
+    "doctrine/doctrine-fixtures-bundle": "^4.1",
+    "ergebnis/composer-normalize": "^2.47",
+    "phpstan/extension-installer": "^1.4",
+    "phpstan/phpstan": "^2.1",
+    "phpstan/phpstan-deprecation-rules": "^2.0",
+    "phpstan/phpstan-doctrine": "^2.0",
+    "phpstan/phpstan-phpunit": "^2.0",
+    "phpstan/phpstan-strict-rules": "^2.0",
+    "phpstan/phpstan-symfony": "^2.0",
+    "phpunit/phpunit": "^12.1",
+    "roave/security-advisories": "dev-latest",
+    "spatie/phpunit-snapshot-assertions": "^5.1",
+    "symfony/browser-kit": "^7.2",
+    "symfony/http-client": "^7.2",
+    "symfony/maker-bundle": "^1.62",
+    "thecodingmachine/phpstan-safe-rule": "^1.2",
+    "var-lab/coding-standard": "^2.0",
+    "zenstruck/messenger-test": "^1.11"
+  },
+  "replace": {
+    "symfony/polyfill-ctype": "*",
+    "symfony/polyfill-iconv": "*",
+    "symfony/polyfill-php72": "*",
+    "symfony/polyfill-php73": "*",
+    "symfony/polyfill-php74": "*",
+    "symfony/polyfill-php80": "*",
+    "symfony/polyfill-php81": "*"
+  },
+  "conflict": {
+    "symfony/symfony": "*"
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "App\\Tests\\": "tests/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "ergebnis/composer-normalize": true,
+      "php-http/discovery": true,
+      "phpstan/extension-installer": true,
+      "symfony/flex": true,
+      "symfony/runtime": true
+    },
+    "sort-packages": true
+  },
+  "extra": {
+    "symfony": {
+      "allow-contrib": false,
+      "require": "7.2.*"
+    }
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "@auto-scripts"
+    ],
+    "post-update-cmd": [
+      "@auto-scripts"
+    ],
+    "all-checks": [
+      "@lint:composer",
+      "@lint:yaml",
+      "@lint:twig",
+      "@db:schema:validate",
+      "@lint:php",
+      "@phpstan",
+      "@tests"
+    ],
+    "auto-scripts": {
+      "cache:clear": "symfony-cmd",
+      "assets:install %PUBLIC_DIR%": "symfony-cmd"
+    },
+    "db:recreate:dev": [
+      "bin/console doctrine:database:drop --env=dev --force -n --if-exists",
+      "bin/console doctrine:database:create --env=dev -n",
+      "bin/console doctrine:migrations:migrate --env=dev -n",
+      "bin/console doctrine:fixtures:load --env=dev -n"
+    ],
+    "db:recreate:test": [
+      "bin/console doctrine:database:drop --env=test --force -n --if-exists",
+      "bin/console doctrine:database:create --env=test -n",
+      "bin/console doctrine:migrations:migrate --env=test -n",
+      "bin/console doctrine:fixtures:load --env=test -n"
+    ],
+    "db:schema:validate": [
+      "bin/console doctrine:schema:validate -n --env=dev",
+      "bin/console doctrine:schema:validate -n --env=test"
+    ],
+    "lint:composer": "composer normalize --dry-run",
+    "lint:php": "XDEBUG_MODE=off phpcs -p --parallel=$(nproc) --standard=var-lab src tests --ignore=tests/reports/* -s",
+    "lint:php:fix": "XDEBUG_MODE=off php -d error_reporting=24575 vendor/bin/phpcbf -q --parallel=$(nproc) --standard=var-lab src tests --ignore=tests/reports/*",
+    "lint:yaml": "bin/console lint:yaml config",
+    "messenger": [
+      "Composer\\Config::disableProcessTimeout",
+      "XDEBUG_MODE=debug bin/console messenger:consume async -vv"
+    ],
+    "phpstan": "XDEBUG_MODE=off phpstan",
+    "rit": "XDEBUG_MODE=coverage,debug phpunit --testsuite=ApiTests --log-junit=tests/reports/junit-apitests.xml",
+    "tests": [
+      "@tests:unit",
+      "@tests:api"
+    ],
+    "tests:api": [
+      "@db:recreate:test",
+      "bin/console doctrine:schema:validate -n --env=test",
+      "chmod -R 777 var",
+      "@rit"
+    ],
+    "tests:api:ci": [
+      "bin/console doctrine:schema:validate -n --env=test",
+      "chmod -R 777 var",
+      "@rit"
+    ],
+    "tests:snapshots:update": [
+      "XDEBUG_MODE=coverage,debug phpunit --testsuite=UnitTests -d --update-snapshots",
+      "@db:recreate:test",
+      "XDEBUG_MODE=coverage,debug phpunit --testsuite=ApiTests -d --update-snapshots"
+    ],
+    "tests:unit": "XDEBUG_MODE=coverage,debug phpunit --testsuite=UnitTests --coverage-html=tests/reports/coverage/unit",
+    "tests:unit:ci": "XDEBUG_MODE=coverage,debug phpunit --testsuite=UnitTests --log-junit=reports/junit-unittests.xml --coverage-text --colors=never --coverage-html=tests/coverage"
+  }
+}

@@ -1,0 +1,21 @@
+includes:
+    - vendor/phpstan/phpstan/conf/bleedingEdge.neon
+
+parameters:
+    level: max
+    #checkGenericClassInNonGenericObjectType: false
+    symfony:
+        containerXmlPath: %rootDir%/../../../var/cache/dev/App_KernelDevDebugContainer.xml
+    #stubFiles:
+    #    - dev/stubs/KernelTestCase.stub
+    excludePaths:
+        - %rootDir%/../../../src/Kernel.php
+        - %rootDir%/../../../tests/bootstrap.php
+    paths:
+       - %rootDir%/../../../src
+       - %rootDir%/../../../tests
+
+#    ignoreErrors:
+#        -
+#            identifier: missingType.iterableValue
+#            path: src/Repository/*

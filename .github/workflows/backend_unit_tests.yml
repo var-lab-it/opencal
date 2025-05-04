@@ -1,0 +1,39 @@
+name: 'unit tests'
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+defaults:
+  run:
+    working-directory: ./backend
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          coverage: 'xdebug'
+          php-version: 8.4
+        env:
+          fail-fast: true
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: '~/.cache/composer'
+          key: "cache-composer-${{ hashFiles('**/app/composer.lock') }}"
+          restore-keys: 'cache-composer-'
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Run unit tests
+        run: composer run tests:unit:ci
