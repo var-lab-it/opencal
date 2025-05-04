@@ -6,7 +6,8 @@
     "strict": true,
     "jsx": "preserve",
     "types": ["vite/client"],
-    "allowJs": true
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src/**/*.ts", "src/**/*.vue"]
 }

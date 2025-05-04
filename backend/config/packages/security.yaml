@@ -1,33 +1,40 @@
 security:
-  # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
+  # https://symfony.com/doc/current/security.html#c-hashing-passwords
   password_hashers:
-    Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
-  # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
+    App\Entity\User: 'auto'
+
+  # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
   providers:
     # used to reload user from session & other features (e.g. switch_user)
-    app_user_provider:
+    users:
       entity:
         class: App\Entity\User
         property: email
+      # mongodb:
+      #    class: App\Document\User
+      #    property: email
+
   firewalls:
     dev:
-      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      pattern: ^/_(profiler|wdt)
       security: false
     main:
-      lazy: true
-      provider: app_user_provider
+      stateless: true
+      provider: users
+      json_login:
+        check_path: auth
+        username_path: email
+        password_path: password
+        success_handler: lexik_jwt_authentication.handler.authentication_success
+        failure_handler: lexik_jwt_authentication.handler.authentication_failure
+      jwt: ~
 
-      # activate different ways to authenticate
-      # https://symfony.com/doc/current/security.html#the-firewall
-
-      # https://symfony.com/doc/current/security/impersonating_user.html
-      # switch_user: true
-
-  # Easy way to control access for large sections of your site
-  # Note: Only the *first* access control that matches will be used
   access_control:
-  # - { path: ^/admin, roles: ROLE_ADMIN }
-  # - { path: ^/profile, roles: ROLE_USER }
+    - { path: ^/$, roles: PUBLIC_ACCESS }
+    - { path: ^/docs, roles: PUBLIC_ACCESS }
+    - { path: ^/contexts, roles: PUBLIC_ACCESS }
+    - { path: ^/auth, roles: PUBLIC_ACCESS }
+    - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
   security:

@@ -33,11 +33,11 @@ backend.install:
 frontend.build:
 	docker build -f frontend/Dockerfile --target production -t opencal-frontend:latest frontend
 
-frontend.sh:
-	docker compose exec -it frontend sh
+frontend.bash:
+	docker compose exec -it frontend bash
 
 frontend.install:
-	docker compose run --rm frontend npm ci
+	docker compose run --rm frontend npm install
 
 frontend.lint:
 	docker compose exec frontend npm run lint

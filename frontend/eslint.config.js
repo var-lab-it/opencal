@@ -26,7 +26,7 @@ export default [
             '@typescript-eslint': tseslint
         },
         rules: {
-            // eigene Regeln hier
+            'vue/multi-word-component-names': 'off'
         }
     },
     {
@@ -46,7 +46,6 @@ export default [
             '@typescript-eslint': tseslint
         },
         rules: {
-            // eigene Regeln hier
         }
     }
 ]
