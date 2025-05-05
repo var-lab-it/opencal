@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Tests\ApiTests;
 
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
+use Spatie\Snapshots\MatchesSnapshots;
 
-class GetUsersTest extends ApiTestCase
+class CurrentUserTest extends ApiTestCase
 {
+    use MatchesSnapshots;
     use RetrieveTokenTrait;
 
     public function testGetUsers(): void
@@ -16,10 +18,13 @@ class GetUsersTest extends ApiTestCase
 
         $token = $this->retrieveToken();
 
-        $client->request('GET', '/users', [
+        $response = $client->request('GET', '/me', [
             'auth_bearer' => $token,
         ]);
 
+        $json = $response->toArray();
+
+        self::assertMatchesJsonSnapshot($json);
         self::assertResponseIsSuccessful();
     }
 }
