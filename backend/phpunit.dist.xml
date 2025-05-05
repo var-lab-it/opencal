@@ -32,12 +32,9 @@
         <testsuite name="ApiTests">
             <directory>tests/ApiTests</directory>
         </testsuite>
-        <testsuite name="Complete">
-            <directory>tests</directory>
-        </testsuite>
     </testsuites>
     <extensions>
-        <bootstrap class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" />
+        <bootstrap class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension"/>
     </extensions>
     <source>
         <include>

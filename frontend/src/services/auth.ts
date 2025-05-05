@@ -2,7 +2,9 @@ import { jwtDecode } from 'jwt-decode';
 
 export function isAuthenticated(): boolean {
     const token = sessionStorage.getItem('jwtToken');
-    if (!token) return false;
+    if (!token) {
+        return false;
+    };
 
     try {
         const decoded: any = jwtDecode(token);

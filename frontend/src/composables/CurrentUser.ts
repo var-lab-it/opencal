@@ -1,9 +1,9 @@
-import { ref, onMounted } from 'vue'
-import axios from 'axios'
+import {onMounted, ref} from 'vue'
 import apiClient from "../services/api";
+import {User} from "../types/User";
 
-export function useCurrentUser() {
-    const user = ref<{ id: number, email: string } | null>(null)
+export function getCurrentUser() {
+    const user = ref<User | null>(null)
 
     onMounted(async () => {
         try {
@@ -15,5 +15,5 @@ export function useCurrentUser() {
         }
     })
 
-    return { user }
+    return {user}
 }

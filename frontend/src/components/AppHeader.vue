@@ -3,8 +3,9 @@
     <div class="container-fluid">
       <router-link
         class="navbar-brand"
-        to="/dashboard"
+        to="/"
       >
+        <font-awesome-icon icon="calendar-check" />
         OpenCal
       </router-link>
       <button
@@ -26,7 +27,7 @@
           <li class="nav-item">
             <router-link
               class="nav-link"
-              to="/dashboard"
+              to="/"
               active-class="active"
             >
               {{ $t('header.nav.dashboard') }}
@@ -55,12 +56,23 @@
             <ul class="dropdown-menu">
               <li>
                 <router-link
-                  to="/logout"
+                  to="/teams"
                   class="nav-link"
+                >
+                  <font-awesome-icon icon="building" />
+                  {{ $t('header.nav.teams') }}
+                </router-link>
+              </li>
+              <li class="dropdown-divider" />
+              <li>
+                <a
+                  href="#"
+                  class="nav-link"
+                  @click="logout"
                 >
                   <font-awesome-icon icon="sign-out" />
                   {{ $t('header.nav.logout') }}
-                </router-link>
+                </a>
               </li>
             </ul>
           </li>
@@ -71,8 +83,14 @@
 </template>
 
 <script setup lang="ts">
-import { useCurrentUser } from '../composables/currentUser'
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import {User} from "../types/User";
+import {logout as doLogout} from "../services/auth";
 
-const { user } = useCurrentUser()
+defineProps<{ user: User }>()
+
+function logout() {
+  doLogout();
+  window.location.href = '/';
+}
 </script>

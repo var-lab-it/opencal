@@ -13,7 +13,10 @@ trait RetrieveTokenTrait
         $client = self::createClient();
 
         $response = $client->request('POST', '/auth', [
-            'headers' => ['Content-Type' => 'application/json'],
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'accept'       => 'application/json',
+            ],
             'json'    => [
                 'email'    => $email,
                 'password' => $password,

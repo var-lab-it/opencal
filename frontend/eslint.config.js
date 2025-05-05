@@ -3,6 +3,7 @@ import globals from 'globals'
 import tseslint from '@typescript-eslint/eslint-plugin'
 import tsParser from '@typescript-eslint/parser'
 import vueParser from 'vue-eslint-parser'
+import unicorn from 'eslint-plugin-unicorn'
 
 export default [
     ...pluginVue.configs['flat/recommended'],
@@ -26,7 +27,7 @@ export default [
             '@typescript-eslint': tseslint
         },
         rules: {
-            'vue/multi-word-component-names': 'off'
+            'vue/multi-word-component-names': 'off',
         }
     },
     {

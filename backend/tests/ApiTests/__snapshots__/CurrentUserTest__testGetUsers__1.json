@@ -8,5 +8,30 @@
         "ROLE_USER"
     ],
     "givenName": "John",
-    "familyName": "Doe"
+    "familyName": "Doe",
+    "teams": [
+        {
+            "@id": "/teams/1",
+            "@type": "Team",
+            "id": 1,
+            "name": "My Team 1",
+            "slug": "my-team-1"
+        },
+        {
+            "@id": "/teams/2",
+            "@type": "Team",
+            "id": 2,
+            "name": "My Team 2",
+            "slug": "my-team-2"
+        }
+    ],
+    "managedTeams": [
+        {
+            "@id": "/teams/1",
+            "@type": "Team",
+            "id": 1,
+            "name": "My Team 1",
+            "slug": "my-team-1"
+        }
+    ]
 }
