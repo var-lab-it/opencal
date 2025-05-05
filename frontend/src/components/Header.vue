@@ -41,14 +41,28 @@
               {{ $t('header.nav.appointments') }}
             </router-link>
           </li>
-          <li class="nav-item">
-            <router-link
-              to="/logout"
-              class="nav-link"
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
             >
-              <font-awesome-icon icon="sign-out" />
-              {{ $t('header.nav.logout') }}
-            </router-link>
+              <font-awesome-icon icon="user" />
+              {{ user?.email || '' }}
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <router-link
+                  to="/logout"
+                  class="nav-link"
+                >
+                  <font-awesome-icon icon="sign-out" />
+                  {{ $t('header.nav.logout') }}
+                </router-link>
+              </li>
+            </ul>
           </li>
         </ul>
       </div>
@@ -57,4 +71,8 @@
 </template>
 
 <script setup lang="ts">
+import { useCurrentUser } from '../composables/currentUser'
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+
+const { user } = useCurrentUser()
 </script>

@@ -20,7 +20,9 @@ class UserFixtures extends Fixture
     {
         $user = new User();
         $user
-                ->setEmail('user@example.tld')
+            ->setGivenName('John')
+            ->setFamilyName('Doe')
+            ->setEmail('user@example.tld')
             ->setPassword($this->passwordHasher->hashPassword($user, 'password'));
 
         $manager->persist($user);

@@ -1,0 +1,12 @@
+{
+    "@context": "/contexts/User",
+    "@id": "/me",
+    "@type": "User",
+    "id": 1,
+    "email": "user@example.tld",
+    "roles": [
+        "ROLE_USER"
+    ],
+    "givenName": "John",
+    "familyName": "Doe"
+}
