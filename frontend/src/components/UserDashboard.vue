@@ -1,6 +1,14 @@
 <script setup lang="ts">
+import Header from "./Header.vue";
 </script>
 
 <template>
-  User Dashboard
+  <Header />
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        User Dashboard
+      </div>
+    </div>
+  </div>
 </template>
