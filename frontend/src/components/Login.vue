@@ -1,5 +1,9 @@
 <template>
   <div class="login-container">
+    <h3 class="mb-3">
+      <font-awesome-icon icon="calendar-check" />
+      OpenCal
+    </h3>
     <form @submit.prevent="handleLogin">
       <div class="form-group mb-3">
         <label for="email">
@@ -44,9 +48,11 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
 import apiClient from '../services/api';
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 export default defineComponent({
   name: 'Login',
+  components: {FontAwesomeIcon},
   data() {
     return {
       email: '',
@@ -56,25 +62,20 @@ export default defineComponent({
   },
   methods: {
     async handleLogin() {
-      this.error = ''; // Fehler-Reset
+      this.error = '';
       try {
-        // Sende die POST-Anfrage mit den Login-Daten
         const response = await apiClient.post('/auth', {
           email: this.email,
           password: this.password,
         });
 
-        // Überprüfen, ob Token im Backend zurückgegeben wird
         if (response.data && response.data.token) {
           const token = response.data.token;
 
-          // Speichere den JWT im LocalStorage
           sessionStorage.setItem('jwtToken', token);
-
-          // Weiterleitung nach erfolgreichem Login (z. B. zur Startseite)
-          this.$router.push('/dashboard');
+          window.location.href = '/';
         } else {
-          this.error = 'Kein gültiges Token erhalten.';
+          this.error = 'No valid token.';
         }
       } catch (error: any) {
         console.error('Login failed:', error);

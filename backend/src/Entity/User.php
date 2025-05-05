@@ -6,8 +6,10 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
-use App\CurrentUserProvider;
 use App\Repository\UserRepository;
+use App\State\CurrentUserProvider;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -57,6 +59,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['me:read'])]
     #[ORM\Column(length: 255)]
     private string $familyName;
+
+    /** @var Collection<int, Team> */
+    #[Groups(['me:read'])]
+    #[ORM\ManyToMany(targetEntity: Team::class, mappedBy: 'members')]
+    private Collection $teams;
+
+    /** @var Collection<int, Team> */
+    #[Groups(['me:read'])]
+    #[ORM\ManyToMany(targetEntity: Team::class, mappedBy: 'managers')]
+    private Collection $managedTeams;
+
+    public function __construct()
+    {
+        $this->teams        = new ArrayCollection();
+        $this->managedTeams = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -145,6 +163,56 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setFamilyName(string $familyName): static
     {
         $this->familyName = $familyName;
+
+        return $this;
+    }
+
+    /** @return Collection<int, Team> */
+    public function getTeams(): Collection
+    {
+        return $this->teams;
+    }
+
+    public function addOrg(Team $org): static
+    {
+        if (!$this->teams->contains($org)) {
+            $this->teams->add($org);
+            $org->addMember($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrg(Team $org): static
+    {
+        if ($this->teams->removeElement($org)) {
+            $org->removeMember($this);
+        }
+
+        return $this;
+    }
+
+    /** @return Collection<int, Team> */
+    public function getManagedTeams(): Collection
+    {
+        return $this->managedTeams;
+    }
+
+    public function addManagedOrg(Team $managedOrg): static
+    {
+        if (!$this->managedTeams->contains($managedOrg)) {
+            $this->managedTeams->add($managedOrg);
+            $managedOrg->addManager($this);
+        }
+
+        return $this;
+    }
+
+    public function removeManagedOrg(Team $managedOrg): static
+    {
+        if ($this->managedTeams->removeElement($managedOrg)) {
+            $managedOrg->removeManager($this);
+        }
 
         return $this;
     }

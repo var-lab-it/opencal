@@ -13,7 +13,11 @@ class AuthTest extends ApiTestCase
     {
         $client = static::createClient();
 
-        $client->request('GET', '/me');
+        $client->request('GET', '/me', [
+            'headers' => [
+                'accept' => 'application/json',
+            ],
+        ]);
 
         self::assertResponseStatusCodeSame(Response::HTTP_UNAUTHORIZED);
     }

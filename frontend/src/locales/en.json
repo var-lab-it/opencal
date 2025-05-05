@@ -5,5 +5,9 @@
 
   "header.nav.dashboard": "Dashboard",
   "header.nav.appointments": "Appointments",
-  "header.nav.logout": "Logout"
+  "header.nav.logout": "Logout",
+  "header.nav.teams": "Teams",
+
+  "teams.manage.headline": "Manage teams",
+  "teams.manage.buttons.edit": "edit"
 }
