@@ -20,9 +20,6 @@ backend.db.recreate:
 backend.migrate:
 	docker compose exec php_backend bin/console doctrine:migrations:migrate -n
 
-backend.setupe2e:
-	make backend.migrate && make backend.fixtures
-
 backend.install:
 	docker compose run --rm php_backend composer install
 
