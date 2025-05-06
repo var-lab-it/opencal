@@ -1,8 +1,6 @@
 #!/bin/sh
 set -e
 
-sleep 5s
-
 if grep -q DATABASE_URL= .env; then
   echo "Waiting for dev/prod database to be ready..."
   ATTEMPTS_LEFT_TO_REACH_DATABASE=60
@@ -27,6 +25,11 @@ if grep -q DATABASE_URL= .env; then
 
   if ls -A migrations/*.php >/dev/null 2>&1; then
     php bin/console doctrine:migrations:migrate --no-interaction
+  fi
+
+  if grep -q '^APP_ENV=dev' .env; then
+    echo "Loading fixtures in dev environment..."
+    php bin/console doctrine:fixtures:load --no-interaction || echo "Fixtures could not be loaded."
   fi
 fi
 

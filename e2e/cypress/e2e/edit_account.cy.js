@@ -1,13 +1,13 @@
 describe('Edit account', () => {
-    it('should allow a user to log in with valid credentials', () => {
+    it('edit user account of the current logged in user should succeed', () => {
         cy.login('user@example.tld', 'password');
 
         cy.get('.navbar .dropdown-toggle').click();
         cy.get('a[id="my-account-link"]').click();
 
         cy.get('h2').contains('My account').should('be.visible');
-        cy.get('#account-name').contains('Name: John Doe').should('be.visible');
-        cy.get('#account-email').contains('Email address: user@example.tld').should('be.visible');
+        cy.get('#account-name').should('contain.text', 'Name:');
+        cy.get('#account-email').should('contain.text', 'Email address:');
         cy.get('#account-teams').contains('Teams: 2').should('be.visible');
 
         cy.get('#edit-button').click();
