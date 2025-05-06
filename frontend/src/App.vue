@@ -26,7 +26,7 @@ export default {
     let user = null;
 
     if (isAuthenticated()) {
-      user = getCurrentUser()
+      user = getCurrentUser().user
     }
 
     return { user }

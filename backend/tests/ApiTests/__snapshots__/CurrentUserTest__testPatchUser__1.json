@@ -1,0 +1,28 @@
+{
+    "id": 1,
+    "email": "test@mail.tld",
+    "roles": [
+        "ROLE_USER"
+    ],
+    "givenName": "Test",
+    "familyName": "User",
+    "teams": [
+        {
+            "id": 1,
+            "name": "My Team 1",
+            "slug": "my-team-1"
+        },
+        {
+            "id": 2,
+            "name": "My Team 2",
+            "slug": "my-team-2"
+        }
+    ],
+    "managedTeams": [
+        {
+            "id": 1,
+            "name": "My Team 1",
+            "slug": "my-team-1"
+        }
+    ]
+}

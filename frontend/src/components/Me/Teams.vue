@@ -1,21 +1,19 @@
 <template>
   <h2>
-    {{ $t('teams.manage.headline') }}
+    {{ $t('teams.headline') }}
   </h2>
 
   <div
-      v-if="loading"
-      class="spinner-border text-dark"
-      role="status"
-  >
-    <span class="sr-only">Loading...</span>
-  </div>
+    v-if="loading"
+    class="spinner-border text-dark"
+    role="status"
+  />
 
   <TeamRow
-      v-for="team in user?.teams"
-      v-else
-      :key="team.id"
-      :team="team"
+    v-for="team in user?.teams"
+    v-else
+    :key="team.id"
+    :team="team"
   />
 </template>
 
