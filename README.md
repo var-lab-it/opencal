@@ -3,6 +3,17 @@
 OpenCal is a modern, open-source web application designed for effortless appointment scheduling. Inspired by platforms
 like Calendly and cal.com, it empowers individuals, small businesses, and teams to manage bookings efficiently.
 
+## Configuration
+
+Both backend and frontend Docker containers can be customized using environment variables.
+
+### Frontend Environment Variables
+
+| Variable            | Description                                           | Default Value           |
+|---------------------|-------------------------------------------------------|-------------------------|
+| `VITE_APP_LANGUAGE` | Defines the default language/locale for the frontend. | `en_GB`                 |
+| `VITE_API_URL`      | Specifies the backend API's base URL.                 | `http://localhost:8080` |
+
 ## Local Development
 
 ### Prerequisites

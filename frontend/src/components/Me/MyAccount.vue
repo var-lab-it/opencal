@@ -12,28 +12,40 @@
   <div
     v-else
   >
-    <div class="mb-2" id="account-name">
+    <div
+      id="account-name"
+      class="mb-2"
+    >
       <strong>
         {{ $t('account.name') }}:
       </strong>
       {{ user?.givenName }} {{ user?.familyName }}
     </div>
 
-    <div class="mb-2" id="account-email">
+    <div
+      id="account-email"
+      class="mb-2"
+    >
       <strong>
         {{ $t('account.email') }}:
       </strong>
       {{ user?.email }}
     </div>
 
-    <div class="mb-2" id="account-password">
+    <div
+      id="account-password"
+      class="mb-2"
+    >
       <strong>
         {{ $t('account.password') }}:
       </strong>
       *****
     </div>
 
-    <div class="mb-2" id="account-teams">
+    <div
+      id="account-teams"
+      class="mb-2"
+    >
       <strong>
         {{ $t('account.teams') }}:
       </strong>
@@ -44,9 +56,9 @@
     </div>
 
     <button
+      id="edit-button"
       class="btn btn-outline-secondary btn-sm mt-3"
       @click="openModal"
-      id="edit-button"
     >
       <font-awesome-icon icon="pencil" />
       {{ $t('account.buttons.edit') }}
@@ -109,9 +121,9 @@
               >
             </div>
             <button
+              id="submit-btn"
               type="submit"
               class="btn btn-primary"
-              id="submit-btn"
             >
               {{ $t('account.form.buttons.save') }}
             </button>
@@ -139,7 +151,7 @@ import {toast} from "vue3-toastify";
 import 'vue3-toastify/dist/index.css';
 import {useI18n} from 'vue-i18n'
 
-const {t} = useI18n()
+const {t, locale, availableLocales} = useI18n()
 
 let {user} = getCurrentUser()
 const loading = ref(true)

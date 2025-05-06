@@ -56,9 +56,9 @@
             <ul class="dropdown-menu dropdown-menu-lg-end">
               <li>
                 <router-link
+                  id="my-account-link"
                   to="/account"
                   class="nav-link"
-                  id="my-account-link"
                 >
                   <font-awesome-icon icon="user" />
                   {{ $t('header.nav.account') }}
@@ -66,9 +66,9 @@
               </li>
               <li>
                 <router-link
+                  id="my-teams-link"
                   to="/teams"
                   class="nav-link"
-                  id="my-teams-link"
                 >
                   <font-awesome-icon icon="building" />
                   {{ $t('header.nav.teams') }}
@@ -77,10 +77,10 @@
               <li class="dropdown-divider" />
               <li>
                 <a
+                  id="logout-link"
                   href="#"
                   class="nav-link"
                   @click="logout"
-                  id="logout-link"
                 >
                   <font-awesome-icon icon="sign-out" />
                   {{ $t('header.nav.logout') }}

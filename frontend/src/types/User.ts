@@ -8,4 +8,5 @@ export type User = {
     roles: string[],
     teams: Array<Team>,
     managedTeams: Array<Team>,
+    locale: string,
 }
