@@ -12,28 +12,28 @@
   <div
     v-else
   >
-    <div class="mb-2">
+    <div class="mb-2" id="account-name">
       <strong>
         {{ $t('account.name') }}:
       </strong>
       {{ user?.givenName }} {{ user?.familyName }}
     </div>
 
-    <div class="mb-2">
+    <div class="mb-2" id="account-email">
       <strong>
         {{ $t('account.email') }}:
       </strong>
       {{ user?.email }}
     </div>
 
-    <div class="mb-2">
+    <div class="mb-2" id="account-password">
       <strong>
         {{ $t('account.password') }}:
       </strong>
       *****
     </div>
 
-    <div class="mb-2">
+    <div class="mb-2" id="account-teams">
       <strong>
         {{ $t('account.teams') }}:
       </strong>
@@ -46,6 +46,7 @@
     <button
       class="btn btn-outline-secondary btn-sm mt-3"
       @click="openModal"
+      id="edit-button"
     >
       <font-awesome-icon icon="pencil" />
       {{ $t('account.buttons.edit') }}
@@ -84,7 +85,7 @@
               <input
                 v-model="form.givenName"
                 type="text"
-                class="form-control"
+                class="form-control given-name"
               >
             </div>
             <div class="mb-3">
@@ -94,7 +95,7 @@
               <input
                 v-model="form.familyName"
                 type="text"
-                class="form-control"
+                class="form-control family-name"
               >
             </div>
             <div class="mb-3 border-bottom pb-3">
@@ -104,12 +105,13 @@
               <input
                 v-model="form.email"
                 type="email"
-                class="form-control"
+                class="form-control email"
               >
             </div>
             <button
               type="submit"
               class="btn btn-primary"
+              id="submit-btn"
             >
               {{ $t('account.form.buttons.save') }}
             </button>

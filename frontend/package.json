@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite -d",
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview",
     "lint:ts": "eslint --ext .ts,.vue src",

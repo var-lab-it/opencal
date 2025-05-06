@@ -58,6 +58,7 @@
                 <router-link
                   to="/account"
                   class="nav-link"
+                  id="my-account-link"
                 >
                   <font-awesome-icon icon="user" />
                   {{ $t('header.nav.account') }}
@@ -67,6 +68,7 @@
                 <router-link
                   to="/teams"
                   class="nav-link"
+                  id="my-teams-link"
                 >
                   <font-awesome-icon icon="building" />
                   {{ $t('header.nav.teams') }}
@@ -78,6 +80,7 @@
                   href="#"
                   class="nav-link"
                   @click="logout"
+                  id="logout-link"
                 >
                   <font-awesome-icon icon="sign-out" />
                   {{ $t('header.nav.logout') }}
