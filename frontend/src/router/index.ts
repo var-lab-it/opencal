@@ -3,6 +3,7 @@ import Login from '../components/Login.vue';
 import { isAuthenticated } from '../services/auth';
 import UserDashboard from "../components/UserDashboard.vue";
 import Teams from "../components/Me/Teams.vue";
+import MyAccount from "../components/Me/MyAccount.vue";
 
 const routes = [
     { path: '/login', component: Login },
@@ -14,6 +15,11 @@ const routes = [
     {
         path: '/teams',
         component: Teams,
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/account',
+        component: MyAccount,
         meta: { requiresAuth: true }
     },
 ];

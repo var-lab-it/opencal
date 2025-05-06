@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg bg-light sticky-top">
+  <nav class="navbar navbar-expand-lg bg-light sticky-top shadow-sm border-bottom">
     <div class="container-fluid">
       <router-link
         class="navbar-brand"
@@ -54,6 +54,15 @@
               {{ user?.email || '' }}
             </a>
             <ul class="dropdown-menu dropdown-menu-lg-end">
+              <li>
+                <router-link
+                  to="/account"
+                  class="nav-link"
+                >
+                  <font-awesome-icon icon="user" />
+                  {{ $t('header.nav.account') }}
+                </router-link>
+              </li>
               <li>
                 <router-link
                   to="/teams"

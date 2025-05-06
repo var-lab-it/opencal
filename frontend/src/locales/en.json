@@ -7,7 +7,23 @@
   "header.nav.appointments": "Appointments",
   "header.nav.logout": "Logout",
   "header.nav.teams": "Teams",
+  "header.nav.account": "Account",
 
-  "teams.manage.headline": "Manage teams",
-  "teams.manage.buttons.edit": "edit"
+  "teams.headline": "My teams",
+  "teams.buttons.edit": "edit",
+
+  "account.headline": "My account",
+  "account.name": "Name",
+  "account.email": "Email address",
+  "account.password": "Password",
+  "account.teams": "Teams",
+  "account.buttons.edit": "edit",
+  "account.messages.saved_success": "Changes successfully saved.",
+  "account.messages.save_failed": "There was an error. Please try again.",
+  "account.form.title": "Edit account data",
+  "account.form.given_name": "Given name",
+  "account.form.family_name": "Family name",
+  "account.form.email": "Email address",
+  "account.form.buttons.cancel": "Cancel",
+  "account.form.buttons.save": "Save"
 }

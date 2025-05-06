@@ -6,6 +6,7 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Patch;
 use App\Repository\UserRepository;
 use App\State\CurrentUserProvider;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -14,32 +15,42 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
     operations: [
         new Get(
             uriTemplate: '/me',
-            normalizationContext: [
-                'groups' => [
-                    'me:read',
-                ],
-            ],
-            security: "is_granted('IS_AUTHENTICATED_FULLY')",
             provider: CurrentUserProvider::class,
         ),
+        new Patch(
+            uriTemplate: '/me/{id}',
+        ),
+    ],
+    normalizationContext: [
+        'groups' => [
+            'me:read',
+        ],
+    ],
+    denormalizationContext: [
+        'groups' => [
+            'me:write',
+        ],
     ],
 )]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    #[Groups(['me:read'])]
+    #[Groups(['me:read', 'me:write'])]
     #[ORM\Column]
     #[ORM\GeneratedValue]
     #[ORM\Id]
     private ?int $id = null;
 
-    #[Groups(['me:read'])]
+    #[Assert\Email]
+    #[Assert\NotBlank]
+    #[Groups(['me:read', 'me:write'])]
     #[ORM\Column(length: 180)]
     private string $email;
 
@@ -52,11 +63,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private string $password;
 
-    #[Groups(['me:read'])]
+    #[Assert\NotBlank]
+    #[Groups(['me:read', 'me:write'])]
     #[ORM\Column(length: 255)]
     private string $givenName;
 
-    #[Groups(['me:read'])]
+    #[Assert\NotBlank]
+    #[Groups(['me:read', 'me:write'])]
     #[ORM\Column(length: 255)]
     private string $familyName;
 

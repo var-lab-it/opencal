@@ -11,12 +11,18 @@
           </div>
         </div>
         <div class="flex-column">
-          <a href="#" class="btn btn-sm btn-outline-primary me-1">
-            <font-awesome-icon icon="pencil"/>
-            {{ $t('teams.manage.buttons.edit') }}
+          <a
+            href="#"
+            class="btn btn-sm btn-outline-primary me-1"
+          >
+            <font-awesome-icon icon="pencil" />
+            {{ $t('teams.buttons.edit') }}
           </a>
-          <a href="#" class="btn btn-sm btn-outline-danger">
-            <font-awesome-icon icon="trash"/>
+          <a
+            href="#"
+            class="btn btn-sm btn-outline-danger"
+          >
+            <font-awesome-icon icon="trash" />
           </a>
         </div>
       </div>
