@@ -53,7 +53,7 @@
               <font-awesome-icon icon="user" />
               {{ user?.email || '' }}
             </a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu dropdown-menu-lg-end">
               <li>
                 <router-link
                   to="/teams"
