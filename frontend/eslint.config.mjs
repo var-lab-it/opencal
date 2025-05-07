@@ -7,13 +7,12 @@ import unicorn from 'eslint-plugin-unicorn'
 
 export default [
     ...pluginVue.configs['flat/recommended'],
-
     {
         files: ['**/*.vue'],
         languageOptions: {
             parser: vueParser,
             parserOptions: {
-                parser: tsParser,  // Vue-Parser nutzt dann TypeScript Parser für <script setup lang="ts">
+                parser: tsParser,
                 project: './tsconfig.json',
                 extraFileExtensions: ['.vue'],
                 ecmaVersion: 'latest',
@@ -24,10 +23,24 @@ export default [
             }
         },
         plugins: {
-            '@typescript-eslint': tseslint
+            '@typescript-eslint': tseslint,
+            unicorn
         },
         rules: {
             'vue/multi-word-component-names': 'off',
+            'vue/no-unused-vars': 'warn',
+            'vue/html-indent': ['error', 2],
+            'vue/html-self-closing': [
+                'error',
+                {
+                    html: {
+                        void: 'always',
+                        normal: 'never',
+                        component: 'always'
+                    }
+                }
+            ],
+            'unicorn/prevent-abbreviations': 'off'
         }
     },
     {
@@ -47,6 +60,8 @@ export default [
             '@typescript-eslint': tseslint
         },
         rules: {
+            '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+            '@typescript-eslint/no-explicit-any': 'warn'
         }
     }
 ]

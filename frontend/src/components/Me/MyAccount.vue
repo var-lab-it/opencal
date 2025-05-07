@@ -7,7 +7,7 @@
     v-if="loading"
     class="spinner-border text-dark"
     role="status"
-  />
+  ></div>
 
   <div
     v-else
@@ -86,7 +86,7 @@
             type="button"
             class="btn-close"
             @click="closeModal"
-          />
+          ></button>
         </div>
         <div class="modal-body">
           <form @submit.prevent="save">
@@ -98,7 +98,7 @@
                 v-model="form.givenName"
                 type="text"
                 class="form-control given-name"
-              >
+              />
             </div>
             <div class="mb-3">
               <label class="form-label">
@@ -108,7 +108,7 @@
                 v-model="form.familyName"
                 type="text"
                 class="form-control family-name"
-              >
+              />
             </div>
             <div class="mb-3 border-bottom pb-3">
               <label class="form-label">
@@ -118,7 +118,7 @@
                 v-model="form.email"
                 type="email"
                 class="form-control email"
-              >
+              />
             </div>
             <button
               id="submit-btn"

@@ -15,7 +15,7 @@
           type="email"
           class="form-control"
           required
-        >
+        />
       </div>
       <div class="form-group mb-4">
         <label for="password">
@@ -27,7 +27,7 @@
           type="password"
           class="form-control"
           required
-        >
+        />
       </div>
       <button
         type="submit"
