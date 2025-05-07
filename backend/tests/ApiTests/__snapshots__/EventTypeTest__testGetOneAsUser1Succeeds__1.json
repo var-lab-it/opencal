@@ -3,5 +3,9 @@
     "name": "Conference Call",
     "description": "A call to discuss project updates.",
     "duration": 60,
-    "slug": "conference-call"
+    "slug": "conference-call",
+    "host": {
+        "givenName": "John",
+        "familyName": "Doe"
+    }
 }

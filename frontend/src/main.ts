@@ -8,9 +8,11 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { createI18n } from 'vue-i18n'
-import enGB from './locales/en_GB'
-import deDE from './locales/de_DE'
+import enGB from './translations/en_GB'
+import deDE from './translations/de_DE'
 import config from './plugins/config'
+import { setupCalendar, DatePicker } from 'v-calendar';
+import 'v-calendar/style.css';
 
 const i18n = createI18n({
     locale: config.language,
@@ -26,6 +28,8 @@ const app = createApp(App)
 
 app.component('FontAwesomeIcon', FontAwesomeIcon)
 app.use(router)
+app.use(setupCalendar, {})
+app.component('VDatePicker', DatePicker)
 app.use(i18n)
 app.mount('#opencal')
 

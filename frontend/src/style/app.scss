@@ -1,1 +1,26 @@
 @use "bootstrap/scss/bootstrap";
+
+.booking-index-link {
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: #eee;
+  }
+}
+
+.booking-now {
+  .event-type {
+    width: 260px;
+  }
+
+  .date-picker {
+    width: 260px;
+  }
+
+  .time-picker-wrapper {
+    height: 350px;
+    width: 260px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}

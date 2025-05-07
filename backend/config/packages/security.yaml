@@ -34,7 +34,7 @@ security:
     - { path: ^/docs, roles: PUBLIC_ACCESS }
     - { path: ^/contexts, roles: PUBLIC_ACCESS }
     - { path: ^/auth, roles: PUBLIC_ACCESS }
-    - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+    - { path: ^/me, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
   security:

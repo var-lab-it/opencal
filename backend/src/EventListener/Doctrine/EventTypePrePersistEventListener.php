@@ -22,7 +22,7 @@ class EventTypePrePersistEventListener
     {
         $user = $this->security->getUser();
 
-        if (!($user instanceof User)) {
+        if (!$user instanceof User) {
             return;
         }
 

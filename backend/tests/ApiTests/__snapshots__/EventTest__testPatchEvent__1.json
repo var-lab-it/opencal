@@ -1,14 +1,15 @@
 {
     "id": 1,
-    "type": {
+    "eventType": {
         "id": 1,
         "name": "Conference Call",
         "description": "A call to discuss project updates.",
         "duration": 60,
         "slug": "conference-call"
     },
-    "startDateTime": "2024-01-01T10:00:00+00:00",
-    "endDateTime": "2024-01-01T11:00:00+00:00",
+    "startTime": "1970-01-01T10:00:00+00:00",
+    "endTime": "1970-01-01T11:00:00+00:00",
+    "day": "2024-01-01T00:00:00+00:00",
     "participantName": "John Doe",
     "participantEmail": "john.doe@example.com",
     "participantMessage": "Looking forward to the event!"

@@ -37,5 +37,28 @@ export default {
                 "save": "Speichern"
             }
         }
-    }
+    },
+    "booking": {
+        "index": {
+            "intro": "Willkommen auf meiner Planungsseite. Wähle hier einen Ereignistyp aus, um einen Termin zu planen.",
+        },
+        "book_now": {
+            "not_available": "{name} ist am {date_string} nicht verfügbar. Bitte wähle einen anderen Tag.",
+            "available_timeslots": "Buchbare Zeiten",
+        },
+        "form": {
+            "fields": {
+                "name": "Name",
+                "email": "E-Mail Adresse",
+                "message": "Nachricht an {name} zur Vorbereitung des Meetings"
+            },
+            "buttons": {
+                "submit": "Terminbuchung absenden"
+            },
+            "messages": {
+                "success": "Termin erfolgreich gebucht.",
+                "error": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+            }
+        }
+    },
 }

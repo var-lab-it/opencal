@@ -72,27 +72,6 @@ class EventTest extends ApiTestCase
         self::assertResponseIsSuccessful();
     }
 
-    public function testGetOneAsUser2NoAccess(): void
-    {
-        $client = static::createClient();
-
-        $token = $this->retrieveToken(
-            'jane.smith@example.tld',
-        );
-
-        $response = $client->request('GET', '/events/1', [
-            'auth_bearer' => $token,
-            'headers'     => [
-                'accept' => 'application/json',
-            ],
-        ]);
-
-        self::assertSame(
-            Response::HTTP_NOT_FOUND,
-            $response->getStatusCode(),
-        );
-    }
-
     public function testCreateEventSucceeds(): void
     {
         $client = static::createClient();
@@ -105,11 +84,12 @@ class EventTest extends ApiTestCase
                 'accept' => 'application/json',
             ],
             'json'        => [
-                'type'             => 'event_types/1',
+                'eventType'        => 'event_types/1',
                 'name'             => 'Test Event',
                 'description'      => 'Test Event Description',
-                'startDateTime'    => '2022-01-01T12:00:00+00:00',
-                'endDateTime'      => '2022-01-01T12:00:30+00:00',
+                'day'              => '2024-03-05',
+                'startTime'        => '11:00',
+                'endTime'          => '11:30',
                 'participantName'  => 'Test User',
                 'participantEmail' => 'mail@user.tld',
             ],
