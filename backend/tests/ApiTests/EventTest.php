@@ -6,21 +6,20 @@ namespace App\Tests\ApiTests;
 
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use Spatie\Snapshots\MatchesSnapshots;
-use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Response;
 
-class EventTypeTest extends ApiTestCase
+class EventTest extends ApiTestCase
 {
     use MatchesSnapshots;
     use RetrieveTokenTrait;
 
-    public function testGetEventTypesAsUser1(): void
+    public function testGetEventsAsUser1(): void
     {
         $client = static::createClient();
 
         $token = $this->retrieveToken();
 
-        $response = $client->request('GET', '/event_types', [
+        $response = $client->request('GET', '/events', [
             'auth_bearer' => $token,
             'headers'     => [
                 'accept' => 'application/json',
@@ -33,7 +32,7 @@ class EventTypeTest extends ApiTestCase
         self::assertResponseIsSuccessful();
     }
 
-    public function testGetEventTypesAsUser2(): void
+    public function testGetEventsAsUser2(): void
     {
         $client = static::createClient();
 
@@ -41,7 +40,7 @@ class EventTypeTest extends ApiTestCase
             'jane.smith@example.tld',
         );
 
-        $response = $client->request('GET', '/event_types', [
+        $response = $client->request('GET', '/events', [
             'auth_bearer' => $token,
             'headers'     => [
                 'accept' => 'application/json',
@@ -60,7 +59,7 @@ class EventTypeTest extends ApiTestCase
 
         $token = $this->retrieveToken();
 
-        $response = $client->request('GET', '/event_types/1', [
+        $response = $client->request('GET', '/events/1', [
             'auth_bearer' => $token,
             'headers'     => [
                 'accept' => 'application/json',
@@ -81,7 +80,7 @@ class EventTypeTest extends ApiTestCase
             'jane.smith@example.tld',
         );
 
-        $response = $client->request('GET', '/event_types/1', [
+        $response = $client->request('GET', '/events/1', [
             'auth_bearer' => $token,
             'headers'     => [
                 'accept' => 'application/json',
@@ -94,22 +93,25 @@ class EventTypeTest extends ApiTestCase
         );
     }
 
-    public function testCreateEventType(): void
+    public function testCreateEventSucceeds(): void
     {
         $client = static::createClient();
 
         $token = $this->retrieveToken();
 
-        $response = $client->request('POST', '/event_types', [
+        $response = $client->request('POST', '/events', [
             'auth_bearer' => $token,
             'headers'     => [
                 'accept' => 'application/json',
             ],
             'json'        => [
-                'name'        => 'Test Event Type',
-                'description' => 'Test Event Type Description',
-                'duration'    => 30,
-                'slug'        => 'test-event-type',
+                'type'             => 'event_types/1',
+                'name'             => 'Test Event',
+                'description'      => 'Test Event Description',
+                'startDateTime'    => '2022-01-01T12:00:00+00:00',
+                'endDateTime'      => '2022-01-01T12:00:30+00:00',
+                'participantName'  => 'Test User',
+                'participantEmail' => 'mail@user.tld',
             ],
         ]);
 
@@ -119,38 +121,13 @@ class EventTypeTest extends ApiTestCase
         self::assertResponseIsSuccessful();
     }
 
-    public function testCreateWithInvalidSlug(): void
+    public function testPatchEvent(): void
     {
         $client = static::createClient();
 
         $token = $this->retrieveToken();
 
-        $response = $client->request('POST', '/event_types', [
-            'auth_bearer' => $token,
-            'headers'     => [
-                'accept' => 'application/json',
-            ],
-            'json'        => [
-                'name'        => 'Test Event Type',
-                'description' => 'Test Event Type Description',
-                'duration'    => 30,
-                'slug'        => 'aBsd )(ua9s8d?Adß)(A#ASd+',
-            ],
-        ]);
-
-        self::expectException(ClientException::class);
-        self::expectExceptionMessage('slug: The slug can only contain lowercase letters, numbers and dashes.');
-
-        $response->toArray();
-    }
-
-    public function testPatchEventType(): void
-    {
-        $client = static::createClient();
-
-        $token = $this->retrieveToken();
-
-        $response = $client->request('PATCH', '/event_types/1', [
+        $response = $client->request('PATCH', '/events/1', [
             'auth_bearer' => $token,
             'headers'     => [
                 'accept'       => 'application/json',
@@ -159,7 +136,6 @@ class EventTypeTest extends ApiTestCase
             'json'        => [
                 'name'        => 'Test Event Type edited',
                 'description' => 'Test Event Type edited Description',
-                'duration'    => 60,
             ],
         ]);
 
@@ -169,13 +145,13 @@ class EventTypeTest extends ApiTestCase
         self::assertResponseIsSuccessful();
     }
 
-    public function testDeleteEventType(): void
+    public function testDeleteEvent(): void
     {
         $client = static::createClient();
 
         $token = $this->retrieveToken();
 
-        $response = $client->request('DELETE', '/event_types/3', [
+        $response = $client->request('DELETE', '/events/3', [
             'auth_bearer' => $token,
             'headers'     => [
                 'accept' => 'application/json',

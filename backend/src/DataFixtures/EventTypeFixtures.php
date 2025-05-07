@@ -41,7 +41,7 @@ class EventTypeFixtures extends Fixture implements DependentFixtureInterface
             ],
         ];
 
-        foreach ($eventTypesData as $data) {
+        foreach ($eventTypesData as $index => $data) {
             $eventType = new EventType();
             $eventType->setName($data['name'])
                 ->setDescription($data['description'])
@@ -50,6 +50,8 @@ class EventTypeFixtures extends Fixture implements DependentFixtureInterface
                 ->setHost($data['host']);
 
             $manager->persist($eventType);
+
+            $this->addReference('eventType' . ($index + 1), $eventType);
         }
 
         $manager->flush();

@@ -4,33 +4,84 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Repository\EventRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
+#[ApiResource(
+    operations: [
+        new getCollection(),
+        new Get(),
+        new Post(),
+        new Patch(),
+        new Delete(),
+    ],
+    normalizationContext: [
+        'groups' => [
+            'event:read',
+        ],
+    ],
+    denormalizationContext: [
+        'groups' => [
+            'event:write',
+        ],
+    ],
+)]
 #[ORM\Entity(repositoryClass: EventRepository::class)]
 class Event
 {
+    #[Groups(['event:read'])]
     #[ORM\Column]
     #[ORM\GeneratedValue]
     #[ORM\Id]
     private int $id;
 
+    #[Assert\NotBlank]
+    #[Assert\Type(
+        type: 'App\Entity\EventType',
+    )]
+    #[Groups(['event:read', 'event:write'])]
     #[ORM\JoinColumn(nullable: false)]
     #[ORM\ManyToOne]
     private EventType $type;
 
+    #[Assert\NotBlank]
+    #[Assert\Type(
+        type: 'DateTime',
+        message: 'The end date must be after the start date.',
+    )]
+    #[Groups(['event:read', 'event:write'])]
     #[ORM\Column]
     private \DateTime $startDateTime;
 
+    #[Assert\NotBlank]
+    #[Assert\Type(
+        type: 'DateTime',
+        message: 'The end date must be after the start date.',
+    )]
+    #[Groups(['event:read', 'event:write'])]
     #[ORM\Column]
     private \DateTime $endDateTime;
 
+    #[Assert\NotBlank]
+    #[Groups(['event:read', 'event:write'])]
     #[ORM\Column(length: 255)]
     private string $participantName;
 
+    #[Assert\Email]
+    #[Assert\NotBlank]
+    #[Groups(['event:read', 'event:write'])]
     #[ORM\Column(length: 255)]
     private string $participantEmail;
 
+    #[Groups(['event:read', 'event:write'])]
     #[ORM\Column(type: 'text', length: 255, nullable: true)]
     private ?string $participantMessage = null;
 
@@ -108,7 +159,7 @@ class Event
         return $this->participantMessage;
     }
 
-    public function setParticipantMessage(string $participantMessage): static
+    public function setParticipantMessage(?string $participantMessage): static
     {
         $this->participantMessage = $participantMessage;
 

@@ -14,6 +14,7 @@ use App\Repository\EventTypeRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
     operations: [
@@ -37,25 +38,33 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\Entity(repositoryClass: EventTypeRepository::class)]
 class EventType
 {
-    #[Groups(['event_type:read'])]
+    #[Groups(['event_type:read', 'event:read'])]
     #[ORM\Column]
     #[ORM\GeneratedValue]
     #[ORM\Id]
     private int $id;
 
-    #[Groups(['event_type:read', 'event_type:write'])]
+    #[Assert\NotBlank]
+    #[Groups(['event_type:read', 'event_type:write', 'event:read'])]
     #[ORM\Column(length: 255)]
     private string $name;
 
-    #[Groups(['event_type:read', 'event_type:write'])]
+    #[Groups(['event_type:read', 'event_type:write', 'event:read'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[Groups(['event_type:read', 'event_type:write'])]
+    #[Assert\NotBlank]
+    #[Assert\Range(min: 5)]
+    #[Groups(['event_type:read', 'event_type:write', 'event:read'])]
     #[ORM\Column]
     private int $duration;
 
-    #[Groups(['event_type:read', 'event_type:write'])]
+    #[Assert\NotBlank]
+    #[Assert\Regex(
+        pattern: '/^[a-z0-9-]+$/',
+        message: 'The slug can only contain lowercase letters, numbers and dashes.',
+    )]
+    #[Groups(['event_type:read', 'event_type:write', 'event:read'])]
     #[ORM\Column(length: 255)]
     private string $slug;
 

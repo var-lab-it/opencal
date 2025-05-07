@@ -1,0 +1,14 @@
+{
+    "id": 4,
+    "type": {
+        "id": 1,
+        "name": "Conference Call",
+        "description": "A call to discuss project updates.",
+        "duration": 60,
+        "slug": "conference-call"
+    },
+    "startDateTime": "2022-01-01T12:00:00+00:00",
+    "endDateTime": "2022-01-01T12:00:30+00:00",
+    "participantName": "Test User",
+    "participantEmail": "mail@user.tld"
+}
