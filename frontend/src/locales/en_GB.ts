@@ -9,13 +9,8 @@ export default {
             "dashboard": "Dashboard",
             "appointments": "Appointments",
             "logout": "Logout",
-            "teams": "Teams",
             "account": "Account"
         }
-    },
-    "teams": {
-        "headline": "My teams",
-        "buttons.edit": "edit"
     },
     "account": {
         "headline": "My account",

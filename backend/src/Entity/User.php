@@ -73,20 +73,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private string $familyName;
 
-    /** @var Collection<int, Team> */
-    #[Groups(['me:read'])]
-    #[ORM\ManyToMany(targetEntity: Team::class, mappedBy: 'members')]
-    private Collection $teams;
+    /** @var Collection<int, EventType> */
+    #[ORM\OneToMany(targetEntity: EventType::class, mappedBy: 'host')]
+    private Collection $eventTypes;
 
-    /** @var Collection<int, Team> */
-    #[Groups(['me:read'])]
-    #[ORM\ManyToMany(targetEntity: Team::class, mappedBy: 'managers')]
-    private Collection $managedTeams;
+    /** @var Collection<int, Event> */
+    #[ORM\OneToMany(targetEntity: Event::class, mappedBy: 'host')]
+    private Collection $events;
 
     public function __construct()
     {
-        $this->teams        = new ArrayCollection();
-        $this->managedTeams = new ArrayCollection();
+        $this->eventTypes = new ArrayCollection();
+        $this->events     = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -180,51 +178,57 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /** @return Collection<int, Team> */
-    public function getTeams(): Collection
+    /** @return Collection<int, EventType> */
+    public function getEventTypes(): Collection
     {
-        return $this->teams;
+        return $this->eventTypes;
     }
 
-    public function addOrg(Team $org): static
+    public function addEventType(EventType $eventType): static
     {
-        if (!$this->teams->contains($org)) {
-            $this->teams->add($org);
-            $org->addMember($this);
+        if (!$this->eventTypes->contains($eventType)) {
+            $this->eventTypes->add($eventType);
+            $eventType->setHost($this);
         }
 
         return $this;
     }
 
-    public function removeOrg(Team $org): static
+    public function removeEventType(EventType $eventType): static
     {
-        if ($this->teams->removeElement($org)) {
-            $org->removeMember($this);
+        if ($this->eventTypes->removeElement($eventType)) {
+            // set the owning side to null (unless already changed)
+            if ($eventType->getHost() === $this) {
+                $eventType->setHost(null);
+            }
         }
 
         return $this;
     }
 
-    /** @return Collection<int, Team> */
-    public function getManagedTeams(): Collection
+    /** @return Collection<int, Event> */
+    public function getEvents(): Collection
     {
-        return $this->managedTeams;
+        return $this->events;
     }
 
-    public function addManagedOrg(Team $managedOrg): static
+    public function addEvent(Event $event): static
     {
-        if (!$this->managedTeams->contains($managedOrg)) {
-            $this->managedTeams->add($managedOrg);
-            $managedOrg->addManager($this);
+        if (!$this->events->contains($event)) {
+            $this->events->add($event);
+            $event->setHost($this);
         }
 
         return $this;
     }
 
-    public function removeManagedOrg(Team $managedOrg): static
+    public function removeEvent(Event $event): static
     {
-        if ($this->managedTeams->removeElement($managedOrg)) {
-            $managedOrg->removeManager($this);
+        if ($this->events->removeElement($event)) {
+            // set the owning side to null (unless already changed)
+            if ($event->getHost() === $this) {
+                $event->setHost(null);
+            }
         }
 
         return $this;

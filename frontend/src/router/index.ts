@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Login from '../components/Login.vue';
 import { isAuthenticated } from '../services/auth';
 import UserDashboard from "../components/UserDashboard.vue";
-import Teams from "../components/Me/Teams.vue";
 import MyAccount from "../components/Me/MyAccount.vue";
 
 const routes = [
@@ -10,11 +9,6 @@ const routes = [
     {
         path: '/',
         component: UserDashboard,
-        meta: { requiresAuth: true }
-    },
-    {
-        path: '/teams',
-        component: Teams,
         meta: { requiresAuth: true }
     },
     {
