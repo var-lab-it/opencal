@@ -9,13 +9,8 @@ export default {
             "dashboard": "Übersicht",
             "appointments": "Termine",
             "logout": "Abmelden",
-            "teams": "Teams",
             "account": "Konto"
         }
-    },
-    "teams": {
-        "headline": "Meine Teams",
-        "buttons.edit": "Bearbeiten"
     },
     "account": {
         "headline": "Mein Konto",

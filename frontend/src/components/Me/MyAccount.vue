@@ -42,19 +42,6 @@
       *****
     </div>
 
-    <div
-      id="account-teams"
-      class="mb-2"
-    >
-      <strong>
-        {{ $t('account.teams') }}:
-      </strong>
-
-      <router-link to="/teams">
-        {{ user?.teams.length }}
-      </router-link>
-    </div>
-
     <button
       id="edit-button"
       class="btn btn-outline-secondary btn-sm mt-3"

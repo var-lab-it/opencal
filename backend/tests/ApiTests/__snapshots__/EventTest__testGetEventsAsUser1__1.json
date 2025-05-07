@@ -1,0 +1,31 @@
+[
+    {
+        "id": 1,
+        "type": {
+            "id": 1,
+            "name": "Conference Call",
+            "description": "A call to discuss project updates.",
+            "duration": 60,
+            "slug": "conference-call"
+        },
+        "startDateTime": "2024-01-01T10:00:00+00:00",
+        "endDateTime": "2024-01-01T11:00:00+00:00",
+        "participantName": "John Doe",
+        "participantEmail": "john.doe@example.com",
+        "participantMessage": "Looking forward to the event!"
+    },
+    {
+        "id": 3,
+        "type": {
+            "id": 1,
+            "name": "Conference Call",
+            "description": "A call to discuss project updates.",
+            "duration": 60,
+            "slug": "conference-call"
+        },
+        "startDateTime": "2024-01-03T16:00:00+00:00",
+        "endDateTime": "2024-01-03T17:00:00+00:00",
+        "participantName": "Alice Johnson",
+        "participantEmail": "alice.johnson@example.com"
+    }
+]

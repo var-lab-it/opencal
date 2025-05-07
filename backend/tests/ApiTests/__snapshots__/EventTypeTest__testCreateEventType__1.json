@@ -1,0 +1,7 @@
+{
+    "id": 4,
+    "name": "Test Event Type",
+    "description": "Test Event Type Description",
+    "duration": 30,
+    "slug": "test-event-type"
+}

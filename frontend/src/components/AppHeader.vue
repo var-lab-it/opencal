@@ -64,16 +64,6 @@
                   {{ $t('header.nav.account') }}
                 </router-link>
               </li>
-              <li>
-                <router-link
-                  id="my-teams-link"
-                  to="/teams"
-                  class="nav-link"
-                >
-                  <font-awesome-icon icon="building" />
-                  {{ $t('header.nav.teams') }}
-                </router-link>
-              </li>
               <li class="dropdown-divider"></li>
               <li>
                 <a

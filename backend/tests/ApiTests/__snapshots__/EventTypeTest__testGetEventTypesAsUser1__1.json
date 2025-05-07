@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "name": "Conference Call",
+        "description": "A call to discuss project updates.",
+        "duration": 60,
+        "slug": "conference-call"
+    },
+    {
+        "id": 3,
+        "name": "One-on-One",
+        "description": "Personal meeting with a team member.",
+        "duration": 45,
+        "slug": "one-on-one"
+    }
+]
