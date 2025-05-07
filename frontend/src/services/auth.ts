@@ -1,15 +1,20 @@
-import { jwtDecode } from 'jwt-decode';
+import {jwtDecode, JwtPayload} from 'jwt-decode';
 
 export function isAuthenticated(): boolean {
     const token = sessionStorage.getItem('jwtToken');
     if (!token) {
         return false;
-    };
+    }
 
     try {
-        const decoded: any = jwtDecode(token);
-        return decoded.exp > Date.now() / 1000;
+        const decoded: JwtPayload = jwtDecode<JwtPayload>(token);
+        if (decoded.exp !== undefined) {
+            return decoded.exp > Date.now() / 1000;
+        } else {
+            return false;
+        }
     } catch (error) {
+        console.log(error);
         return false;
     }
 }

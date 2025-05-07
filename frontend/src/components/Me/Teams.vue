@@ -7,7 +7,7 @@
     v-if="loading"
     class="spinner-border text-dark"
     role="status"
-  />
+  ></div>
 
   <TeamRow
     v-for="team in user?.teams"

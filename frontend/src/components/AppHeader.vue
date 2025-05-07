@@ -17,7 +17,7 @@
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
-        <span class="navbar-toggler-icon" />
+        <span class="navbar-toggler-icon"></span>
       </button>
       <div
         id="navbarSupportedContent"
@@ -74,7 +74,7 @@
                   {{ $t('header.nav.teams') }}
                 </router-link>
               </li>
-              <li class="dropdown-divider" />
+              <li class="dropdown-divider"></li>
               <li>
                 <a
                   id="logout-link"
