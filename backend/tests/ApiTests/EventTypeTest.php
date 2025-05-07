@@ -117,4 +117,48 @@ class EventTypeTest extends ApiTestCase
         self::assertMatchesJsonSnapshot($json);
         self::assertResponseIsSuccessful();
     }
+
+    public function testPatchEventType(): void
+    {
+        $client = static::createClient();
+
+        $token = $this->retrieveToken();
+
+        $response = $client->request('PATCH', '/event_types/1', [
+            'auth_bearer' => $token,
+            'headers'     => [
+                'accept'       => 'application/json',
+                'content-type' => 'application/merge-patch+json',
+            ],
+            'json'        => [
+                'name'        => 'Test Event Type edited',
+                'description' => 'Test Event Type edited Description',
+                'duration'    => 60,
+            ],
+        ]);
+
+        $json = $response->toArray();
+
+        self::assertMatchesJsonSnapshot($json);
+        self::assertResponseIsSuccessful();
+    }
+
+    public function testDeleteEventType(): void
+    {
+        $client = static::createClient();
+
+        $token = $this->retrieveToken();
+
+        $response = $client->request('DELETE', '/event_types/3', [
+            'auth_bearer' => $token,
+            'headers'     => [
+                'accept' => 'application/json',
+            ],
+        ]);
+
+        self::assertSame(
+            Response::HTTP_NO_CONTENT,
+            $response->getStatusCode(),
+        );
+    }
 }

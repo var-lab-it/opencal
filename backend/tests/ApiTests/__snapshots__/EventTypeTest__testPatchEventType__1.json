@@ -1,0 +1,7 @@
+{
+    "id": 1,
+    "name": "Test Event Type edited",
+    "description": "Test Event Type edited Description",
+    "duration": 60,
+    "slug": "conference-call"
+}

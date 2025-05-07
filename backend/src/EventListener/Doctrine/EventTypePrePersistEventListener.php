@@ -9,7 +9,6 @@ use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
 use Doctrine\ORM\Events;
 use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 #[AsEntityListener(event: Events::prePersist, method: 'prePersist', entity: EventType::class)]
 class EventTypePrePersistEventListener
@@ -23,8 +22,8 @@ class EventTypePrePersistEventListener
     {
         $user = $this->security->getUser();
 
-        if (!$user instanceof User) {
-            throw new AccessDeniedHttpException();
+        if (!($user instanceof User)) {
+            return;
         }
 
         $eventType->setHost($user);
