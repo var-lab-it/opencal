@@ -1,0 +1,9 @@
+[
+    {
+        "id": 2,
+        "name": "Team Meeting",
+        "description": "Weekly sync with the team.",
+        "duration": 30,
+        "slug": "team-meeting"
+    }
+]

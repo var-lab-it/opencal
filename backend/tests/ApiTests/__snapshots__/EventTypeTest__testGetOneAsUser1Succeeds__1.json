@@ -1,0 +1,7 @@
+{
+    "id": 1,
+    "name": "Conference Call",
+    "description": "A call to discuss project updates.",
+    "duration": 60,
+    "slug": "conference-call"
+}
