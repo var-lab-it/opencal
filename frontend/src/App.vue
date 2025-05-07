@@ -21,7 +21,7 @@ import {isAuthenticated} from "./services/auth.js";
 
 export default {
   name: 'App',
-  components: { AppHeader },
+  components: {AppHeader},
   setup() {
     let user = null;
 
@@ -29,7 +29,7 @@ export default {
       user = getCurrentUser().user
     }
 
-    return { user }
+    return {user}
   }
 }
 </script>
