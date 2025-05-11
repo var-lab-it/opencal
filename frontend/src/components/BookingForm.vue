@@ -17,67 +17,67 @@
       </div>
     </div>
 
-    <div v-if="!loadSubmit">
-      <form
-        v-if="!submitted"
-        class="booking-form"
-        @submit.prevent="handleSubmit"
-      >
-        <div class="form-group mb-3">
-          <label for="name">{{ $t('booking.form.fields.name') }}:</label>
-          <input
-            id="name"
-            v-model="formName"
-            type="text"
-            class="form-control"
-            required
-          />
-        </div>
-
-        <div class="form-group mb-3">
-          <label for="email">{{ $t('booking.form.fields.email') }}:</label>
-          <input
-            id="email"
-            v-model="formEmail"
-            type="email"
-            class="form-control"
-            required
-          />
-        </div>
-
-        <div class="form-group mb-3">
-          <label for="message">{{ $t('booking.form.fields.message', { name: eventType.host.givenName }) }}:</label>
-          <textarea
-            id="message"
-            v-model="formMessage"
-            class="form-control"
-          ></textarea>
-        </div>
-
-        <div>
-          <button
-            type="submit"
-            class="btn btn-primary"
-          >
-            {{ $t('booking.form.buttons.submit') }}
-            <font-awesome-icon icon="angle-right" />
-          </button>
-        </div>
-      </form>
-
-      <div v-else-if="submitted">
-        <div class="alert alert-success">
-          <font-awesome-icon icon="check-circle" />
-          {{ $t('booking.form.messages.success') }}
-        </div>
-      </div>
-    </div>
-
-    <div
-      v-else
-      class="text-center p-5 m-5"
+    <form
+      v-if="!submitted"
+      class="booking-form"
+      @submit.prevent="handleSubmit"
     >
-      <div class="spinner-border text-dark"></div>
+      <div class="form-group mb-3">
+        <label for="name">{{ $t('booking.form.fields.name') }}:</label>
+        <input
+          id="name"
+          v-model="formName"
+          type="text"
+          class="form-control"
+          required
+          :disabled="loadSubmit"
+        />
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="email">{{ $t('booking.form.fields.email') }}:</label>
+        <input
+          id="email"
+          v-model="formEmail"
+          type="email"
+          class="form-control"
+          required
+          :disabled="loadSubmit"
+        />
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="message">{{ $t('booking.form.fields.message', { name: eventType.host.givenName }) }}:</label>
+        <textarea
+          id="message"
+          v-model="formMessage"
+          class="form-control"
+          :disabled="loadSubmit"
+        ></textarea>
+      </div>
+
+      <div>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          :disabled="loadSubmit"
+        >
+          <span
+            v-if="loadSubmit"
+            class="spinner-grow text-light spinner-grow-sm"
+            role="status"
+          ></span>
+          {{ $t('booking.form.buttons.submit') }}
+          <font-awesome-icon icon="angle-right" />
+        </button>
+      </div>
+    </form>
+
+    <div v-else-if="submitted">
+      <div class="alert alert-success">
+        <font-awesome-icon icon="check-circle" />
+        {{ $t('booking.form.messages.success') }}
+      </div>
     </div>
   </div>
 </template>
