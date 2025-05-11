@@ -8,17 +8,14 @@ use ApiPlatform\Metadata\Operation;
 use App\Entity\EventType;
 use App\Entity\User;
 use App\Repository\EventTypeRepository;
-use App\Repository\UserRepository;
 use App\Service\AvailabilityService;
 use App\State\DayAvailabilityStateProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Safe\DateTime;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DayAvailabilityStateProviderTest extends TestCase
 {
-    private UserRepository&MockObject $userRepositoryMock;
     private EventTypeRepository&MockObject $eventTypeRepositoryMock;
     private AvailabilityService&MockObject $availabilityServiceMock;
 
@@ -26,13 +23,11 @@ class DayAvailabilityStateProviderTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->userRepositoryMock      = $this->createMock(UserRepository::class);
         $this->eventTypeRepositoryMock = $this->createMock(EventTypeRepository::class);
         $this->availabilityServiceMock = $this->createMock(AvailabilityService::class);
 
         $this->provider = new DayAvailabilityStateProvider(
             $this->availabilityServiceMock,
-            $this->userRepositoryMock,
             $this->eventTypeRepositoryMock,
         );
     }
@@ -54,19 +49,14 @@ class DayAvailabilityStateProviderTest extends TestCase
 
         $availabilities = [['start' => '09:00', 'end' => '10:00']];
 
-        $this->userRepositoryMock
-            ->method('findOneBy')
-            ->with(['email' => $filters['email']])
-            ->willReturn($user);
-
         $this->eventTypeRepositoryMock
-            ->method('findOneByIdAndEmail')
-            ->with(1, $filters['email'])
+            ->method('find')
+            ->with(1)
             ->willReturn($eventType);
 
         $this->availabilityServiceMock
             ->method('getDayAvailability')
-            ->with(new DateTime('2023-11-22'), $user, $eventType)
+            ->with(new DateTime('2023-11-22'), $eventType)
             ->willReturn($availabilities);
 
         $operation = $this->createMock(Operation::class);
@@ -83,27 +73,6 @@ class DayAvailabilityStateProviderTest extends TestCase
         ], $result);
     }
 
-    public function testProvideThrowsNotFoundHttpExceptionForMissingUser(): void
-    {
-        self::expectException(NotFoundHttpException::class);
-        self::expectExceptionMessage('User not found.');
-
-        $filters = [
-            'email'         => 'missing@example.com',
-            'date'          => '2023-11-22',
-            'event_type_id' => '1',
-        ];
-
-        $this->userRepositoryMock
-            ->method('findOneBy')
-            ->with(['email' => $filters['email']])
-            ->willReturn(null);
-
-        $operation = $this->createMock(Operation::class);
-
-        $this->provider->provide($operation, [], ['filters' => $filters]);
-    }
-
     public function testProvideReturnsEmptyArrayForMissingEventType(): void
     {
         $filters = [
@@ -115,14 +84,9 @@ class DayAvailabilityStateProviderTest extends TestCase
         $user = $this->createMock(User::class);
         $user->method('getEmail')->willReturn($filters['email']);
 
-        $this->userRepositoryMock
-            ->method('findOneBy')
-            ->with(['email' => $filters['email']])
-            ->willReturn($user);
-
         $this->eventTypeRepositoryMock
-            ->method('findOneByIdAndEmail')
-            ->with(999, $filters['email'])
+            ->method('find')
+            ->with(999)
             ->willReturn(null);
 
         $operation = $this->createMock(Operation::class);

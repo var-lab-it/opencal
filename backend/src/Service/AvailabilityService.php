@@ -7,7 +7,6 @@ namespace App\Service;
 use App\Entity\Availability;
 use App\Entity\EventType;
 use App\Entity\Unavailability;
-use App\Entity\User;
 use App\Repository\AvailabilityRepository;
 use App\Repository\UnavailabilityRepository;
 use Safe\DateTime;
@@ -30,17 +29,17 @@ class AvailabilityService
     }
 
     /** @return list<array<string, string>> */
-    public function getDayAvailability(DateTime $day, User $user, EventType $eventType): array
+    public function getDayAvailability(DateTime $day, EventType $eventType): array
     {
         $weekDay = $day->format('l');
 
         $unavailabilities = $this
             ->unavailabilityRepository
-            ->findByWeekDayAndUser($weekDay, $user);
+            ->findByWeekDayAndUser($weekDay, $eventType->getHost());
 
         $availabilities = $this
             ->availabilityRepository
-            ->findAllByWeekDayAndUser($weekDay, $user);
+            ->findAllByWeekDayAndUser($weekDay, $eventType->getHost());
 
         return $this->buildTimeSlots($availabilities, $eventType->getDuration(), $unavailabilities);
     }

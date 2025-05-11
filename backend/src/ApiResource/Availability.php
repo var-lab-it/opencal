@@ -33,17 +33,6 @@ use Symfony\Component\Validator\Constraints\Regex;
                         ]),
                     ],
                 ),
-                'email'         => new QueryParameter(
-                    constraints: [
-                        new NotBlank([
-                            'message' => 'The email is required.',
-                        ]),
-                        new Regex([
-                            'pattern' => '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/',
-                            'message' => 'The email must be a valid email address.',
-                        ]),
-                    ],
-                ),
                 'date'          => new QueryParameter(
                     constraints: [
                         new NotBlank([
