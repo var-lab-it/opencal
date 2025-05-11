@@ -7,19 +7,15 @@ namespace App\State;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
 use App\Entity\EventType;
-use App\Entity\User;
 use App\Repository\EventTypeRepository;
-use App\Repository\UserRepository;
 use App\Service\AvailabilityService;
 use Safe\DateTime;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /** @phpstan-ignore-next-line */
 class DayAvailabilityStateProvider implements ProviderInterface
 {
     public function __construct(
         private readonly AvailabilityService $availabilityService,
-        private readonly UserRepository $userRepository,
         private readonly EventTypeRepository $eventTypeRepository,
     ) {
     }
@@ -34,17 +30,11 @@ class DayAvailabilityStateProvider implements ProviderInterface
         } $filters */
         $filters = $context['filters'] ?? [];
 
-        $user = $this->userRepository->findOneBy(['email' => $filters['email']]);
-
-        if (!$user instanceof User) {
-            throw new NotFoundHttpException('User not found.');
-        }
-
         $dayDT = new DateTime($filters['date']);
 
         $eventType = $this
             ->eventTypeRepository
-            ->findOneByIdAndEmail(\intval($filters['event_type_id']), $user->getEmail());
+            ->find(\intval($filters['event_type_id']));
 
         if (!$eventType instanceof EventType) {
             return [];
@@ -52,7 +42,7 @@ class DayAvailabilityStateProvider implements ProviderInterface
 
         $availabilities = $this
             ->availabilityService
-            ->getDayAvailability($dayDT, $user, $eventType);
+            ->getDayAvailability($dayDT, $eventType);
 
         /** @var array<string, array<string>|string> $result */
         $result = [
