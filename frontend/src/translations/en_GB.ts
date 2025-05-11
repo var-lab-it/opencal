@@ -37,5 +37,8 @@ export default {
                 "save": "Save"
             }
         }
+    },
+    "booking": {
+        "headline": "",
     }
 }

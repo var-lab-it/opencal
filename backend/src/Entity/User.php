@@ -21,10 +21,12 @@ use Symfony\Component\Validator\Constraints as Assert;
     operations: [
         new Get(
             uriTemplate: '/me',
+            security: "is_granted('IS_AUTHENTICATED_FULLY')",
             provider: CurrentUserProvider::class,
         ),
         new Patch(
             uriTemplate: '/me/{id}',
+            security: "is_granted('IS_AUTHENTICATED_FULLY')",
         ),
     ],
     normalizationContext: [
@@ -64,12 +66,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private string $password;
 
     #[Assert\NotBlank]
-    #[Groups(['me:read', 'me:write'])]
+    #[Groups(['me:read', 'me:write', 'event_type:read'])]
     #[ORM\Column(length: 255)]
     private string $givenName;
 
     #[Assert\NotBlank]
-    #[Groups(['me:read', 'me:write'])]
+    #[Groups(['me:read', 'me:write', 'event_type:read'])]
     #[ORM\Column(length: 255)]
     private string $familyName;
 
@@ -77,14 +79,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: EventType::class, mappedBy: 'host')]
     private Collection $eventTypes;
 
-    /** @var Collection<int, Event> */
-    #[ORM\OneToMany(targetEntity: Event::class, mappedBy: 'host')]
-    private Collection $events;
+    /** @var Collection<int, Unavailability> */
+    #[ORM\OneToMany(targetEntity: Unavailability::class, mappedBy: 'user')]
+    private Collection $recurringUnavailabilities;
+
+    /** @var Collection<int, Availability> */
+    #[ORM\OneToMany(targetEntity: Availability::class, mappedBy: 'user')]
+    private Collection $availabilities;
 
     public function __construct()
     {
-        $this->eventTypes = new ArrayCollection();
-        $this->events     = new ArrayCollection();
+        $this->eventTypes                = new ArrayCollection();
+        $this->recurringUnavailabilities = new ArrayCollection();
+        $this->availabilities            = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -206,28 +213,56 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /** @return Collection<int, Event> */
-    public function getEvents(): Collection
+    /** @return Collection<int, Unavailability> */
+    public function getRecurringUnavailabilities(): Collection
     {
-        return $this->events;
+        return $this->recurringUnavailabilities;
     }
 
-    public function addEvent(Event $event): static
+    public function addRecurringUnavailability(Unavailability $recurringUnavailability): static
     {
-        if (!$this->events->contains($event)) {
-            $this->events->add($event);
-            $event->setHost($this);
+        if (!$this->recurringUnavailabilities->contains($recurringUnavailability)) {
+            $this->recurringUnavailabilities->add($recurringUnavailability);
+            $recurringUnavailability->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeEvent(Event $event): static
+    public function removeRecurringUnavailability(Unavailability $recurringUnavailability): static
     {
-        if ($this->events->removeElement($event)) {
+        if ($this->recurringUnavailabilities->removeElement($recurringUnavailability)) {
             // set the owning side to null (unless already changed)
-            if ($event->getHost() === $this) {
-                $event->setHost(null);
+            if ($recurringUnavailability->getUser() === $this) {
+                $recurringUnavailability->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /** @return Collection<int, Availability> */
+    public function getAvailabilities(): Collection
+    {
+        return $this->availabilities;
+    }
+
+    public function addAvailability(Availability $availability): static
+    {
+        if (!$this->availabilities->contains($availability)) {
+            $this->availabilities->add($availability);
+            $availability->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAvailability(Availability $availability): static
+    {
+        if ($this->availabilities->removeElement($availability)) {
+            // set the owning side to null (unless already changed)
+            if ($availability->getUser() === $this) {
+                $availability->setUser(null);
             }
         }
 

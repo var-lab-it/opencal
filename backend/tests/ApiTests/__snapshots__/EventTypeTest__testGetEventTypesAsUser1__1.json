@@ -4,13 +4,21 @@
         "name": "Conference Call",
         "description": "A call to discuss project updates.",
         "duration": 60,
-        "slug": "conference-call"
+        "slug": "conference-call",
+        "host": {
+            "givenName": "John",
+            "familyName": "Doe"
+        }
     },
     {
         "id": 3,
         "name": "One-on-One",
         "description": "Personal meeting with a team member.",
         "duration": 45,
-        "slug": "one-on-one"
+        "slug": "one-on-one",
+        "host": {
+            "givenName": "John",
+            "familyName": "Doe"
+        }
     }
 ]

@@ -23,6 +23,6 @@ class CurrentUserProvider implements ProviderInterface
         /** @var User|null $user */
         $user = $this->security->getUser();
 
-        return $user;
+        return $user instanceof User ? $user : null;
     }
 }

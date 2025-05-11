@@ -15,4 +15,19 @@ class EventTypeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, EventType::class);
     }
+
+    public function findOneByIdAndEmail(int $id, string $email): ?EventType
+    {
+        /** @var ?EventType $result */
+        $result = $this->createQueryBuilder('e')
+           ->leftJoin('e.host', 'h')
+           ->where('e.id = :id')
+           ->andWhere('h.email = :email')
+           ->setParameter('id', $id)
+           ->setParameter('email', $email)
+           ->getQuery()
+           ->getOneOrNullResult();
+
+        return $result;
+    }
 }

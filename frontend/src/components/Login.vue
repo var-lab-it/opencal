@@ -1,14 +1,9 @@
 <template>
-  <div class="login-container">
-    <h3 class="mb-3">
-      <font-awesome-icon icon="calendar-check" />
-      OpenCal
-    </h3>
+  <div class="login-form">
+    <h2>Login</h2>
     <form @submit.prevent="handleLogin">
       <div class="form-group mb-3">
-        <label for="email">
-          {{ $t('login.email') }}
-        </label>
+        <label for="email">Email:</label>
         <input
           id="email"
           v-model="email"
@@ -17,10 +12,8 @@
           required
         />
       </div>
-      <div class="form-group mb-4">
-        <label for="password">
-          {{ $t('login.password') }}
-        </label>
+      <div class="form-group mb-3">
+        <label for="password">Password:</label>
         <input
           id="password"
           v-model="password"
@@ -29,12 +22,14 @@
           required
         />
       </div>
-      <button
-        type="submit"
-        class="btn btn-primary w-100"
-      >
-        {{ $t('login.button') }}
-      </button>
+      <div class="d-grid">
+        <button
+          type="submit"
+          class="btn btn-primary"
+        >
+          Login
+        </button>
+      </div>
     </form>
     <p
       v-if="error"
@@ -45,50 +40,43 @@
   </div>
 </template>
 
-<script lang="ts">
-import {defineComponent} from 'vue';
-import apiClient from '../services/api';
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+<script setup lang="ts">
+import {ref} from "vue";
+import apiClient from "../services/api";
 
-export default defineComponent({
-  name: 'Login',
-  components: {FontAwesomeIcon},
-  data() {
-    return {
-      email: '',
-      password: '',
-      error: '',
-    };
-  },
-  methods: {
-    async handleLogin() {
-      this.error = '';
-      try {
-        const response = await apiClient.post('/auth', {
-          email: this.email,
-          password: this.password,
-        });
+const email = ref('');
+const password = ref('');
+const error = ref('');
 
-        if (response.data && response.data.token) {
-          const token = response.data.token;
+async function handleLogin() {
+  error.value = '';
+  try {
+    const response = await apiClient.post('/auth', {
+      email: email.value,
+      password: password.value,
+    });
 
-          sessionStorage.setItem('jwtToken', token);
-          window.location.href = '/';
-        } else {
-          this.error = 'No valid token.';
-        }
-      } catch (error: any) {
-        console.error('Login failed:', error);
-        this.error = 'Login failed. Please try again.';
-      }
-    },
-  },
-});
+    if (response.data && response.data.token) {
+      const token = response.data.token;
+
+      sessionStorage.setItem('jwtToken', token);
+      window.location.href = '/';
+    } else {
+      error.value = 'No valid token.';
+    }
+  } catch (err) {
+    console.error("Login failed:", err);
+    error.value = "Login failed. Please try again.";
+  }
+}
 </script>
 
 <style scoped>
-.login-container {
+.login-form {
   max-width: 400px;
-  margin: 50px auto;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
 }
 </style>

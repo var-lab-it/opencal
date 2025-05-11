@@ -10,6 +10,39 @@
           <router-view />
         </div>
       </div>
+      <div class="row mt-3">
+        <div class="col">
+          <div class="text-center small text-muted">
+            <a
+              href="https://github.com/var-lab-it/opencal"
+              target="_blank"
+              class="text-dark"
+            >OpenCal</a>
+            &nbsp;
+            <a
+              href="https://github.com/sponsors/var-lab-it"
+              target="_blank"
+            >
+              <font-awesome-icon
+                icon="heart"
+                class="text-danger"
+              />
+            </a>
+            &nbsp;
+            Open Source Scheduling
+            <div class="mt-1 small">
+              Created by
+              <a
+                href="https://var-lab.com"
+                target="_blank"
+                class="text-dark"
+              >
+                var-lab IT GmbH
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>

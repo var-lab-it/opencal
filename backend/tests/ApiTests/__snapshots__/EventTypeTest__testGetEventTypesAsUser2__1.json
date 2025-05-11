@@ -4,6 +4,10 @@
         "name": "Team Meeting",
         "description": "Weekly sync with the team.",
         "duration": 30,
-        "slug": "team-meeting"
+        "slug": "team-meeting",
+        "host": {
+            "givenName": "Jane",
+            "familyName": "Smith"
+        }
     }
 ]

@@ -11,17 +11,22 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Repository\EventRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
     operations: [
-        new getCollection(),
+        new getCollection(
+            security: "is_granted('IS_AUTHENTICATED_FULLY')",
+        ),
         new Get(),
         new Post(),
         new Patch(),
-        new Delete(),
+        new Delete(
+            security: "is_granted('IS_AUTHENTICATED_FULLY')",
+        ),
     ],
     normalizationContext: [
         'groups' => [
@@ -49,26 +54,22 @@ class Event
     )]
     #[Groups(['event:read', 'event:write'])]
     #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne]
-    private EventType $type;
+    #[ORM\ManyToOne(targetEntity: EventType::class, cascade: ['persist'], inversedBy: 'events')]
+    private EventType $eventType;
 
     #[Assert\NotBlank]
-    #[Assert\Type(
-        type: 'DateTime',
-        message: 'The end date must be after the start date.',
-    )]
     #[Groups(['event:read', 'event:write'])]
-    #[ORM\Column]
-    private \DateTime $startDateTime;
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: false)]
+    private \DateTime $startTime;
 
     #[Assert\NotBlank]
-    #[Assert\Type(
-        type: 'DateTime',
-        message: 'The end date must be after the start date.',
-    )]
     #[Groups(['event:read', 'event:write'])]
-    #[ORM\Column]
-    private \DateTime $endDateTime;
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: false)]
+    private \DateTime $endTime;
+
+    #[Groups(['event:read', 'event:write'])]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private \DateTime $day;
 
     #[Assert\NotBlank]
     #[Groups(['event:read', 'event:write'])]
@@ -85,47 +86,45 @@ class Event
     #[ORM\Column(type: 'text', length: 255, nullable: true)]
     private ?string $participantMessage = null;
 
-    #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(inversedBy: 'events')]
-    private User $host;
-
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getType(): EventType
+    public function getEventType(): EventType
     {
-        return $this->type;
+        return $this->eventType;
     }
 
-    public function setType(EventType $type): static
+    public function setEventType(?EventType $eventType): static
     {
-        $this->type = $type;
+        if ($eventType instanceof EventType) {
+            $this->eventType = $eventType;
+        }
 
         return $this;
     }
 
-    public function getStartDateTime(): \DateTime
+    public function getStartTime(): \DateTime
     {
-        return $this->startDateTime;
+        return $this->startTime;
     }
 
-    public function setStartDateTime(\DateTime $startDateTime): static
+    public function setStartTime(\DateTime $startTime): static
     {
-        $this->startDateTime = $startDateTime;
+        $this->startTime = $startTime;
 
         return $this;
     }
 
-    public function getEndDateTime(): \DateTime
+    public function getEndTime(): \DateTime
     {
-        return $this->endDateTime;
+        return $this->endTime;
     }
 
-    public function setEndDateTime(\DateTime $endDateTime): static
+    public function setEndTime(\DateTime $endTime): static
     {
-        $this->endDateTime = $endDateTime;
+        $this->endTime = $endTime;
 
         return $this;
     }
@@ -166,16 +165,14 @@ class Event
         return $this;
     }
 
-    public function getHost(): User
+    public function getDay(): \DateTime
     {
-        return $this->host;
+        return $this->day;
     }
 
-    public function setHost(?User $host): static
+    public function setDay(\DateTime $day): static
     {
-        if ($host instanceof User) {
-            $this->host = $host;
-        }
+        $this->day = $day;
 
         return $this;
     }
