@@ -1,0 +1,18 @@
+mails:
+  booking:
+    new:
+      to_host:
+        subject: 'Neues Ereignis: {name_invitee} - {time_from}, {date) - {event_type_name}'
+        message: |
+          Hallo {given_name} {family_name},
+          
+          es wurde ein neues Ereignis gebucht.
+          
+          Ereignistyp:
+          {event_type_name}
+          
+          Teilnehmer:
+          {name_invitee}
+          
+          E-Mail-Adresse des Teilnehmers:
+          {email_invitee}
