@@ -2,17 +2,35 @@ mails:
   booking:
     new:
       to_host:
-        subject: 'Neues Ereignis: {name_invitee} - {time_from}, {date) - {event_type_name}'
+        subject: 'Neues Ereignis: {attendee_name} - {time_from}, {booking_date} - {event_type_name}'
         message: |
           Hallo {given_name} {family_name},
           
           es wurde ein neues Ereignis gebucht.
           
           Ereignistyp:
-          {event_type_name}
+          {event_type_name} ({duration}min)
           
           Teilnehmer:
-          {name_invitee}
+          {attendee_name}
           
           E-Mail-Adresse des Teilnehmers:
-          {email_invitee}
+          {email_attendee}
+          ---
+          Diese E-Mail wurde automatisch über das Open-Source-Buchungstool OpenCal versendet.
+      to_attendee:
+        subject: 'Bestätigung: {event_type_name} mit {given_name} {family_name} am {booking_date} um {time_from}'
+        message: |
+          Hallo {attendee_name},
+          
+          die Buchung des Termins war erfolgreich.
+          
+          {event_type_name} mit {given_name} {family_name} findet am {booking_date} um {time_from} statt.
+          
+          Dauer: {duration}min)
+          
+          Organisator: {given_name} {family_name}
+          
+          E-Mail-Adresse des Organisators: {host_email}
+          ---
+          Diese E-Mail wurde automatisch über das Open-Source-Buchungstool OpenCal versendet.

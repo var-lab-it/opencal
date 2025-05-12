@@ -86,7 +86,7 @@ class Event
     #[ORM\Column(type: 'text', length: 255, nullable: true)]
     private ?string $participantMessage = null;
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }

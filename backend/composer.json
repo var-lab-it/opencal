@@ -8,6 +8,7 @@
     "api-platform/core": "^4.1",
     "doctrine/doctrine-bundle": "^2.14",
     "doctrine/doctrine-migrations-bundle": "^3.4",
+    "eluceo/ical": "^2.14",
     "lexik/jwt-authentication-bundle": "^3.1",
     "nelmio/cors-bundle": "^2.5",
     "symfony/asset": "^7.2",
@@ -24,7 +25,7 @@
     "symfony/runtime": "^7.2",
     "symfony/security-bundle": "^7.2",
     "symfony/string": "~7.2.0",
-    "symfony/translation": "7.2.*",
+    "symfony/translation": "~7.2.0",
     "symfony/translation-contracts": "^3.5",
     "symfony/twig-bundle": "^7.2",
     "symfony/validator": "^7.2",
@@ -137,7 +138,7 @@
     "lint:yaml": "bin/console lint:yaml config",
     "messenger": [
       "Composer\\Config::disableProcessTimeout",
-      "XDEBUG_MODE=debug bin/console messenger:consume async -vv"
+      "XDEBUG_MODE=debug bin/console messenger:consume transport -vv"
     ],
     "phpstan": "XDEBUG_MODE=off phpstan",
     "rit": "XDEBUG_MODE=coverage,debug phpunit --testsuite=ApiTests --log-junit=tests/reports/junit-apitests.xml",

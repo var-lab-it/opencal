@@ -1,0 +1,36 @@
+mails:
+  booking:
+    new:
+      to_host:
+        subject: 'New Event: {attendee_name} - {time_from}, {booking_date} - {event_type_name}'
+        message: |
+          Hello {given_name} {family_name},
+          
+          A new event has been booked.
+          
+          Event type:
+          {event_type_name} ({duration}min)
+          
+          Attendee:
+          {attendee_name}
+          
+          Attendee's email address:
+          {email_attendee}
+          ---
+          This email was automatically sent using the open-source booking tool OpenCal.
+      to_attendee:
+        subject: 'Confirmation: {event_type_name} with {given_name} {family_name} on {booking_date} at {time_from}'
+        message: |
+          Hello {attendee_name},
+          
+          The booking for the event has been successfully made.
+          
+          {event_type_name} with {given_name} {family_name} will take place on {booking_date} at {time_from}.
+          
+          Duration: {duration}min
+          
+          Organiser: {given_name} {family_name}
+          
+          Organiser's email address: {host_email}
+          ---
+          This email was automatically sent using the open-source booking tool OpenCal.
