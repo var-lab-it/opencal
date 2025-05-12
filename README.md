@@ -14,6 +14,17 @@ Both backend and frontend Docker containers can be customized using environment 
 | `VITE_APP_LANGUAGE` | Defines the default language/locale for the frontend. | `en_GB`                 |
 | `VITE_API_URL`      | Specifies the backend API's base URL.                 | `http://localhost:8080` |
 
+### Backend/API Environment Variables
+
+| Variable                  | Description                                     | Default Value                     |
+|---------------------------|-------------------------------------------------|-----------------------------------|
+| `LOCALE`                  | The locale.                                     | `en_GB`                           |
+| `EMAIL_SENDER_ADDRESS`    | The e-mail address from which e-mails are sent. | ` `                               |
+| `EMAIL_SENDER_NAME`       | The name of the sender of e-mails               | `OpenCal`                         |
+| `EMAIL_SENDER_NAME`       | The name of the sender of e-mails               | `OpenCal`                         |
+| `MAILER_DSN`              | Mailer configuration                            | `smtp://mailer:1025` (MailPit)    |
+| `MESSENGER_TRANSPORT_DSN` | Messenger transport configuration               | `doctrine://default?auto_setup=0` |
+
 ## Local Development
 
 ### Prerequisites
@@ -41,10 +52,10 @@ make up
 
 ### All
 
-| Action                       | Command                    |
-|------------------------------|----------------------------|
-| Stop containers              | `make down`                |
-| Show running containers      | `make ps`                  |
+| Action                  | Command     |
+|-------------------------|-------------|
+| Stop containers         | `make down` |
+| Show running containers | `make ps`   |
 
 ### Backend (Symfony)
 
