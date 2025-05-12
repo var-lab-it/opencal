@@ -36,6 +36,14 @@ jobs:
         working-directory: backend
         run: composer run tests:unit:ci
 
+  lint_docker_compose:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: lint docker-compose.yml
+        run: docker compose config
+
   frontend_lint:
     runs-on: ubuntu-latest
 
