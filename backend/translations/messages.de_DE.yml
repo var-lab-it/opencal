@@ -34,5 +34,25 @@ mails:
           Organisator: {given_name} {family_name}
           
           E-Mail-Adresse des Organisators: {host_email}
+          
+          Termin absagen: {cancellation_url}
           ---
           Diese E-Mail wurde automatisch über das Open-Source-Buchungstool OpenCal versendet.
+
+    cancellation:
+      to_host:
+        subject: 'Event cancelled by attendee: {attendee_name} - {time_from}, {booking_date} - {event_type_name}'
+        message: |
+          Hello {given_name} {family_name},
+          
+          The event on {booking_date} at {time_from} was cancelled by {attendee_name}.
+          
+          Event type:
+          {event_type_name} ({duration}min)
+          
+          Attendee's email address:
+          {email_attendee}
+          
+          Manage appointments: {frontend_url}/login
+          ---
+          This email was automatically sent via the open-source booking tool OpenCal.

@@ -86,6 +86,13 @@ class Event
     #[ORM\Column(type: 'text', length: 255, nullable: true)]
     private ?string $participantMessage = null;
 
+    #[Groups(['event:read'])]
+    #[ORM\Column(type: TYPES::STRING, length: 32)]
+    private string $cancellationHash;
+
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true)]
+    private ?bool $canceledByAttendee = null;
+
     public function getId(): int
     {
         return $this->id;
@@ -173,6 +180,31 @@ class Event
     public function setDay(\DateTime $day): static
     {
         $this->day = $day;
+
+        return $this;
+    }
+
+    public function getCancellationHash(): string
+    {
+        return $this->cancellationHash;
+    }
+
+    public function setCancellationHash(string $cancellationHash): static
+    {
+        $this->cancellationHash = $cancellationHash;
+
+        return $this;
+    }
+
+    #[Groups(['event:read'])]
+    public function isCancelledByAttendee(): ?bool
+    {
+        return $this->canceledByAttendee;
+    }
+
+    public function setCanceledByAttendee(?bool $canceledByAttendee): static
+    {
+        $this->canceledByAttendee = $canceledByAttendee;
 
         return $this;
     }

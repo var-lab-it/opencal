@@ -2,6 +2,7 @@ import {EventType, EventTypes} from "../types/EventType";
 import apiClient from "./api";
 import {Availability} from "../types/Availability";
 import {Booking} from "../types/Booking";
+import {Event} from "../types/Event";
 
 export async function getEventTypes(email: string): Promise<EventTypes> {
     try {
@@ -43,6 +44,28 @@ export async function submitBooking(booking: Booking): Promise<EventTypes> {
             day: booking.day,
             startTime: booking.startTime,
             endTime: booking.endTime,
+        });
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+export async function getOneEvent(eventId: number): Promise<Event> {
+    try {
+        const response = await apiClient.get(`/events/${eventId}`);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+export async function cancelBooking(eventId: number, cancellationHash: string): Promise<null> {
+    try {
+        const response = await apiClient.post(`/events/${eventId}/cancel`, {
+            cancellationHash: cancellationHash,
         });
         return response.data;
     } catch (error) {

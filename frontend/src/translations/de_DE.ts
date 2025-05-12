@@ -59,6 +59,11 @@ export default {
                 "success": "Termin erfolgreich gebucht.",
                 "error": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
             }
+        },
+        "cancel": {
+            "headline": "Termin absagen",
+            "confirm_message": "Möchten Sie den Termin wirklich absagen?",
+            "success_message": "Termin erfolgreich abgesagt."
         }
     },
 }

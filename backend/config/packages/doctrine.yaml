@@ -23,6 +23,11 @@ doctrine:
         prefix: 'App\Entity'
         alias: App
 
+when@test:
+  doctrine:
+    dbal:
+      schema_filter:  ~^(?!messenger_messages)~
+
 when@prod:
   doctrine:
     orm:
