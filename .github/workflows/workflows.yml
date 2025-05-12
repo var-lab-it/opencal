@@ -137,8 +137,6 @@ jobs:
     needs:
       - static_analysis
       - security_checks_backend
-      - frontend_security_checks
-      - frontend_lint
       - backend_unit_tests
     services:
       mysql:
@@ -196,6 +194,85 @@ jobs:
         env:
           DATABASE_URL: mysql://root:symfony@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/symfony?serverVersion=8.2
         run: composer run tests:api:ci
+
+  build_backend:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    needs:
+      - static_analysis
+      - security_checks_backend
+      - backend_unit_tests
+      - api_tests
+    steps:
+      - name: 'Login to GitHub Container Registry'
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{github.actor}}
+          password: ${{secrets.GITHUB_TOKEN}}
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: ./backend
+          target: php_prod
+          push: true
+          tags: ghcr.io/var-lab-it/opencal:backend-latest
+
+  build_backend_nginx:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    needs:
+      - static_analysis
+      - security_checks_backend
+      - backend_unit_tests
+      - api_tests
+    steps:
+      - name: 'Login to GitHub Container Registry'
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{github.actor}}
+          password: ${{secrets.GITHUB_TOKEN}}
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: ./backend
+          target: nginx_prod
+          push: true
+          tags: ghcr.io/var-lab-it/opencal:backend-nginx-latest
+
+  build_frontend:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    needs:
+      - frontend_security_checks
+      - frontend_lint
+    steps:
+      - name: 'Login to GitHub Container Registry'
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{github.actor}}
+          password: ${{secrets.GITHUB_TOKEN}}
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: ./frontend
+          target: production
+          push: true
+          tags: ghcr.io/var-lab-it/opencal:frontend-latest
 
 #  e2e-tests:
 #    runs-on: ubuntu-latest
