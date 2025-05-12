@@ -24,6 +24,8 @@ Both backend and frontend Docker containers can be customized using environment 
 | `EMAIL_SENDER_NAME`       | The name of the sender of e-mails               | `OpenCal`                         |
 | `MAILER_DSN`              | Mailer configuration                            | `smtp://mailer:1025` (MailPit)    |
 | `MESSENGER_TRANSPORT_DSN` | Messenger transport configuration               | `doctrine://default?auto_setup=0` |
+| `FRONTEND_DOMAIN`         | Domain of the frontend.                         | `localhost`                       |
+| `USE_SSL`                 | If true, https will be used.                    | `true`                            |
 
 ## Local Development
 

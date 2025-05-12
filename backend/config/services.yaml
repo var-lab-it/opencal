@@ -7,6 +7,8 @@ parameters:
   locale: '%env(LOCALE)%'
   email_sender_address: '%env(EMAIL_SENDER_ADDRESS)%'
   email_sender_name: '%env(EMAIL_SENDER_NAME)%'
+  frontend_domain: '%env(FRONTEND_DOMAIN)%'
+  use_ssl: '%env(bool:USE_SSL)%'
 
 services:
   # default configuration for services in *this* file
@@ -17,6 +19,8 @@ services:
       $locale: '%locale%'
       $emailSenderAddress: '%email_sender_address%'
       $emailSenderName: '%email_sender_name%'
+      $frontendDomain: '%frontend_domain%'
+      $useSSL: '%use_ssl%'
 
   # makes classes in src/ available to be used as services
   # this creates a service per class whose id is the fully-qualified class name

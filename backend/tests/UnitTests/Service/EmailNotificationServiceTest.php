@@ -27,7 +27,9 @@ class EmailNotificationServiceTest extends TestCase
 
     private const EMAIL_SENDER_ADDRESS = 'no-reply@example.com';
     private const EMAIL_SENDER_NAME    = 'Example App';
-    private const LOCALE               = 'en';
+    private const LOCALE               = 'en_GB';
+    private const FRONTEND_DOMAIN      = 'domain.tld';
+    private const USE_SSL              = true;
 
     protected function setUp(): void
     {
@@ -44,6 +46,8 @@ class EmailNotificationServiceTest extends TestCase
             self::EMAIL_SENDER_ADDRESS,
             self::EMAIL_SENDER_NAME,
             self::LOCALE,
+            self::FRONTEND_DOMAIN,
+            self::USE_SSL,
         );
     }
 
@@ -130,6 +134,7 @@ class EmailNotificationServiceTest extends TestCase
             '{given_name}'      => 'Host GivenName',
             '{family_name}'     => 'Host FamilyName',
             '{host_email}'      => 'host@example.com',
+            '{frontend_url}'    => 'https://domain.tld',
         ];
     }
 
