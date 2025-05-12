@@ -16,6 +16,8 @@ mails:
           
           Attendee's email address:
           {email_attendee}
+          
+          Manage appointments: {frontend_url}/login
           ---
           This email was automatically sent using the open-source booking tool OpenCal.
       to_attendee:

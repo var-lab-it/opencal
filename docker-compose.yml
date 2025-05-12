@@ -35,6 +35,8 @@ services:
       PHP_IDE_CONFIG: "serverName=opencal-backend"
       TIMEZONE: Europe/Berlin
       PS1: '[opencal-backend]::$$(pwd) # '
+      FRONTEND_HOST: 'localhost'
+      USE_SSL: false
     volumes:
       - php_socket:/var/run/php
       - ./backend:/srv/app

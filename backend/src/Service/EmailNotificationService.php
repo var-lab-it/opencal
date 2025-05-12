@@ -22,6 +22,8 @@ class EmailNotificationService
         private readonly string $emailSenderAddress,
         private readonly string $emailSenderName,
         private readonly string $locale,
+        private readonly string $frontendDomain,
+        private readonly bool $useSSL,
     ) {
     }
 
@@ -67,6 +69,17 @@ class EmailNotificationService
         $this->filesystem->remove($iCalTmpFilePath);
     }
 
+    private function getFrontendUrl(): string
+    {
+        $protocol = $this->useSSL ? 'https' : 'http';
+
+        return \sprintf(
+            '%s://%s',
+            $protocol,
+            $this->frontendDomain,
+        );
+    }
+
     /** @return array<string, string|int> */
     private function getParams(Event $event): array
     {
@@ -80,6 +93,7 @@ class EmailNotificationService
             '{given_name}'      => $event->getEventType()->getHost()->getGivenName(),
             '{family_name}'     => $event->getEventType()->getHost()->getFamilyName(),
             '{host_email}'      => $event->getEventType()->getHost()->getEmail(),
+            '{frontend_url}'    => $this->getFrontendUrl(),
         ];
     }
 

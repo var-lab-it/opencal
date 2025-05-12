@@ -16,6 +16,8 @@ mails:
           
           E-Mail-Adresse des Teilnehmers:
           {email_attendee}
+          
+          Termine verwalten: {frontend_url}/login
           ---
           Diese E-Mail wurde automatisch über das Open-Source-Buchungstool OpenCal versendet.
       to_attendee:
