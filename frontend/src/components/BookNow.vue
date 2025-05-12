@@ -151,7 +151,7 @@ async function dayClicked(day: CalendarDay): Promise<void> {
   const dayString = formatCalendarDayToString(day);
 
   try {
-    const response = await getDayAvailabilities(userEmail, dayString, eventType.value.id);
+    const response = await getDayAvailabilities(userEmail, dayString, eventType.value?.id ?? 0);
     availability.value = response;
 
     const hasAvailabilities = response.availabilities.length > 0;

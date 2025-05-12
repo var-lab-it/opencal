@@ -14,6 +14,14 @@ export default defineConfig({
     },
     optimizeDeps: {
         include: ['@fortawesome/fontawesome-svg-core']
+    },
+    build: {
+        outDir: './dist',
+        emptyOutDir: true,
+        sourcemap: true,
+        rollupOptions: {
+            input: './index.html'
+        }
     }
 
 })

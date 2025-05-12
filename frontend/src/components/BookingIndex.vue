@@ -54,7 +54,7 @@ import {EventType, EventTypes} from "../types/EventType";
 import { useRoute } from 'vue-router'
 
 const $route = useRoute();
-const userEmail = $route.params.email
+const userEmail = String($route.params.email)
 const loading = ref(true)
 const eventTypes = ref<EventTypes>([]);
 

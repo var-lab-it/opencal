@@ -6,9 +6,11 @@
     "strict": true,
     "jsx": "preserve",
     "types": ["vite/client"],
-    "allowJs": true,
+    "allowJs": false,
     "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "skipLibCheck": true
   },
   "include": ["src/**/*.ts", "src/**/*.vue"]
 }

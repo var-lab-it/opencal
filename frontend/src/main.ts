@@ -1,7 +1,6 @@
 import { createApp } from 'vue'
 import './style/app.scss'
 import router from './router/index';
-import App from './App.vue'
 import 'bootstrap'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -13,6 +12,7 @@ import deDE from './translations/de_DE'
 import config from './plugins/config'
 import { setupCalendar, DatePicker } from 'v-calendar';
 import 'v-calendar/style.css';
+import App from "./App.vue";
 
 const i18n = createI18n({
     locale: config.language,
