@@ -138,7 +138,7 @@ import {toast} from "vue3-toastify";
 import 'vue3-toastify/dist/index.css';
 import {useI18n} from 'vue-i18n'
 
-const {t, locale, availableLocales} = useI18n()
+const {t} = useI18n()
 
 let {user} = getCurrentUser()
 const loading = ref(true)
@@ -196,7 +196,7 @@ function closeModal() {
 async function save() {
   try {
     await apiClient.patch(
-        `/me/${user?.value.id}`,
+        `/me/${user.value?.id}`,
         form.value,
         {
           headers: {
