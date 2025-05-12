@@ -69,6 +69,18 @@ class EmailNotificationService
         $this->filesystem->remove($iCalTmpFilePath);
     }
 
+    public function sendBookingCanceledNotificationToAHost(Event $event): void
+    {
+        $params = $this->getParams($event);
+
+        $this->sendNotification(
+            $this->translator->trans('mails.booking.cancellation.to_host.subject', $params, 'messages', $this->locale),
+            $this->translator->trans('mails.booking.cancellation.to_host.message', $params, 'messages', $this->locale),
+            $event->getParticipantEmail(),
+            $event->getParticipantName(),
+        );
+    }
+
     private function getFrontendUrl(): string
     {
         $protocol = $this->useSSL ? 'https' : 'http';
@@ -84,16 +96,22 @@ class EmailNotificationService
     private function getParams(Event $event): array
     {
         return [
-            '{attendee_name}'   => $event->getParticipantName(),
-            '{time_from}'       => $event->getStartTime()->format('H:i'),
-            '{booking_date}'    => $event->getDay()->format('d.m.Y'),
-            '{event_type_name}' => $event->getEventType()->getName(),
-            '{duration}'        => $event->getEventType()->getDuration(),
-            '{email_attendee}'  => $event->getParticipantEmail(),
-            '{given_name}'      => $event->getEventType()->getHost()->getGivenName(),
-            '{family_name}'     => $event->getEventType()->getHost()->getFamilyName(),
-            '{host_email}'      => $event->getEventType()->getHost()->getEmail(),
-            '{frontend_url}'    => $this->getFrontendUrl(),
+            '{attendee_name}'    => $event->getParticipantName(),
+            '{time_from}'        => $event->getStartTime()->format('H:i'),
+            '{booking_date}'     => $event->getDay()->format('d.m.Y'),
+            '{event_type_name}'  => $event->getEventType()->getName(),
+            '{duration}'         => $event->getEventType()->getDuration(),
+            '{email_attendee}'   => $event->getParticipantEmail(),
+            '{given_name}'       => $event->getEventType()->getHost()->getGivenName(),
+            '{family_name}'      => $event->getEventType()->getHost()->getFamilyName(),
+            '{host_email}'       => $event->getEventType()->getHost()->getEmail(),
+            '{frontend_url}'     => $this->getFrontendUrl(),
+            '{cancellation_url}' => \sprintf(
+                '%s/event/%s/cancel/%s',
+                $this->getFrontendUrl(),
+                $event->getId(),
+                $event->getCancellationHash(),
+            ),
         ];
     }
 

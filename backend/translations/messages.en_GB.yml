@@ -34,5 +34,7 @@ mails:
           Organiser: {given_name} {family_name}
           
           Organiser's email address: {host_email}
+          
+          Cancel appointment: {cancellation_url}
           ---
           This email was automatically sent using the open-source booking tool OpenCal.
