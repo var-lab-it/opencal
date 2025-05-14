@@ -12,7 +12,8 @@ Both backend and frontend Docker containers can be customized using environment 
 | Variable            | Description                                           | Default Value           |
 |---------------------|-------------------------------------------------------|-------------------------|
 | `VITE_APP_LANGUAGE` | Defines the default language/locale for the frontend. | `en_GB`                 |
-| `VITE_API_URL`      | Specifies the backend API's base URL.                 | `http://localhost:8080` |
+| `VITE_API_HOST`     | Specifies the backend API's base URL.                 | `http://localhost:8080` |
+| `VITE_LOGO_URL`     | URL to your logo.                                     | <empty>                 |
 
 ### Backend/API Environment Variables
 

@@ -67,7 +67,6 @@ services:
     environment:
       NODE_ENV: development
       DEBUG: "vite:*"
-      VITE_APP_LANGUAGE: 'de_DE'
     depends_on:
       - nginx_backend
 

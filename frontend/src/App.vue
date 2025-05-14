@@ -10,7 +10,7 @@
           <router-view />
         </div>
       </div>
-      <div class="row mt-3">
+      <div class="row mt-3 mb-3">
         <div class="col">
           <div class="text-center small text-muted">
             <a
@@ -36,9 +36,8 @@
                 href="https://var-lab.com"
                 target="_blank"
                 class="text-dark"
-              >
-                var-lab IT GmbH
-              </a>
+              >var-lab IT GmbH</a>
+              and Contributors
             </div>
           </div>
         </div>
