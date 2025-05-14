@@ -2,10 +2,8 @@
 
 .booking-index-link {
   transition: background-color 0.2s ease-in-out;
-
-  &:hover {
-    background-color: #eee;
-  }
+  cursor: pointer;
+  background-color: #fff;
 }
 
 .booking-now {
