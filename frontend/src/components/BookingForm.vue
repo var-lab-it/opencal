@@ -10,7 +10,9 @@
 
       <div v-else>
         <div class="mb-3 d-flex justify-content-between align-items-center">
-          <h5>Termin buchen</h5>
+          <h5>
+            {{ $t('booking.form.headline') }}
+          </h5>
         </div>
 
         <form

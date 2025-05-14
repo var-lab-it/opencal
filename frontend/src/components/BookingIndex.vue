@@ -41,7 +41,7 @@
                       @click="selectedEventType=null"
                     >
                       <font-awesome-icon icon="pencil" />
-                      ändern
+                      {{ $t('change') }}
                     </button>
                   </div>
                 </div>
@@ -68,7 +68,7 @@
 
                   <div class="float-end">
                     <div class="small">
-                      {{ eventType.duration }} Minuten
+                      {{ eventType.duration }} {{ $t('booking.index.minutes') }}
                     </div>
                   </div>
                 </div>
