@@ -38,15 +38,18 @@ export default {
             }
         }
     },
+    "change": "ändern",
     "booking": {
         "index": {
             "intro": "Willkommen auf meiner Planungsseite. Wähle hier einen Ereignistyp aus, um einen Termin zu planen.",
+            "minutes": "Minuten"
         },
         "book_now": {
             "not_available": "{name} ist am {date_string} nicht verfügbar. Bitte wähle einen anderen Tag.",
             "available_timeslots": "Buchbare Zeiten",
         },
         "form": {
+            "headline": "Termin buchen",
             "fields": {
                 "name": "Name",
                 "email": "E-Mail Adresse",

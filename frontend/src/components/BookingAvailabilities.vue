@@ -48,7 +48,7 @@
                     @click="selectedTimeSlot=null"
                   >
                     <font-awesome-icon icon="pencil" />
-                    ändern
+                    {{ $t('change') }}
                   </button>
                 </div>
               </div>
