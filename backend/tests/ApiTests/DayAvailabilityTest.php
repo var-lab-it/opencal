@@ -29,7 +29,8 @@ class DayAvailabilityTest extends ApiTestCase
             ['/availability/day', Response::HTTP_UNPROCESSABLE_ENTITY],
             ['/availability/day?email=test%40mail.com', Response::HTTP_UNPROCESSABLE_ENTITY],
             ['/availability/day?date=2021-01-01', Response::HTTP_UNPROCESSABLE_ENTITY],
-            ['/availability/day?date=2021-01-01&event_type_id=1', Response::HTTP_OK],
+            ['/availability/day?date=2021-01-01&event_type_id=1', Response::HTTP_UNPROCESSABLE_ENTITY],
+            ['/availability/day?date=2021-01-01&event_type_id=1&email=test%40mail.com', Response::HTTP_OK],
         ];
     }
 
