@@ -10,6 +10,7 @@
           type="email"
           class="form-control"
           required
+          data-testid="email-input"
         />
       </div>
       <div class="form-group mb-3">
@@ -20,12 +21,14 @@
           type="password"
           class="form-control"
           required
+          data-testid="password-input"
         />
       </div>
       <div class="d-grid">
         <button
           type="submit"
           class="btn btn-primary"
+          data-testid="login-btn"
         >
           Login
         </button>
@@ -43,6 +46,7 @@
 <script setup lang="ts">
 import {ref} from "vue";
 import apiClient from "../services/api";
+import {redirectAfterLogin} from "../services/auth";
 
 const email = ref('');
 const password = ref('');
@@ -60,7 +64,7 @@ async function handleLogin() {
       const token = response.data.token;
 
       sessionStorage.setItem('jwtToken', token);
-      window.location.href = '/';
+      redirectAfterLogin();
     } else {
       error.value = 'No valid token.';
     }

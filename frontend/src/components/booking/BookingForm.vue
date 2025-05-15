@@ -84,12 +84,12 @@
 
 <script setup lang="ts">
 import {onMounted, ref} from "vue";
-import {submitBooking} from "../services/booking";
+import {submitBooking} from "../../services/booking";
 import type {CalendarDay} from "v-calendar/dist/types/src/utils/page";
-import type {EventType} from "../types/EventType";
-import type {TimeSlot} from "../types/TimeSlot";
-import type {Booking} from "../types/Booking";
-import {formatCalendarDayToString} from "../helper/dateTime";
+import type {EventType} from "../../types/EventType";
+import type {TimeSlot} from "../../types/TimeSlot";
+import type {Booking} from "../../types/Booking";
+import {formatCalendarDayToString} from "../../helper/dateTime";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 const props = defineProps({

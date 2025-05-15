@@ -70,14 +70,14 @@
 </template>
 
 <script setup lang="ts">
-import {EventType} from "../types/EventType";
+import {EventType} from "../../types/EventType";
 import {CalendarDay} from "v-calendar/dist/types/src/utils/page";
 import {onMounted, ref} from "vue";
-import {getDayAvailabilities} from "../services/booking";
-import {formatCalendarDayToString} from "../helper/dateTime";
+import {getDayAvailabilities} from "../../services/booking";
+import {formatCalendarDayToString} from "../../helper/dateTime";
 import {useRoute} from "vue-router";
-import {Availability} from "../types/Availability";
-import {TimeSlot} from "../types/TimeSlot";
+import {Availability} from "../../types/Availability";
+import {TimeSlot} from "../../types/TimeSlot";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import BookingForm from "./BookingForm.vue";
 

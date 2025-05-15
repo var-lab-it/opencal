@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Login from '../components/Login.vue';
 import { isAuthenticated } from '../services/auth';
-import UserDashboard from "../components/UserDashboard.vue";
-import MyAccount from "../components/Me/MyAccount.vue";
-import BookingIndex from "../components/BookingIndex.vue";
-import CancelBooking from "../components/CancelBooking.vue";
+import BookingIndex from "../components/booking/BookingIndex.vue";
+import CancelBooking from "../components/booking/CancelBooking.vue";
+import Dashboard from "../components/user/Dashboard.vue";
+import Account from "../components/user/Account.vue";
 
 const routes = [
     {name: 'login', path: '/login', component: Login },
@@ -13,13 +13,13 @@ const routes = [
     {
         name: 'dashboard',
         path: '/',
-        component: UserDashboard,
+        component: Dashboard,
         meta: { requiresAuth: true }
     },
     {
         name: 'account',
         path: '/account',
-        component: MyAccount,
+        component: Account,
         meta: { requiresAuth: true }
     },
 ];

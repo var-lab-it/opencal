@@ -88,12 +88,12 @@
 
 <script setup lang="ts">
 import {onMounted, ref} from 'vue';
-import {getEventTypes} from '../services/booking';
-import {EventType, EventTypes} from "../types/EventType";
+import {getEventTypes} from '../../services/booking';
+import {EventType, EventTypes} from "../../types/EventType";
 import {useRoute} from 'vue-router'
 import BookingCalendar from "./BookingCalendar.vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-import Logo from "./Logo.vue";
+import Logo from "../Logo.vue";
 const $route = useRoute();
 const userEmail = String($route.params.email)
 const loading = ref(true)

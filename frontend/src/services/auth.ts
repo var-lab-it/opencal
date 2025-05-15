@@ -19,11 +19,14 @@ export function isAuthenticated(): boolean {
     }
 }
 
-
 export function getToken(): string | null {
     return sessionStorage.getItem('jwtToken');
 }
 
 export function logout() {
     sessionStorage.removeItem('jwtToken');
+}
+
+export function redirectAfterLogin() {
+    window.location.href = '/';
 }

@@ -55,10 +55,10 @@
 
 <script setup lang="ts">
 import {onMounted, ref} from "vue";
-import {cancelBooking, getOneEvent} from "../services/booking";
+import {cancelBooking, getOneEvent} from "../../services/booking";
 import {useRoute} from "vue-router";
-import {Event} from "../types/Event";
-import {formatDateStringToDay, formatDateStringToTime} from "../helper/dateTime";
+import {Event} from "../../types/Event";
+import {formatDateStringToDay, formatDateStringToTime} from "../../helper/dateTime";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 const loading = ref(true);
