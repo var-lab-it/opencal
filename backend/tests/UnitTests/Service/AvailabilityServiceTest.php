@@ -9,6 +9,7 @@ use App\Entity\EventType;
 use App\Entity\Unavailability;
 use App\Entity\User;
 use App\Repository\AvailabilityRepository;
+use App\Repository\EventRepository;
 use App\Repository\UnavailabilityRepository;
 use App\Service\AvailabilityService;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -19,15 +20,18 @@ class AvailabilityServiceTest extends TestCase
 {
     private AvailabilityRepository&MockObject $availabilityRepositoryMock;
     private UnavailabilityRepository&MockObject $unavailabilityRepositoryMock;
+    private EventRepository&MockObject $eventRepositoryMock;
     private AvailabilityService $service;
 
     protected function setUp(): void
     {
         $this->availabilityRepositoryMock   = $this->createMock(AvailabilityRepository::class);
         $this->unavailabilityRepositoryMock = $this->createMock(UnavailabilityRepository::class);
+        $this->eventRepositoryMock          = $this->createMock(EventRepository::class);
         $this->service                      = new AvailabilityService(
             $this->unavailabilityRepositoryMock,
             $this->availabilityRepositoryMock,
+            $this->eventRepositoryMock,
         );
     }
 

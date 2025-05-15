@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Entity\Availability;
+use App\Entity\Event;
 use App\Entity\EventType;
 use App\Entity\Unavailability;
 use App\Repository\AvailabilityRepository;
+use App\Repository\EventRepository;
 use App\Repository\UnavailabilityRepository;
 use Safe\DateTime;
 use function Safe\strtotime;
@@ -25,6 +27,7 @@ class AvailabilityService
     public function __construct(
         private readonly UnavailabilityRepository $unavailabilityRepository,
         private readonly AvailabilityRepository $availabilityRepository,
+        private readonly EventRepository $eventRepository,
     ) {
     }
 
@@ -41,22 +44,30 @@ class AvailabilityService
             ->availabilityRepository
             ->findAllByWeekDayAndUser($weekDay, $eventType->getHost());
 
-        return $this->buildTimeSlots($availabilities, $eventType->getDuration(), $unavailabilities);
+        $eventsToday = $this
+            ->eventRepository
+            ->findAllByDayByUser($eventType->getHost(), $day);
+
+        return $this->buildTimeSlots($availabilities, $eventType->getDuration(), $unavailabilities, $eventsToday);
     }
 
     /**
      * @param array<Availability> $availabilities
      * @param array<Unavailability> $unavailabilities
+     * @param array<Event> $eventsToday
      *
      * @return list<array{start: non-falsy-string, end: non-falsy-string}>
      *
      * @throws \Safe\Exceptions\DatetimeException
      */
-    private function buildTimeSlots(array $availabilities, int $duration, array $unavailabilities): array
-    {
+    private function buildTimeSlots(
+        array $availabilities,
+        int $duration,
+        array $unavailabilities,
+        array $eventsToday,
+    ): array {
         $slots = [];
 
-        /** @var Availability $availability */
         foreach ($availabilities as $availability) {
             $startTimeString = $availability->getStartTime()->format('H:i');
             $endTimeString   = $availability->getEndTime()->format('H:i');
@@ -80,7 +91,10 @@ class AvailabilityService
                     'end'   => $nextSlot->format('H:i'),
                 ];
 
-                if ($nextSlot <= $endTime && true === !$this->isUnavailable($slot, $unavailabilities)) {
+                if ($nextSlot <= $endTime
+                    && false === $this->isUnavailable($slot, $unavailabilities)
+                    && false === $this->hasConflicts($slot, $eventsToday)
+                ) {
                     $slots[] = $slot;
                 }
 
@@ -118,6 +132,33 @@ class AvailabilityService
             $slotTimeEnd   = strtotime($slot['end']);
 
             if (($slotTimeStart < $unavailableEnd && $slotTimeEnd > $unavailableStart)
+            ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param array{start: string, end: string} $slot
+     * @param array<Event> $eventsToday
+     *
+     * @throws \Safe\Exceptions\DatetimeException
+     */
+    private function hasConflicts(array $slot, array $eventsToday): bool
+    {
+        foreach ($eventsToday as $event) {
+            $startTimeString = $event->getStartTime()->format('H:i');
+            $endTimeString   = $event->getEndTime()->format('H:i');
+
+            $eventStart = strtotime($startTimeString);
+            $eventEnd   = strtotime($endTimeString);
+
+            $slotTimeStart = strtotime($slot['start']);
+            $slotTimeEnd   = strtotime($slot['end']);
+
+            if (($slotTimeStart < $eventEnd && $slotTimeEnd > $eventStart)
             ) {
                 return true;
             }
