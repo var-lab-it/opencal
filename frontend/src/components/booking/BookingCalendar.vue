@@ -46,7 +46,7 @@
 <script setup lang="ts">
 import {ref} from "vue";
 import {CalendarDay} from "v-calendar/dist/types/src/utils/page";
-import {EventType} from "../types/EventType";
+import {EventType} from "../../types/EventType";
 import BookingAvailabilities from "./BookingAvailabilities.vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 

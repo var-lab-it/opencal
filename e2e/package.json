@@ -1,9 +1,0 @@
-{
-  "scripts": {
-    "cy:open": "cypress open --config baseUrl=http://localhost",
-    "cy:run": "cypress run --config baseUrl=http://localhost --browser chrome"
-  },
-  "devDependencies": {
-    "cypress": "^14.3.2"
-  }
-}
