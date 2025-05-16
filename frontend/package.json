@@ -6,8 +6,8 @@
     "dev": "vite -d",
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview",
-    "lint:ts": "eslint --ext .ts,.vue src tests",
-    "lint:ts:fix": "eslint --ext .ts,.vue src tests --fix",
+    "lint:ts": "eslint --ext .ts,.vue src",
+    "lint:ts:fix": "eslint --ext .ts,.vue src --fix",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "coverage": "vitest run --coverage"
