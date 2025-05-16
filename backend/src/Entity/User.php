@@ -87,11 +87,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Availability::class, mappedBy: 'user')]
     private Collection $availabilities;
 
+    /** @var Collection<int, CalDavAuth> */
+    #[ORM\OneToMany(targetEntity: CalDavAuth::class, mappedBy: 'user')]
+    private Collection $calDavAuths;
+
     public function __construct()
     {
         $this->eventTypes                = new ArrayCollection();
         $this->recurringUnavailabilities = new ArrayCollection();
         $this->availabilities            = new ArrayCollection();
+        $this->calDavAuths               = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -263,6 +268,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($availability->getUser() === $this) {
                 $availability->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /** @return Collection<int, CalDavAuth> */
+    public function getCalDavAuths(): Collection
+    {
+        return $this->calDavAuths;
+    }
+
+    public function addCalDavAuth(CalDavAuth $calDavAuth): static
+    {
+        if (!$this->calDavAuths->contains($calDavAuth)) {
+            $this->calDavAuths->add($calDavAuth);
+            $calDavAuth->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCalDavAuth(CalDavAuth $calDavAuth): static
+    {
+        if ($this->calDavAuths->removeElement($calDavAuth)) {
+            // set the owning side to null (unless already changed)
+            if ($calDavAuth->getUser() === $this) {
+                $calDavAuth->setUser(null);
             }
         }
 

@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250512133248 extends AbstractMigration
+final class Version20250520200857 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -24,7 +24,10 @@ final class Version20250512133248 extends AbstractMigration
             CREATE TABLE availability (id INT AUTO_INCREMENT NOT NULL, day_of_week VARCHAR(255) NOT NULL, start_time TIME NOT NULL, end_time TIME NOT NULL, user_id INT NOT NULL, INDEX IDX_3FB7A2BFA76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci`
         SQL);
         $this->addSql(<<<'SQL'
-            CREATE TABLE event (id INT AUTO_INCREMENT NOT NULL, start_time TIME NOT NULL, end_time TIME NOT NULL, day DATE NOT NULL, participant_name VARCHAR(255) NOT NULL, participant_email VARCHAR(255) NOT NULL, participant_message TINYTEXT DEFAULT NULL, cancellation_hash VARCHAR(32) NOT NULL, canceled_by_attendee TINYINT(1) DEFAULT NULL, event_type_id INT NOT NULL, INDEX IDX_3BAE0AA7401B253C (event_type_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci`
+            CREATE TABLE cal_dav_auth (id INT AUTO_INCREMENT NOT NULL, enabled TINYINT(1) NOT NULL, base_uri VARCHAR(255) NOT NULL, username VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL, user_id INT NOT NULL, INDEX IDX_14B16BA5A76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci`
+        SQL);
+        $this->addSql(<<<'SQL'
+            CREATE TABLE event (id INT AUTO_INCREMENT NOT NULL, start_time TIME NOT NULL, end_time TIME NOT NULL, day DATE NOT NULL, participant_name VARCHAR(255) DEFAULT NULL, participant_email VARCHAR(255) DEFAULT NULL, participant_message TINYTEXT DEFAULT NULL, cancellation_hash VARCHAR(32) DEFAULT NULL, canceled_by_attendee TINYINT(1) DEFAULT NULL, sync_hash VARCHAR(255) DEFAULT NULL, event_type_id INT DEFAULT NULL, cal_dav_auth_id INT DEFAULT NULL, INDEX IDX_3BAE0AA7401B253C (event_type_id), INDEX IDX_3BAE0AA7839D6BD9 (cal_dav_auth_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci`
         SQL);
         $this->addSql(<<<'SQL'
             CREATE TABLE event_type (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, description LONGTEXT DEFAULT NULL, duration INT NOT NULL, slug VARCHAR(255) NOT NULL, host_id INT NOT NULL, INDEX IDX_93151B821FB8D185 (host_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci`
@@ -42,7 +45,13 @@ final class Version20250512133248 extends AbstractMigration
             ALTER TABLE availability ADD CONSTRAINT FK_3FB7A2BFA76ED395 FOREIGN KEY (user_id) REFERENCES user (id)
         SQL);
         $this->addSql(<<<'SQL'
+            ALTER TABLE cal_dav_auth ADD CONSTRAINT FK_14B16BA5A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)
+        SQL);
+        $this->addSql(<<<'SQL'
             ALTER TABLE event ADD CONSTRAINT FK_3BAE0AA7401B253C FOREIGN KEY (event_type_id) REFERENCES event_type (id)
+        SQL);
+        $this->addSql(<<<'SQL'
+            ALTER TABLE event ADD CONSTRAINT FK_3BAE0AA7839D6BD9 FOREIGN KEY (cal_dav_auth_id) REFERENCES cal_dav_auth (id)
         SQL);
         $this->addSql(<<<'SQL'
             ALTER TABLE event_type ADD CONSTRAINT FK_93151B821FB8D185 FOREIGN KEY (host_id) REFERENCES user (id)
@@ -59,7 +68,13 @@ final class Version20250512133248 extends AbstractMigration
             ALTER TABLE availability DROP FOREIGN KEY FK_3FB7A2BFA76ED395
         SQL);
         $this->addSql(<<<'SQL'
+            ALTER TABLE cal_dav_auth DROP FOREIGN KEY FK_14B16BA5A76ED395
+        SQL);
+        $this->addSql(<<<'SQL'
             ALTER TABLE event DROP FOREIGN KEY FK_3BAE0AA7401B253C
+        SQL);
+        $this->addSql(<<<'SQL'
+            ALTER TABLE event DROP FOREIGN KEY FK_3BAE0AA7839D6BD9
         SQL);
         $this->addSql(<<<'SQL'
             ALTER TABLE event_type DROP FOREIGN KEY FK_93151B821FB8D185
@@ -69,6 +84,9 @@ final class Version20250512133248 extends AbstractMigration
         SQL);
         $this->addSql(<<<'SQL'
             DROP TABLE availability
+        SQL);
+        $this->addSql(<<<'SQL'
+            DROP TABLE cal_dav_auth
         SQL);
         $this->addSql(<<<'SQL'
             DROP TABLE event

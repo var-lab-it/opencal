@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<multistatus xmlns="DAV:" xmlns:C="urn:ietf:params:xml:ns:caldav">
+    <response>
+        <href>/dev/example/meeting-002%40examplecorp.com.ics</href>
+        <propstat>
+            <prop>
+                <getetag>"6538ffeb07351b205c91c3be8a298925c192be5711353397fd6215f6796266d6"</getetag>
+                <C:calendar-data>BEGIN:VCALENDAR
+                    VERSION:2.0
+                    PRODID:-//Radicale//NONSGML Version 3.5.2//EN
+                    BEGIN:VEVENT
+                    UID:meeting-002@examplecorp.com
+                    DTSTART:20250516T104500Z
+                    DTEND:20250516T111500Z
+                    ATTENDEE;CN=Julia Becker;PARTSTAT=ACCEPTED:mailto:julia.becker@examplecorp.
+                    com
+                    DTSTAMP:20250516T103000Z
+                    ORGANIZER;CN=Alex Braun:mailto:alex.braun@examplecorp.com
+                    SUMMARY:1:1 with Alex Braun
+                    END:VEVENT
+                    END:VCALENDAR
+                </C:calendar-data>
+            </prop>
+            <status>HTTP/1.1 200 OK</status>
+        </propstat>
+    </response>
+    <response>
+        <href>/dev/example/meeting-003%40examplecorp.com.ics</href>
+        <propstat>
+            <prop>
+                <getetag>"847c72eae8af7d0bcc0ec244c800bffbc7eadb423707765caf63fe00580c88ed"</getetag>
+                <C:calendar-data>BEGIN:VCALENDAR
+                    VERSION:2.0
+                    PRODID:-//Radicale//NONSGML Version 3.5.2//EN
+                    BEGIN:VEVENT
+                    UID:meeting-003@examplecorp.com
+                    DTSTART:20250517T093000Z
+                    DTEND:20250517T100000Z
+                    ATTENDEE;CN=David Schmitt;PARTSTAT=ACCEPTED:mailto:david.schmitt@examplecor
+                    p.com
+                    DTSTAMP:20250517T091500Z
+                    ORGANIZER;CN=Sophia Winkler:mailto:sophia.winkler@examplecorp.com
+                    SUMMARY:1:1 with Sophia Winkler
+                    END:VEVENT
+                    END:VCALENDAR
+                </C:calendar-data>
+            </prop>
+            <status>HTTP/1.1 200 OK</status>
+        </propstat>
+    </response>
+    <response>
+        <href>/dev/example/meeting-001%40examplecorp.com.ics</href>
+        <propstat>
+            <prop>
+                <getetag>"ca7ed5e2379fa606103a0e1e036b3da3620f3778ca24c85efd7023fbbd8729d9"</getetag>
+                <C:calendar-data>BEGIN:VCALENDAR
+                    VERSION:2.0
+                    PRODID:-//Radicale//NONSGML Version 3.5.2//EN
+                    BEGIN:VEVENT
+                    UID:meeting-001@examplecorp.com
+                    DTSTART:20250516T070000Z
+                    DTEND:20250516T073000Z
+                    ATTENDEE;CN=Thomas Mayer;PARTSTAT=ACCEPTED:mailto:thomas.mayer@examplecorp.
+                    com
+                    DTSTAMP:20250516T064500Z
+                    ORGANIZER;CN=Laura König:mailto:laura.koenig@examplecorp.com
+                    SUMMARY:1:1 with Laura König
+                    END:VEVENT
+                    END:VCALENDAR
+                </C:calendar-data>
+            </prop>
+            <status>HTTP/1.1 200 OK</status>
+        </propstat>
+    </response>
+    <response>
+        <href>/dev/example/meeting-004%40examplecorp.com.ics</href>
+        <propstat>
+            <prop>
+                <getetag>"b6d6ecb61ed6ad1b11879be7a89b7ade3625608cb83d565869ad0808bd9b1253"</getetag>
+                <C:calendar-data>BEGIN:VCALENDAR
+                    VERSION:2.0
+                    PRODID:-//Radicale//NONSGML Version 3.5.2//EN
+                    BEGIN:VEVENT
+                    UID:meeting-004@examplecorp.com
+                    DTSTART:20250518T180000Z
+                    DTEND:20250518T190000Z
+                    ATTENDEE;CN=Isabelle Roth;PARTSTAT=ACCEPTED:mailto:isabelle.roth@examplecor
+                    p.com
+                    DTSTAMP:20250518T173000Z
+                    ORGANIZER;CN=Tobias Richter:mailto:tobias.richter@examplecorp.com
+                    SUMMARY:1:1 with Tobias Richter
+                    END:VEVENT
+                    END:VCALENDAR
+                </C:calendar-data>
+            </prop>
+            <status>HTTP/1.1 200 OK</status>
+        </propstat>
+    </response>
+</multistatus>

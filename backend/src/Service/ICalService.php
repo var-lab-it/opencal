@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Entity\Event;
+use App\Entity\EventType;
 use Eluceo\iCal\Domain\Entity\Attendee;
 use Eluceo\iCal\Domain\Entity\Calendar;
 use Eluceo\iCal\Domain\Entity\Event as iCalEvent;
@@ -14,10 +15,10 @@ use Eluceo\iCal\Domain\ValueObject\Organizer;
 use Eluceo\iCal\Domain\ValueObject\TimeSpan;
 use Eluceo\iCal\Presentation\Factory\CalendarFactory;
 use Safe\DateTimeImmutable;
-use function Safe\tempnam;
+use function Safe\fclose;
 use function Safe\fopen;
 use function Safe\fwrite;
-use function Safe\fclose;
+use function Safe\tempnam;
 
 class ICalService
 {
@@ -27,6 +28,14 @@ class ICalService
 
     public function exportEvent(Event $event): string
     {
+        if (!$event->getEventType() instanceof EventType) {
+            throw new \RuntimeException('Event has no event type');
+        }
+
+        if (null === $event->getParticipantEmail()) {
+            throw new \RuntimeException('Event has no participant email');
+        }
+
         $iCalEvent = new iCalEvent();
         $iCalEvent
             ->setSummary($event->getEventType()->getName())

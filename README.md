@@ -87,6 +87,30 @@ make up
 docker compose exec php_backend bin/console doctrine:migrations:migrate
 ```
 
+### Generate data for Radicale (CalDAV)
+
+To generate some test data for CalDAV (Radicale service in docker-compose.yml), there is a script do so:
+
+What it does
+- Creates 4 events/day (09:00, 11:00, 14:00, 16:00 UTC)
+- For 30 days starting today
+- Saves each event as an individual .ics file (e.g. `meeting-001@examplecorp.com.ics`)
+- Output directory: `dev/caldav/data/collections/collection-root/dev/example`
+
+.Radicale.props in that folder is preserved; all meeting-*.ics files are replaced.
+
+#### Usage:
+
+```bash
+bash generate-ics.sh
+```
+
+or
+
+```bash
+make ics
+```
+
 ### Frontend (Vue.js)
 
 | Action                 | Command                 |

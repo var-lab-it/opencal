@@ -60,3 +60,6 @@ build:
 
 install:
 	make backend.install && make frontend.install
+
+make ics:
+	bash generate-ics.sh

@@ -23,7 +23,7 @@ final class NewBookingMessageHandler
     {
         $event = $this->eventRepository->find($message->getEventId());
 
-        if (!$event instanceof Event) {
+        if (!$event instanceof Event || null !== $event->getSyncHash()) {
             return;
         }
 
