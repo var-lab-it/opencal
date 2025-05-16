@@ -1,0 +1,159 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Login.vue > renders correctly and displays all necessary elements 1`] = `
+{
+  "baseElement": <body>
+    
+  
+
+
+    <div>
+      <div
+        class="login-form"
+        data-v-47199182=""
+      >
+        <h2
+          data-v-47199182=""
+        >
+          Login
+        </h2>
+        <form
+          data-v-47199182=""
+        >
+          <div
+            class="form-group mb-3"
+            data-v-47199182=""
+          >
+            <label
+              data-v-47199182=""
+              for="email"
+            >
+              Email:
+            </label>
+            <input
+              class="form-control"
+              data-testid="email-input"
+              data-v-47199182=""
+              id="email"
+              required=""
+              type="email"
+            />
+          </div>
+          <div
+            class="form-group mb-3"
+            data-v-47199182=""
+          >
+            <label
+              data-v-47199182=""
+              for="password"
+            >
+              Password:
+            </label>
+            <input
+              class="form-control"
+              data-testid="password-input"
+              data-v-47199182=""
+              id="password"
+              required=""
+              type="password"
+            />
+          </div>
+          <div
+            class="d-grid"
+            data-v-47199182=""
+          >
+            <button
+              class="btn btn-primary"
+              data-testid="login-btn"
+              data-v-47199182=""
+              type="submit"
+            >
+               Login 
+            </button>
+          </div>
+        </form>
+        <!--v-if-->
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="login-form"
+      data-v-47199182=""
+    >
+      <h2
+        data-v-47199182=""
+      >
+        Login
+      </h2>
+      <form
+        data-v-47199182=""
+      >
+        <div
+          class="form-group mb-3"
+          data-v-47199182=""
+        >
+          <label
+            data-v-47199182=""
+            for="email"
+          >
+            Email:
+          </label>
+          <input
+            class="form-control"
+            data-testid="email-input"
+            data-v-47199182=""
+            id="email"
+            required=""
+            type="email"
+          />
+        </div>
+        <div
+          class="form-group mb-3"
+          data-v-47199182=""
+        >
+          <label
+            data-v-47199182=""
+            for="password"
+          >
+            Password:
+          </label>
+          <input
+            class="form-control"
+            data-testid="password-input"
+            data-v-47199182=""
+            id="password"
+            required=""
+            type="password"
+          />
+        </div>
+        <div
+          class="d-grid"
+          data-v-47199182=""
+        >
+          <button
+            class="btn btn-primary"
+            data-testid="login-btn"
+            data-v-47199182=""
+            type="submit"
+          >
+             Login 
+          </button>
+        </div>
+      </form>
+      <!--v-if-->
+    </div>
+  </div>,
+  "debug": [Function],
+  "emitted": [Function],
+  "getByAltText": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholder": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

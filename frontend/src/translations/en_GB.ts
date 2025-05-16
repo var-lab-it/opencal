@@ -66,7 +66,13 @@ export default {
         "cancel": {
             "headline": "Cancel Appointment",
             "confirm_message": "Are you sure you want to cancel the appointment?",
-            "success_message": "Appointment successfully canceled."
+            "success_message": "Appointment successfully canceled.",
+            "appointment": "Appointment",
+            "day": "Day",
+            "time": "Time",
+            "buttons": {
+                "cancel_appointment": "Cancel Appointment"
+            }
         }
     },
 }

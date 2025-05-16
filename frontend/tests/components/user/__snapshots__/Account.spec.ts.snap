@@ -1,0 +1,451 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`account > renders the account 1`] = `
+{
+  "baseElement": <body>
+    
+  
+
+
+    <div>
+      
+      <h2
+        class="mb-3"
+      >
+        account.headline
+      </h2>
+      <div
+        class="spinner-border text-dark"
+        role="status"
+      />
+      <div
+        aria-hidden="true"
+        aria-labelledby="editModalLabel"
+        class="modal fade"
+        id="editModal"
+        tabindex="-1"
+      >
+        <div
+          class="modal-dialog"
+        >
+          <div
+            class="modal-content"
+          >
+            <div
+              class="modal-header"
+            >
+              <h5
+                class="modal-title"
+                id="editModalLabel"
+              >
+                account.form.title
+              </h5>
+              <button
+                class="btn-close"
+                type="button"
+              />
+            </div>
+            <div
+              class="modal-body"
+            >
+              <form>
+                <div
+                  class="mb-3"
+                >
+                  <label
+                    class="form-label"
+                  >
+                    account.form.given_name
+                  </label>
+                  <input
+                    class="form-control given-name"
+                    type="text"
+                  />
+                </div>
+                <div
+                  class="mb-3"
+                >
+                  <label
+                    class="form-label"
+                  >
+                    account.form.family_name
+                  </label>
+                  <input
+                    class="form-control family-name"
+                    type="text"
+                  />
+                </div>
+                <div
+                  class="mb-3 border-bottom pb-3"
+                >
+                  <label
+                    class="form-label"
+                  >
+                    account.form.email
+                  </label>
+                  <input
+                    class="form-control email"
+                    type="email"
+                  />
+                </div>
+                <button
+                  class="btn btn-primary"
+                  id="submit-btn"
+                  type="submit"
+                >
+                  account.form.buttons.save
+                </button>
+                <button
+                  class="btn btn-outline-danger float-end"
+                  type="button"
+                >
+                  account.form.buttons.cancel
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </body>,
+  "container": <div>
+    
+    <h2
+      class="mb-3"
+    >
+      account.headline
+    </h2>
+    <div
+      class="spinner-border text-dark"
+      role="status"
+    />
+    <div
+      aria-hidden="true"
+      aria-labelledby="editModalLabel"
+      class="modal fade"
+      id="editModal"
+      tabindex="-1"
+    >
+      <div
+        class="modal-dialog"
+      >
+        <div
+          class="modal-content"
+        >
+          <div
+            class="modal-header"
+          >
+            <h5
+              class="modal-title"
+              id="editModalLabel"
+            >
+              account.form.title
+            </h5>
+            <button
+              class="btn-close"
+              type="button"
+            />
+          </div>
+          <div
+            class="modal-body"
+          >
+            <form>
+              <div
+                class="mb-3"
+              >
+                <label
+                  class="form-label"
+                >
+                  account.form.given_name
+                </label>
+                <input
+                  class="form-control given-name"
+                  type="text"
+                />
+              </div>
+              <div
+                class="mb-3"
+              >
+                <label
+                  class="form-label"
+                >
+                  account.form.family_name
+                </label>
+                <input
+                  class="form-control family-name"
+                  type="text"
+                />
+              </div>
+              <div
+                class="mb-3 border-bottom pb-3"
+              >
+                <label
+                  class="form-label"
+                >
+                  account.form.email
+                </label>
+                <input
+                  class="form-control email"
+                  type="email"
+                />
+              </div>
+              <button
+                class="btn btn-primary"
+                id="submit-btn"
+                type="submit"
+              >
+                account.form.buttons.save
+              </button>
+              <button
+                class="btn btn-outline-danger float-end"
+                type="button"
+              >
+                account.form.buttons.cancel
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>,
+  "debug": [Function],
+  "emitted": [Function],
+  "getByAltText": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholder": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`header > renders the header 1`] = `
+{
+  "baseElement": <body>
+    
+  
+
+
+    <div>
+      <nav
+        class="navbar navbar-expand-lg bg-light sticky-top shadow-sm border-bottom"
+      >
+        <div
+          class="container-fluid"
+        >
+          <router-link
+            class="navbar-brand"
+            to="/"
+          >
+            <!---->
+             OpenCal 
+          </router-link>
+          <button
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+            class="navbar-toggler"
+            data-bs-target="#navbarSupportedContent"
+            data-bs-toggle="collapse"
+            type="button"
+          >
+            <span
+              class="navbar-toggler-icon"
+            />
+          </button>
+          <div
+            class="collapse navbar-collapse"
+            id="navbarSupportedContent"
+          >
+            <ul
+              class="navbar-nav ms-auto mb-2 mb-lg-0"
+            >
+              <li
+                class="nav-item"
+              >
+                <router-link
+                  active-class="active"
+                  class="nav-link"
+                  to="/"
+                >
+                  header.nav.dashboard
+                </router-link>
+              </li>
+              <li
+                class="nav-item"
+              >
+                <router-link
+                  active-class="active"
+                  class="nav-link"
+                  to="/appointments"
+                >
+                  header.nav.appointments
+                </router-link>
+              </li>
+              <li
+                class="nav-item dropdown"
+              >
+                <a
+                  aria-expanded="false"
+                  class="nav-link dropdown-toggle"
+                  data-bs-toggle="dropdown"
+                  href="#"
+                  role="button"
+                >
+                  <!---->
+                   test@test.tld
+                </a>
+                <ul
+                  class="dropdown-menu dropdown-menu-lg-end"
+                >
+                  <li>
+                    <router-link
+                      class="nav-link"
+                      id="my-account-link"
+                      to="/account"
+                    >
+                      <!---->
+                       header.nav.account
+                    </router-link>
+                  </li>
+                  <li
+                    class="dropdown-divider"
+                  />
+                  <li>
+                    <a
+                      class="nav-link"
+                      href="#"
+                      id="logout-link"
+                    >
+                      <!---->
+                       header.nav.logout
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </body>,
+  "container": <div>
+    <nav
+      class="navbar navbar-expand-lg bg-light sticky-top shadow-sm border-bottom"
+    >
+      <div
+        class="container-fluid"
+      >
+        <router-link
+          class="navbar-brand"
+          to="/"
+        >
+          <!---->
+           OpenCal 
+        </router-link>
+        <button
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+          class="navbar-toggler"
+          data-bs-target="#navbarSupportedContent"
+          data-bs-toggle="collapse"
+          type="button"
+        >
+          <span
+            class="navbar-toggler-icon"
+          />
+        </button>
+        <div
+          class="collapse navbar-collapse"
+          id="navbarSupportedContent"
+        >
+          <ul
+            class="navbar-nav ms-auto mb-2 mb-lg-0"
+          >
+            <li
+              class="nav-item"
+            >
+              <router-link
+                active-class="active"
+                class="nav-link"
+                to="/"
+              >
+                header.nav.dashboard
+              </router-link>
+            </li>
+            <li
+              class="nav-item"
+            >
+              <router-link
+                active-class="active"
+                class="nav-link"
+                to="/appointments"
+              >
+                header.nav.appointments
+              </router-link>
+            </li>
+            <li
+              class="nav-item dropdown"
+            >
+              <a
+                aria-expanded="false"
+                class="nav-link dropdown-toggle"
+                data-bs-toggle="dropdown"
+                href="#"
+                role="button"
+              >
+                <!---->
+                 test@test.tld
+              </a>
+              <ul
+                class="dropdown-menu dropdown-menu-lg-end"
+              >
+                <li>
+                  <router-link
+                    class="nav-link"
+                    id="my-account-link"
+                    to="/account"
+                  >
+                    <!---->
+                     header.nav.account
+                  </router-link>
+                </li>
+                <li
+                  class="dropdown-divider"
+                />
+                <li>
+                  <a
+                    class="nav-link"
+                    href="#"
+                    id="logout-link"
+                  >
+                    <!---->
+                     header.nav.logout
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>,
+  "debug": [Function],
+  "emitted": [Function],
+  "getByAltText": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholder": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

@@ -3,7 +3,10 @@
     <div class="w-50">
       <div class="card shadow">
         <div class="card-body">
-          <div v-if="loading">
+          <div
+            v-if="loading"
+            data-testid="loading-spinner"
+          >
             <div class="text-center p-5 m-5">
               <div class="spinner-border text-dark"></div>
             </div>
@@ -17,10 +20,13 @@
               {{ $t('booking.cancel.confirm_message') }}
             </p>
 
-            <div class="mb-3">
-              <strong>Ereignis: </strong> {{ eventData?.eventType.name }} <br />
-              <strong>Datum:</strong> {{ formatDateStringToDay(eventData?.day) }}<br />
-              <strong>Uhrzeit:</strong> {{ formatDateStringToTime(eventData?.startTime) }} -
+            <div
+              class="mb-3"
+              data-testid="appointment-details"
+            >
+              <strong>{{ $t('booking.cancel.appointment') }}: </strong> {{ eventData?.eventType.name }} <br />
+              <strong>{{ $t('booking.cancel.day') }}:</strong> {{ formatDateStringToDay(eventData?.day) }}<br />
+              <strong>{{ $t('booking.cancel.time') }}:</strong> {{ formatDateStringToTime(eventData?.startTime) }} -
               {{ formatDateStringToTime(eventData?.endTime) }}<br />
             </div>
 
@@ -29,6 +35,7 @@
                 v-if="isCancelled === false"
                 type="button"
                 class="btn btn-danger"
+                data-testid="cancel-button"
                 @click="doCancellation"
               >
                 <span
@@ -36,7 +43,7 @@
                   class="spinner-grow text-light spinner-grow-sm"
                   role="status"
                 ></span>
-                Termin absagen
+                {{ $t('booking.cancel.buttons.cancel_appointment') }}
               </button>
               <div
                 v-else
@@ -97,6 +104,7 @@ function doCancellation() {
     }
   } catch (error) {
     console.error("Error", error);
+    loading.value = false;
   }
 }
 </script>

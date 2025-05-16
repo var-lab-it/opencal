@@ -15,15 +15,9 @@ vi.mock("../../src/services/auth", () => ({
 
 describe("Login.vue", () => {
     it("renders correctly and displays all necessary elements", () => {
-        const {getByTestId} = render(Login);
+        const result = render(Login);
 
-        const emailInput = getByTestId('email-input');
-        const passwordInput = getByTestId('password-input');
-        const loginBtn = getByTestId('login-btn');
-
-        expect(emailInput).toBeTruthy();
-        expect(passwordInput).toBeTruthy();
-        expect(loginBtn).toBeTruthy();
+        expect(result).toMatchSnapshot();
     });
 
     it("displays an error message when login fails", async () => {
@@ -63,24 +57,21 @@ describe("Login.vue", () => {
         await loginBtn.click();
     });
 
-    // it("displays an error message when the token is missing in the response", async () => {
-    //     const { getByText, getByLabelText } = render(Login);
-    //
-    //     // Mock for a login response missing the token
-    //     (apiClient.post as vi.Mock).mockResolvedValueOnce({
-    //         data: {},
-    //     });
-    //
-    //     // Simulate user interaction: entering email, password, and submitting form
-    //     const emailInput = getByLabelText("Email:");
-    //     const passwordInput = getByLabelText("Password:");
-    //     const submitButton = getByText("Login");
-    //
-    //     await fireEvent.update(emailInput, "test@example.com");
-    //     await fireEvent.update(passwordInput, "12345678");
-    //     await fireEvent.click(submitButton);
-    //
-    //     // Verify error message rendering for missing token
-    //     expect(getByText("No valid token.")).toBeTruthy();
-    // });
+    it("displays an error message when the token is missing in the response", async () => {
+        const { getByText, getByTestId } = render(Login);
+
+        (apiClient.post as vi.Mock).mockResolvedValueOnce({
+            data: {},
+        });
+
+        const emailInput = getByTestId('email-input');
+        const passwordInput = getByTestId('password-input');
+        const loginBtn = getByTestId('login-btn');
+
+        await emailInput.fill("test@example.com");
+        await passwordInput.fill("12345678");
+        await loginBtn.click();
+
+        expect(getByText("No valid token.")).toBeTruthy();
+    });
 });
