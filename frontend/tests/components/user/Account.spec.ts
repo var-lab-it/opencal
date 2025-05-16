@@ -35,9 +35,8 @@ describe('account', () => {
                 mocks: {
                     $t: (msg: string) => msg,
                     useI18n: () => ({
-                        t: (key: string) => key, // gibt Schlüssel zurück
+                        t: (key: string) => key,
                     }),
-
                 }
             }
         });

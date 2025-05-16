@@ -66,7 +66,13 @@ export default {
         "cancel": {
             "headline": "Termin absagen",
             "confirm_message": "Möchten Sie den Termin wirklich absagen?",
-            "success_message": "Termin erfolgreich abgesagt."
+            "success_message": "Termin erfolgreich abgesagt.",
+            "appointment": "Ereignis",
+            "day": "Tag",
+            "time": "Uhrzeit",
+            "buttons": {
+                "cancel_appointment": "Termin absagen"
+            }
         }
     },
 }

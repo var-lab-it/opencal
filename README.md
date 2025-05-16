@@ -1,7 +1,16 @@
-# OpenCal – Open Source Appointment Scheduling Platform
+# OpenCal - Open Source Appointment Scheduling Platform
 
-OpenCal is a modern, open-source web application designed for effortless appointment scheduling. Inspired by platforms
-like Calendly and cal.com, it empowers individuals, small businesses, and teams to manage bookings efficiently.
+**OpenCal** is a modern, open-source web application that simplifies and streamlines the process of scheduling
+appointments.
+It’s ideal for anyone who organizes meetings and wants to save time, whether they are self-employed, part of a
+team or employed by a company.
+Due to its open license, OpenCal can be used, customized, and self-hosted free of charge. It is also suitable for
+professional and commercial use in businesses.
+
+The backend is written in Symfony and the API Platform, and it provides a RESTful API that the Vue front end uses. The
+API can also be integrated into other software applications.
+
+![screenshot-opencal.png](screenshot-opencal.png)
 
 ## Configuration
 
