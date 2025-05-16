@@ -86,8 +86,8 @@
 
 <script setup lang="ts">
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-import {User} from "../types/User";
-import {logout as doLogout} from "../services/auth";
+import {User} from "../../types/User";
+import {logout as doLogout} from "../../services/auth";
 
 defineProps<{ user: User }>()
 

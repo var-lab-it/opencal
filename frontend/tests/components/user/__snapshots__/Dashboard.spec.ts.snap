@@ -1,0 +1,73 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`dashboard > renders the dashboard component 1`] = `
+{
+  "baseElement": <body>
+    
+  
+
+
+    <div>
+       User Dashboard 
+    </div>
+  </body>,
+  "container": <div>
+     User Dashboard 
+  </div>,
+  "debug": [Function],
+  "emitted": [Function],
+  "getByAltText": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholder": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`logo > renders the logo with url 1`] = `
+{
+  "baseElement": <body>
+    
+  
+
+
+    <div>
+      <div
+        class="text-center pt-4 pb-5"
+      >
+        <img
+          alt="Logo"
+          src="https://example.com/logo.png"
+          width="200px"
+        />
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="text-center pt-4 pb-5"
+    >
+      <img
+        alt="Logo"
+        src="https://example.com/logo.png"
+        width="200px"
+      />
+    </div>
+  </div>,
+  "debug": [Function],
+  "emitted": [Function],
+  "getByAltText": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholder": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

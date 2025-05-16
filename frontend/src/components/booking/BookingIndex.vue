@@ -1,7 +1,7 @@
 <template>
   <div class="row mt-xl-5 mt-0">
     <div class="offset-xl-4 col-xl-4 offset-lg-3 col-lg-6 col-md-12">
-      <Logo />
+      <Logo :logo-url="logoUrl" />
 
       <div class="card shadow-sm mb-3">
         <div class="card-body">
@@ -99,6 +99,8 @@ const userEmail = String($route.params.email)
 const loading = ref(true)
 const eventTypes = ref<EventTypes>([]);
 const selectedEventType = ref<EventType | null>(null);
+
+const logoUrl = ref(import.meta.env.VITE_LOGO_URL || null);
 
 onMounted(async () => {
   try {
