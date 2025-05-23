@@ -3,7 +3,7 @@ ARG NGINX_VERSION=1.24
 # -------------
 # generic php base image
 # -------------
-FROM php:8.3-fpm-alpine AS generic
+FROM php:8.4-fpm-alpine AS generic
 
 RUN apk update && \
   apk add --no-cache \

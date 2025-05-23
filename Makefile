@@ -21,7 +21,7 @@ backend.migrate:
 	docker compose exec php_backend bin/console doctrine:migrations:migrate -n
 
 backend.install:
-	docker compose run --rm php_backend composer install
+	docker compose run --entrypoint="composer" php_backend install
 
 # ---------------------------
 # Frontend targets (Vue.js)

@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e
 
+sleep 5s
+
 if grep -q DATABASE_URL= .env; then
   echo "Waiting for dev/prod database to be ready..."
   ATTEMPTS_LEFT_TO_REACH_DATABASE=60
