@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Entity\Event;
+use App\Entity\EventType;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
@@ -29,6 +30,14 @@ class EmailNotificationService
 
     public function sendNewBookingNotificationToHost(Event $event): void
     {
+        if (!$event->getEventType() instanceof EventType) {
+            throw new \RuntimeException('Event has no event type');
+        }
+
+        if (null === $event->getParticipantEmail()) {
+            throw new \RuntimeException('Event has no participant email');
+        }
+
         $params = $this->getParams($event);
 
         $iCalTmpFilePath = $this->iCalService->exportEvent($event);
@@ -52,6 +61,14 @@ class EmailNotificationService
 
     public function sendBookingConfirmationToAttendee(Event $event): void
     {
+        if (!$event->getEventType() instanceof EventType) {
+            throw new \RuntimeException('Event has no event type');
+        }
+
+        if (null === $event->getParticipantEmail()) {
+            throw new \RuntimeException('Event has no participant email');
+        }
+
         $params = $this->getParams($event);
 
         $iCalTmpFilePath = $this->iCalService->exportEvent($event);
@@ -60,7 +77,7 @@ class EmailNotificationService
             $this->translator->trans('mails.booking.new.to_attendee.subject', $params, 'messages', $this->locale),
             $this->translator->trans('mails.booking.new.to_attendee.message', $params, 'messages', $this->locale),
             $event->getParticipantEmail(),
-            $event->getParticipantName(),
+            $event->getParticipantName() ?? 'unknown',
             [
                 $iCalTmpFilePath => 'invite.ics',
             ],
@@ -71,13 +88,17 @@ class EmailNotificationService
 
     public function sendBookingCanceledNotificationToAHost(Event $event): void
     {
+        if (null === $event->getParticipantEmail()) {
+            throw new \RuntimeException('Event has no participant email');
+        }
+
         $params = $this->getParams($event);
 
         $this->sendNotification(
             $this->translator->trans('mails.booking.cancellation.to_host.subject', $params, 'messages', $this->locale),
             $this->translator->trans('mails.booking.cancellation.to_host.message', $params, 'messages', $this->locale),
             $event->getParticipantEmail(),
-            $event->getParticipantName(),
+            $event->getParticipantName() ?? 'unknown',
         );
     }
 
@@ -95,8 +116,16 @@ class EmailNotificationService
     /** @return array<string, string|int> */
     private function getParams(Event $event): array
     {
+        if (!$event->getEventType() instanceof EventType) {
+            throw new \RuntimeException('Event has no event type');
+        }
+
+        if (null === $event->getParticipantEmail()) {
+            throw new \RuntimeException('Event has no participant email');
+        }
+
         return [
-            '{attendee_name}'    => $event->getParticipantName(),
+            '{attendee_name}'    => $event->getParticipantName() ?? 'unknown',
             '{time_from}'        => $event->getStartTime()->format('H:i'),
             '{booking_date}'     => $event->getDay()->format('d.m.Y'),
             '{event_type_name}'  => $event->getEventType()->getName(),

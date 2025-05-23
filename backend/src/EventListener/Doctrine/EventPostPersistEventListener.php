@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\EventListener\Doctrine;
 
+use App\Entity\CalDavAuth;
 use App\Entity\Event;
 use App\Message\NewBookingMessage;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
@@ -20,6 +21,10 @@ class EventPostPersistEventListener
 
     public function postPersist(Event $event): void
     {
+        if ($event->getCalDavAuth() instanceof CalDavAuth) {
+            return;
+        }
+
         $this->messageBus->dispatch(
             new NewBookingMessage($event->getId()),
         );

@@ -8,10 +8,10 @@ use App\Entity\Event;
 use App\Message\EventCanceledMessage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\AsController;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Messenger\MessageBusInterface;
 use function Safe\json_decode;
 
@@ -32,8 +32,12 @@ class CancelEventController extends AbstractController
         $json = json_decode($requestContent, true);
         $hash = $json['cancellationHash'];
 
-        if ($hash !== $event->getCancellationHash() || true === $event->isCancelledByAttendee()) {
-            throw new BadRequestException('Invalid cancellation hash');
+        if ($hash !== $event->getCancellationHash()) {
+            throw new BadRequestHttpException('Invalid cancellation hash');
+        }
+
+        if (true === $event->isCancelledByAttendee()) {
+            throw new BadRequestHttpException('Event already canceled by attendee');
         }
 
         $event

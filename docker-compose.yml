@@ -37,6 +37,7 @@ services:
       PS1: '[opencal-backend]::$$(pwd) # '
       FRONTEND_HOST: 'localhost'
       USE_SSL: false
+      APP_ENV: dev
     volumes:
       - php_socket:/var/run/php
       - ./backend:/srv/app
@@ -78,6 +79,17 @@ services:
     environment:
       MP_SMTP_AUTH_ACCEPT_ANY: 1
       MP_SMTP_AUTH_ALLOW_INSECURE: 1
+
+  radicale:
+    image: tomsquest/docker-radicale:latest
+    container_name: radicale
+    ports:
+      - "5232:5232"
+    volumes:
+      - ./dev/caldav/data:/data
+    environment:
+      - RADICALE_CONFIG=/data/config
+    restart: unless-stopped
 
 volumes:
   php_socket:

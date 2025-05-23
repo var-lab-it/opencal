@@ -1,0 +1,2 @@
+*/15 * * * * php /srv/app/bin/console sync:caldav -v --env=$APP_ENV >> /dev/stdout 2>&1
+# crontab requires empty line at end of file

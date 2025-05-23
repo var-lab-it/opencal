@@ -30,8 +30,15 @@ RUN chmod +x /usr/local/bin/docker-healthcheck
 
 HEALTHCHECK --interval=10s --timeout=3s --retries=3 CMD ["docker-healthcheck"]
 
+RUN apk --update add supervisor
+
+COPY docker/supervisord.conf /etc/supervisor/supervisord.conf
+
+COPY docker/crontab /etc/cron/crontab
+RUN crontab /etc/cron/crontab
+
 ENTRYPOINT ["docker-entrypoint"]
-CMD ["php-fpm"]
+CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
 
 FROM generic AS base
 

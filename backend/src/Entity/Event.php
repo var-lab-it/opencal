@@ -53,9 +53,9 @@ class Event
         type: 'App\Entity\EventType',
     )]
     #[Groups(['event:read', 'event:write'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     #[ORM\ManyToOne(targetEntity: EventType::class, cascade: ['persist'], inversedBy: 'events')]
-    private EventType $eventType;
+    private ?EventType $eventType = null;
 
     #[Assert\NotBlank]
     #[Groups(['event:read', 'event:write'])]
@@ -73,41 +73,45 @@ class Event
 
     #[Assert\NotBlank]
     #[Groups(['event:read', 'event:write'])]
-    #[ORM\Column(length: 255)]
-    private string $participantName;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $participantName;
 
     #[Assert\Email]
     #[Assert\NotBlank]
     #[Groups(['event:read', 'event:write'])]
-    #[ORM\Column(length: 255)]
-    private string $participantEmail;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $participantEmail;
 
     #[Groups(['event:read', 'event:write'])]
     #[ORM\Column(type: 'text', length: 255, nullable: true)]
     private ?string $participantMessage = null;
 
     #[Groups(['event:read'])]
-    #[ORM\Column(type: TYPES::STRING, length: 32)]
-    private string $cancellationHash;
+    #[ORM\Column(type: TYPES::STRING, length: 32, nullable: true)]
+    private ?string $cancellationHash;
 
     #[ORM\Column(type: Types::BOOLEAN, nullable: true)]
     private ?bool $canceledByAttendee = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $syncHash = null;
+
+    #[ORM\ManyToOne(inversedBy: 'events')]
+    private ?CalDavAuth $calDavAuth = null;
 
     public function getId(): int
     {
         return $this->id;
     }
 
-    public function getEventType(): EventType
+    public function getEventType(): ?EventType
     {
         return $this->eventType;
     }
 
     public function setEventType(?EventType $eventType): static
     {
-        if ($eventType instanceof EventType) {
-            $this->eventType = $eventType;
-        }
+        $this->eventType = $eventType;
 
         return $this;
     }
@@ -136,24 +140,24 @@ class Event
         return $this;
     }
 
-    public function getParticipantName(): string
+    public function getParticipantName(): ?string
     {
         return $this->participantName;
     }
 
-    public function setParticipantName(string $participantName): static
+    public function setParticipantName(?string $participantName): static
     {
         $this->participantName = $participantName;
 
         return $this;
     }
 
-    public function getParticipantEmail(): string
+    public function getParticipantEmail(): ?string
     {
         return $this->participantEmail;
     }
 
-    public function setParticipantEmail(string $participantEmail): static
+    public function setParticipantEmail(?string $participantEmail): static
     {
         $this->participantEmail = $participantEmail;
 
@@ -184,12 +188,12 @@ class Event
         return $this;
     }
 
-    public function getCancellationHash(): string
+    public function getCancellationHash(): ?string
     {
         return $this->cancellationHash;
     }
 
-    public function setCancellationHash(string $cancellationHash): static
+    public function setCancellationHash(?string $cancellationHash): static
     {
         $this->cancellationHash = $cancellationHash;
 
@@ -205,6 +209,30 @@ class Event
     public function setCanceledByAttendee(?bool $canceledByAttendee): static
     {
         $this->canceledByAttendee = $canceledByAttendee;
+
+        return $this;
+    }
+
+    public function getSyncHash(): ?string
+    {
+        return $this->syncHash;
+    }
+
+    public function setSyncHash(?string $syncHash): static
+    {
+        $this->syncHash = $syncHash;
+
+        return $this;
+    }
+
+    public function getCalDavAuth(): ?CalDavAuth
+    {
+        return $this->calDavAuth;
+    }
+
+    public function setCalDavAuth(?CalDavAuth $calDavAuth): static
+    {
+        $this->calDavAuth = $calDavAuth;
 
         return $this;
     }
