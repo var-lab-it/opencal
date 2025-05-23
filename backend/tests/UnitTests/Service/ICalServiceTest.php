@@ -65,7 +65,7 @@ class ICalServiceTest extends TestCase
             $iCalContent,
         );
         self::assertStringContainsString(
-            'ATTENDEE:mailto:email@someone.tld',
+            'ATTENDEE;CN=Someone:mailto:email@someone.tld',
             $iCalContent,
         );
 

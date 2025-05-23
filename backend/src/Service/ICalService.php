@@ -6,14 +6,7 @@ namespace App\Service;
 
 use App\Entity\Event;
 use App\Entity\EventType;
-use Eluceo\iCal\Domain\Entity\Attendee;
-use Eluceo\iCal\Domain\Entity\Calendar;
-use Eluceo\iCal\Domain\Entity\Event as iCalEvent;
-use Eluceo\iCal\Domain\ValueObject\DateTime;
-use Eluceo\iCal\Domain\ValueObject\EmailAddress;
-use Eluceo\iCal\Domain\ValueObject\Organizer;
-use Eluceo\iCal\Domain\ValueObject\TimeSpan;
-use Eluceo\iCal\Presentation\Factory\CalendarFactory;
+use Sabre\VObject;
 use Safe\DateTimeImmutable;
 use function Safe\fclose;
 use function Safe\fopen;
@@ -36,41 +29,30 @@ class ICalService
             throw new \RuntimeException('Event has no participant email');
         }
 
-        $iCalEvent = new iCalEvent();
-        $iCalEvent
-            ->setSummary($event->getEventType()->getName())
-            ->setDescription($event->getParticipantMessage() ?? '')
-            ->setOrganizer(new Organizer(
-                new EmailAddress($event->getEventType()->getHost()->getEmail()),
-                \sprintf(
-                    '%s %s',
-                    $event->getEventType()->getHost()->getGivenName(),
-                    $event->getEventType()->getHost()->getFamilyName(),
+        $vCalendar = new VObject\Component\VCalendar([
+            'VEVENT' => [
+                'SUMMARY'   => $event->getEventType()->getName(),
+                'DTSTAMP'   => $event->getDay(),
+                'DTSTART'   => new DateTimeImmutable(
+                    $event->getDay()->format('Y-m-d') .
+                    ' ' . $event->getStartTime()->format('H:i:s'),
                 ),
-            ))
-            ->addAttendee(new Attendee(
-                new EmailAddress($event->getParticipantEmail()),
-            ))
-            ->setOccurrence(
-                new TimeSpan(
-                    new DateTime(new DateTimeImmutable(\sprintf(
-                        '%s %s',
-                        $event->getDay()->format('Y-m-d'),
-                        $event->getStartTime()->format('H:i:s'),
-                    )), true),
-                    new DateTime(new DateTimeImmutable(\sprintf(
-                        '%s %s',
-                        $event->getDay()->format('Y-m-d'),
-                        $event->getEndTime()->format('H:i:s'),
-                    )), true),
+                'DTEND'     => new DateTimeImmutable(
+                    $event->getDay()->format('Y-m-d') .
+                    ' ' . $event->getEndTime()->format('H:i:s'),
                 ),
-            );
+                'ATTENDEE'  => 'mailto:' . $event->getParticipantEmail(),
+                'ORGANIZER' => 'mailto:' . $event->getEventType()->getHost()->getEmail(),
+            ],
+        ]);
 
-        $calendar = new Calendar([$iCalEvent]);
+        /** @phpstan-ignore-next-line */
+        $vCalendar->VEVENT->ATTENDEE['CN'] = $event->getParticipantName();
+        /** @phpstan-ignore-next-line */
+        $vCalendar->VEVENT->ORGANIZER['CN'] = $event->getEventType()->getHost()->getGivenName() . ' '
+            . $event->getEventType()->getHost()->getFamilyName();
 
-        $componentFactory = new CalendarFactory();
-
-        $iCalContent = $componentFactory->createCalendar($calendar)->__toString();
+        $iCalContent = $vCalendar->serialize();
 
         $tmpFilePath = tempnam(\sys_get_temp_dir(), 'opencal_');
         $fHandle     = fopen($tmpFilePath, 'w');
