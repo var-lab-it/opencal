@@ -7,14 +7,14 @@ namespace App\Tests\UnitTests\Service;
 use App\Entity\Event;
 use App\Entity\EventType;
 use App\Entity\User;
-use App\Service\ICalService;
+use App\Service\ICalExportService;
 use PHPUnit\Framework\TestCase;
 use Safe\DateTime;
 use Spatie\Snapshots\MatchesSnapshots;
 use function Safe\file_get_contents;
 use function Safe\unlink;
 
-class ICalServiceTest extends TestCase
+class ICalExportServiceTest extends TestCase
 {
     use MatchesSnapshots;
 
@@ -39,7 +39,7 @@ class ICalServiceTest extends TestCase
                     ),
             );
 
-        $service = new ICalService();
+        $service = new ICalExportService();
         $result  = $service->exportEvent($event);
 
         $iCalContent = file_get_contents($result);

@@ -7,7 +7,7 @@ namespace App\MessageHandler;
 use App\Entity\Event;
 use App\Message\EventCanceledMessage;
 use App\Repository\EventRepository;
-use App\Service\EmailNotificationService;
+use App\Service\Notification\Email\BookingCanceledToHostEmailNotificationService;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
@@ -15,7 +15,7 @@ final class EventCanceledMessageHandler
 {
     public function __construct(
         private readonly EventRepository $eventRepository,
-        private readonly EmailNotificationService $notificationService,
+        private readonly BookingCanceledToHostEmailNotificationService $bookingCanceledToHostEmailNotificationService,
     ) {
     }
 
@@ -27,6 +27,6 @@ final class EventCanceledMessageHandler
             return;
         }
 
-        $this->notificationService->sendBookingCanceledNotificationToAHost($event);
+        $this->bookingCanceledToHostEmailNotificationService->sendNotification($event);
     }
 }

@@ -8,19 +8,26 @@ use App\Entity\Event;
 use App\Message\NewBookingMessage;
 use App\MessageHandler\NewBookingMessageHandler;
 use App\Repository\EventRepository;
-use App\Service\EmailNotificationService;
+use App\Service\Notification\Email\NewBookingToAttendeeEmailNotificationService;
+use App\Service\Notification\Email\NewBookingToHostEmailNotificationService;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class NewBookingMessageHandlerTest extends TestCase
 {
     private EventRepository&MockObject $eventRepository;
-    private EmailNotificationService&MockObject $notificationService;
+    private NewBookingToHostEmailNotificationService&MockObject $newBookingToHostEmailNotificationServiceMock;
+    private NewBookingToAttendeeEmailNotificationService&MockObject $newBookingToAttendeeEmailNotificationServiceMock;
 
     protected function setUp(): void
     {
-        $this->eventRepository     = $this->createMock(EventRepository::class);
-        $this->notificationService = $this->createMock(EmailNotificationService::class);
+        $this->eventRepository                                  = $this->createMock(EventRepository::class);
+        $this->newBookingToHostEmailNotificationServiceMock     = $this->createMock(
+            NewBookingToHostEmailNotificationService::class,
+        );
+        $this->newBookingToAttendeeEmailNotificationServiceMock = $this->createMock(
+            NewBookingToAttendeeEmailNotificationService::class,
+        );
     }
 
     public function testInvokeEventNotFound(): void
@@ -29,16 +36,17 @@ class NewBookingMessageHandlerTest extends TestCase
             ->method('find')
             ->willReturn(null);
 
-        $this->notificationService
+        $this->newBookingToHostEmailNotificationServiceMock
             ->expects($this->never())
-            ->method('sendNewBookingNotificationToHost');
-        $this->notificationService
+            ->method('sendNotification');
+        $this->newBookingToAttendeeEmailNotificationServiceMock
             ->expects($this->never())
-            ->method('sendBookingConfirmationToAttendee');
+            ->method('sendNotification');
 
         $handler = new NewBookingMessageHandler(
             $this->eventRepository,
-            $this->notificationService,
+            $this->newBookingToHostEmailNotificationServiceMock,
+            $this->newBookingToAttendeeEmailNotificationServiceMock,
         );
 
         $handler->__invoke(new NewBookingMessage(1));
@@ -55,16 +63,17 @@ class NewBookingMessageHandlerTest extends TestCase
             ->method('find')
             ->willReturn($eventMock);
 
-        $this->notificationService
+        $this->newBookingToHostEmailNotificationServiceMock
             ->expects($this->never())
-            ->method('sendNewBookingNotificationToHost');
-        $this->notificationService
+            ->method('sendNotification');
+        $this->newBookingToAttendeeEmailNotificationServiceMock
             ->expects($this->never())
-            ->method('sendBookingConfirmationToAttendee');
+            ->method('sendNotification');
 
         $handler = new NewBookingMessageHandler(
             $this->eventRepository,
-            $this->notificationService,
+            $this->newBookingToHostEmailNotificationServiceMock,
+            $this->newBookingToAttendeeEmailNotificationServiceMock,
         );
 
         $handler->__invoke(new NewBookingMessage(1));
@@ -81,16 +90,17 @@ class NewBookingMessageHandlerTest extends TestCase
             ->method('find')
             ->willReturn($eventMock);
 
-        $this->notificationService
+        $this->newBookingToHostEmailNotificationServiceMock
             ->expects($this->once())
-            ->method('sendNewBookingNotificationToHost');
-        $this->notificationService
+            ->method('sendNotification');
+        $this->newBookingToAttendeeEmailNotificationServiceMock
             ->expects($this->once())
-            ->method('sendBookingConfirmationToAttendee');
+            ->method('sendNotification');
 
         $handler = new NewBookingMessageHandler(
             $this->eventRepository,
-            $this->notificationService,
+            $this->newBookingToHostEmailNotificationServiceMock,
+            $this->newBookingToAttendeeEmailNotificationServiceMock,
         );
 
         $handler->__invoke(new NewBookingMessage(1));
