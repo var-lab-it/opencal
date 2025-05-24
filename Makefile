@@ -34,7 +34,7 @@ frontend.bash:
 	docker compose exec -it frontend bash
 
 frontend.install:
-	docker compose run --rm frontend npm install
+	docker compose run --entrypoint="npm" frontend install
 
 frontend.lint:
 	docker compose exec frontend npm run lint
