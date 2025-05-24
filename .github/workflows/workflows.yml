@@ -36,6 +36,18 @@ jobs:
         working-directory: backend
         run: composer run tests:unit:ci
 
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./backend/reports/coverage.xml
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./backend/reports/junit-unittests.xml
+
   lint_docker_compose:
     runs-on: ubuntu-latest
     steps:
