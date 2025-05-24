@@ -140,6 +140,9 @@ class NewBookingToHostEmailNotificationServiceTest extends TestCase
         $eventMock
             ->method('getCancellationHash')
             ->willReturn('2e2af3da3b4d75fce835dad5ea077471');
+        $eventMock
+            ->method('getParticipantName')
+            ->willReturn('The Attendee');
 
         return $eventMock;
     }

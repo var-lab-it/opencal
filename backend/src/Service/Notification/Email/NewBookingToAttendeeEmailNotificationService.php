@@ -67,13 +67,16 @@ class NewBookingToAttendeeEmailNotificationService extends AbstractEmailNotifica
             throw new \RuntimeException('Event has no event type');
         }
 
+        $unknownAttendee = $this->translator->trans('unknown_attendee', [], 'messages', $this->locale);
+        $unknownEmail    = $this->translator->trans('unknown_email', [], 'messages', $this->locale);
+
         return [
-            '{attendee_name}'    => $event->getParticipantName() ?? 'unknown',
+            '{attendee_name}'    => $event->getParticipantName() ?? $unknownAttendee,
             '{time_from}'        => $event->getStartTime()->format('H:i'),
             '{booking_date}'     => $event->getDay()->format('d.m.Y'),
             '{event_type_name}'  => $event->getEventType()->getName(),
             '{duration}'         => $event->getEventType()->getDuration(),
-            '{email_attendee}'   => $event->getParticipantEmail() ?? 'not set', // todo: Should be a translatable string
+            '{email_attendee}'   => $event->getParticipantEmail() ?? $unknownEmail,
             '{given_name}'       => $event->getEventType()->getHost()->getGivenName(),
             '{family_name}'      => $event->getEventType()->getHost()->getFamilyName(),
             '{host_email}'       => $event->getEventType()->getHost()->getEmail(),

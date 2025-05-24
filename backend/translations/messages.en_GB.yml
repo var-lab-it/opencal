@@ -1,3 +1,6 @@
+unknown_attendee: 'Nicht angegeben'
+unknown_email: 'Nicht angegeben'
+
 mails:
   booking:
     new:
