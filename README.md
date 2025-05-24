@@ -1,5 +1,8 @@
 # OpenCal - Open Source Appointment Scheduling Platform
 
+![Checks](https://github.com/var-lab-it/opencal/actions/workflows/workflows.yml/badge.svg)
+[![codecov backend](https://codecov.io/gh/var-lab-it/opencal/graph/badge.svg?token=P6QF1EYWLJ)](https://codecov.io/gh/var-lab-it/opencal)
+
 **OpenCal** is a modern, open-source web application that simplifies and streamlines the process of scheduling
 appointments.
 It’s ideal for anyone who organizes meetings and wants to save time, whether they are self-employed, part of a
