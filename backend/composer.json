@@ -20,6 +20,7 @@
     "doctrine/doctrine-migrations-bundle": "^3.4",
     "doctrine/orm": "^3.3",
     "dragonmantank/cron-expression": "^3.4",
+    "eluceo/ical": "^2.14",
     "lexik/jwt-authentication-bundle": "^3.1",
     "nelmio/cors-bundle": "^2.5",
     "sabre/dav": "^4.7",

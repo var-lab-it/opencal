@@ -8,19 +8,19 @@ use App\Entity\Event;
 use App\Message\EventCanceledMessage;
 use App\MessageHandler\EventCanceledMessageHandler;
 use App\Repository\EventRepository;
-use App\Service\EmailNotificationService;
+use App\Service\Notification\Email\BookingCanceledToHostEmailNotificationService;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class EventCanceledMessageHandlerTest extends TestCase
 {
     private EventRepository&MockObject $eventRepository;
-    private EmailNotificationService&MockObject $notificationService;
+    private BookingCanceledToHostEmailNotificationService&MockObject $notificationService;
 
     protected function setUp(): void
     {
         $this->eventRepository     = $this->createMock(EventRepository::class);
-        $this->notificationService = $this->createMock(EmailNotificationService::class);
+        $this->notificationService = $this->createMock(BookingCanceledToHostEmailNotificationService::class);
     }
 
     public function testInvokeEventFound(): void
@@ -33,7 +33,7 @@ class EventCanceledMessageHandlerTest extends TestCase
 
         $this->notificationService
             ->expects($this->once())
-            ->method('sendBookingCanceledNotificationToAHost');
+            ->method('sendNotification');
 
         $handler = new EventCanceledMessageHandler(
             $this->eventRepository,
@@ -51,7 +51,7 @@ class EventCanceledMessageHandlerTest extends TestCase
 
         $this->notificationService
             ->expects($this->never())
-            ->method('sendBookingCanceledNotificationToAHost');
+            ->method('sendNotification');
 
         $handler = new EventCanceledMessageHandler(
             $this->eventRepository,

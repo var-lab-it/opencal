@@ -31,10 +31,26 @@ mails:
           
           Duration: {duration}min
           
-          Organiser: {given_name} {family_name}
+          Organizer: {given_name} {family_name} ({host_email})
           
-          Organiser's email address: {host_email}
-          
-          Cancel appointment: {cancellation_url}
+          Cancel this appointment: {cancellation_url}
           ---
           This email was automatically sent using the open-source booking tool OpenCal.
+
+    cancellation:
+      to_host:
+        subject: 'Event cancelled by attendee: {attendee_name} - {time_from}, {booking_date} - {event_type_name}'
+        message: |
+          Hello {given_name} {family_name},
+          
+          The event on {booking_date} at {time_from} was cancelled by {attendee_name}.
+          
+          Event type:
+          {event_type_name} ({duration}min)
+          
+          Attendee's email address:
+          {email_attendee}
+          
+          Manage appointments: {frontend_url}/login
+          ---
+          This email was automatically sent via the open-source booking tool OpenCal.

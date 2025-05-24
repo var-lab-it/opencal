@@ -7,7 +7,8 @@ namespace App\MessageHandler;
 use App\Entity\Event;
 use App\Message\NewBookingMessage;
 use App\Repository\EventRepository;
-use App\Service\EmailNotificationService;
+use App\Service\Notification\Email\NewBookingToAttendeeEmailNotificationService;
+use App\Service\Notification\Email\NewBookingToHostEmailNotificationService;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
@@ -15,7 +16,8 @@ final class NewBookingMessageHandler
 {
     public function __construct(
         private readonly EventRepository $eventRepository,
-        private readonly EmailNotificationService $notificationService,
+        private readonly NewBookingToHostEmailNotificationService $newBookingToHostEmailNotificationService,
+        private readonly NewBookingToAttendeeEmailNotificationService $newBookingToAttendeeEmailNotificationService,
     ) {
     }
 
@@ -27,7 +29,7 @@ final class NewBookingMessageHandler
             return;
         }
 
-        $this->notificationService->sendNewBookingNotificationToHost($event);
-        $this->notificationService->sendBookingConfirmationToAttendee($event);
+        $this->newBookingToHostEmailNotificationService->sendNotification($event);
+        $this->newBookingToAttendeeEmailNotificationService->sendNotification($event);
     }
 }
