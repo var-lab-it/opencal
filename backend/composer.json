@@ -177,6 +177,6 @@
       "XDEBUG_MODE=coverage,debug phpunit --testsuite=ApiTests -d --update-snapshots"
     ],
     "tests:unit": "XDEBUG_MODE=coverage,debug phpunit --testsuite=UnitTests --coverage-html=tests/reports/coverage/unit",
-    "tests:unit:ci": "XDEBUG_MODE=coverage,debug phpunit --testsuite=UnitTests --log-junit=reports/junit-unittests.xml --coverage-text --colors=never --coverage-html=tests/coverage"
+    "tests:unit:ci": "XDEBUG_MODE=coverage,debug phpunit --testsuite=UnitTests --log-junit=reports/junit-unittests.xml --coverage-text --colors=never --coverage-clover=reports/coverage.xml"
   }
 }
