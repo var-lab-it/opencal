@@ -17,7 +17,7 @@ class Unavailability
     private int $id;
 
     #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(inversedBy: 'recurringUnavailabilities')]
+    #[ORM\ManyToOne(inversedBy: 'unavailabilities')]
     private User $user;
 
     #[ORM\Column(length: 255)]

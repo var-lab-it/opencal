@@ -12,6 +12,7 @@ use App\State\CurrentUserProvider;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Safe\DateTimeImmutable;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Attribute\Groups;
@@ -41,9 +42,13 @@ use Symfony\Component\Validator\Constraints as Assert;
     ],
 )]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    public const string ROLE_USER  = 'ROLE_USER';
+    public const string ROLE_ADMIN = 'ROLE_ADMIN';
+
     #[Groups(['me:read', 'me:write'])]
     #[ORM\Column]
     #[ORM\GeneratedValue]
@@ -81,7 +86,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /** @var Collection<int, Unavailability> */
     #[ORM\OneToMany(targetEntity: Unavailability::class, mappedBy: 'user')]
-    private Collection $recurringUnavailabilities;
+    private Collection $unavailabilities;
 
     /** @var Collection<int, Availability> */
     #[ORM\OneToMany(targetEntity: Availability::class, mappedBy: 'user')]
@@ -91,12 +96,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: CalDavAuth::class, mappedBy: 'user')]
     private Collection $calDavAuths;
 
+    #[ORM\Column]
+    private bool $enabled = false;
+
+    #[ORM\Column]
+    private \DateTimeImmutable $createdAt;
+
+    #[ORM\Column]
+    private \DateTimeImmutable $updatedAt;
+
     public function __construct()
     {
-        $this->eventTypes                = new ArrayCollection();
-        $this->recurringUnavailabilities = new ArrayCollection();
-        $this->availabilities            = new ArrayCollection();
-        $this->calDavAuths               = new ArrayCollection();
+        $this->eventTypes       = new ArrayCollection();
+        $this->unavailabilities = new ArrayCollection();
+        $this->availabilities   = new ArrayCollection();
+        $this->calDavAuths      = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -146,6 +160,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function addRole(string $role): static
+    {
+        if (!\in_array($role, $this->roles, true)) {
+            $this->roles[] = $role;
+        }
+
+        return $this;
+    }
+
     /** @see PasswordAuthenticatedUserInterface */
     public function getPassword(): string
     {
@@ -162,8 +185,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /** @see UserInterface */
     public function eraseCredentials(): void
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
     }
 
     public function getGivenName(): string
@@ -219,24 +240,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /** @return Collection<int, Unavailability> */
-    public function getRecurringUnavailabilities(): Collection
+    public function getUnavailabilities(): Collection
     {
-        return $this->recurringUnavailabilities;
+        return $this->unavailabilities;
     }
 
-    public function addRecurringUnavailability(Unavailability $recurringUnavailability): static
+    public function addUnavailability(Unavailability $recurringUnavailability): static
     {
-        if (!$this->recurringUnavailabilities->contains($recurringUnavailability)) {
-            $this->recurringUnavailabilities->add($recurringUnavailability);
+        if (!$this->unavailabilities->contains($recurringUnavailability)) {
+            $this->unavailabilities->add($recurringUnavailability);
             $recurringUnavailability->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeRecurringUnavailability(Unavailability $recurringUnavailability): static
+    public function removeUnavailability(Unavailability $recurringUnavailability): static
     {
-        if ($this->recurringUnavailabilities->removeElement($recurringUnavailability)) {
+        if ($this->unavailabilities->removeElement($recurringUnavailability)) {
             // set the owning side to null (unless already changed)
             if ($recurringUnavailability->getUser() === $this) {
                 $recurringUnavailability->setUser(null);
@@ -300,5 +321,54 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): static
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): \DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): \DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new DateTimeImmutable();
+    }
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function setUpdatedAtValue(): void
+    {
+        $this->updatedAt = new DateTimeImmutable();
     }
 }

@@ -1,0 +1,26 @@
+[
+    {
+        "name": "email",
+        "is_required": true,
+        "default": null,
+        "description": "A email address for the new user (must be unique)"
+    },
+    {
+        "name": "given_name",
+        "is_required": true,
+        "default": null,
+        "description": "The given name of the new user."
+    },
+    {
+        "name": "family_name",
+        "is_required": true,
+        "default": null,
+        "description": "The family name of the new user."
+    },
+    {
+        "name": "password",
+        "is_required": false,
+        "default": null,
+        "description": "Password for the new user (the user needs to set a new password during next login)"
+    }
+]
