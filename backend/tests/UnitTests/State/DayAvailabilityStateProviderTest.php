@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Tests\Unit\State;
 
 use ApiPlatform\Metadata\Operation;
+use App\Availability\AvailabilityService;
 use App\Entity\EventType;
 use App\Entity\User;
 use App\Repository\EventTypeRepository;
-use App\Service\AvailabilityService;
 use App\State\DayAvailabilityStateProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

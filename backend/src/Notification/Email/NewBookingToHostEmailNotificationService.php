@@ -2,14 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Notification\Email;
+namespace App\Notification\Email;
 
+use App\CalDav\ExportEventService;
 use App\Entity\Event;
 use App\Entity\EventType;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class BookingCanceledToHostEmailNotificationService extends AbstractEmailNotificationService
+class NewBookingToHostEmailNotificationService extends AbstractEmailNotificationService
 {
     public function __construct(
         MailerInterface $mailer,
@@ -18,6 +20,8 @@ class BookingCanceledToHostEmailNotificationService extends AbstractEmailNotific
         string $frontendDomain,
         bool $useSSL,
         private readonly TranslatorInterface $translator,
+        private readonly ExportEventService $iCalService,
+        private readonly Filesystem $filesystem,
         private readonly string $locale,
     ) {
         parent::__construct(
@@ -35,18 +39,25 @@ class BookingCanceledToHostEmailNotificationService extends AbstractEmailNotific
             throw new \RuntimeException('Event has no event type');
         }
 
-        if (null === $event->getParticipantEmail()) {
-            throw new \RuntimeException('Event has no participant email');
-        }
-
         $params = $this->getParams($event);
 
+        $iCalTmpFilePath = $this->iCalService->exportEvent($event);
+
         $this->sentEmail(
-            $this->translator->trans('mails.booking.cancellation.to_host.subject', $params, 'messages', $this->locale),
-            $this->translator->trans('mails.booking.cancellation.to_host.message', $params, 'messages', $this->locale),
-            $event->getParticipantEmail(),
-            $event->getParticipantName() ?? 'unknown',
+            $this->translator->trans('mails.booking.new.to_host.subject', $params, 'messages', $this->locale),
+            $this->translator->trans('mails.booking.new.to_host.message', $params, 'messages', $this->locale),
+            $event->getEventType()->getHost()->getEmail(),
+            \sprintf(
+                '%s %s',
+                $event->getEventType()->getHost()->getGivenName(),
+                $event->getEventType()->getHost()->getFamilyName(),
+            ),
+            [
+                $iCalTmpFilePath => 'invite.ics',
+            ],
         );
+
+        $this->filesystem->remove($iCalTmpFilePath);
     }
 
     /** @return array<string, string|int> */
@@ -66,7 +77,8 @@ class BookingCanceledToHostEmailNotificationService extends AbstractEmailNotific
             '{event_type_name}' => $event->getEventType()->getName(),
             '{duration}'        => $event->getEventType()->getDuration(),
             '{email_attendee}'  => $event->getParticipantEmail() ?? $unknownEmail,
-            '{host_email}'      => $event->getEventType()->getHost()->getEmail(),
+            '{given_name}'      => $event->getEventType()->getHost()->getGivenName(),
+            '{family_name}'     => $event->getEventType()->getHost()->getFamilyName(),
             '{frontend_url}'    => $this->getFrontendUrl(),
         ];
     }

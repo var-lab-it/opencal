@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service;
+namespace App\CalDav;
 
 use App\Entity\Event;
 use App\Entity\EventType;
@@ -20,7 +20,7 @@ use function Safe\fopen;
 use function Safe\fwrite;
 use function Safe\fclose;
 
-class ICalExportService
+class ExportEventService
 {
     public function __construct()
     {

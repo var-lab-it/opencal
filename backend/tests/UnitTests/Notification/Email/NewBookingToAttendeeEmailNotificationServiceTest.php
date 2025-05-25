@@ -2,30 +2,36 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\UnitTests\Service\Notification\Email;
+namespace App\Tests\UnitTests\Notification\Email;
 
+use App\CalDav\ExportEventService;
 use App\Entity\Event;
 use App\Entity\EventType;
 use App\Entity\User;
-use App\Service\Notification\Email\BookingCanceledToHostEmailNotificationService;
+use App\Notification\Email\NewBookingToAttendeeEmailNotificationService;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Safe\DateTime;
 use Spatie\Snapshots\MatchesSnapshots;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class BookingCanceledToHostEmailNotificationServiceTest extends TestCase
+class NewBookingToAttendeeEmailNotificationServiceTest extends TestCase
 {
     use MatchesSnapshots;
 
     private MailerInterface&MockObject $mailerMock;
     private TranslatorInterface&MockObject $translatorMock;
+    private ExportEventService&MockObject $ICalServiceMock;
+    private Filesystem&MockObject $filesystemMock;
 
     protected function setUp(): void
     {
-        $this->mailerMock     = $this->createMock(MailerInterface::class);
-        $this->translatorMock = $this->createMock(TranslatorInterface::class);
+        $this->mailerMock      = $this->createMock(MailerInterface::class);
+        $this->translatorMock  = $this->createMock(TranslatorInterface::class);
+        $this->ICalServiceMock = $this->createMock(ExportEventService::class);
+        $this->filesystemMock  = $this->createMock(Filesystem::class);
     }
 
     public function testSendNewBookingNotificationToAttendeeNoEventType(): void
@@ -153,15 +159,17 @@ class BookingCanceledToHostEmailNotificationServiceTest extends TestCase
         return $eventMock;
     }
 
-    private function getService(): BookingCanceledToHostEmailNotificationService
+    private function getService(): NewBookingToAttendeeEmailNotificationService
     {
-        return new BookingCanceledToHostEmailNotificationService(
+        return new NewBookingToAttendeeEmailNotificationService(
             $this->mailerMock,
             'unit@test.tld',
             'Unit Test',
             'http://frontend.tld',
             false,
             $this->translatorMock,
+            $this->ICalServiceMock,
+            $this->filesystemMock,
             'en_GB',
         );
     }

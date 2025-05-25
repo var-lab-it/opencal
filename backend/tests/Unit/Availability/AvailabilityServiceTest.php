@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Service;
+namespace App\Tests\Unit\Availability;
 
+use App\Availability\AvailabilityService;
 use App\Entity\Availability;
 use App\Entity\EventType;
 use App\Entity\Unavailability;
@@ -11,7 +12,6 @@ use App\Entity\User;
 use App\Repository\AvailabilityRepository;
 use App\Repository\EventRepository;
 use App\Repository\UnavailabilityRepository;
-use App\Service\AvailabilityService;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Safe\DateTime;

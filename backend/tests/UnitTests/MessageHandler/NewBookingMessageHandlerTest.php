@@ -7,9 +7,9 @@ namespace App\Tests\UnitTests\MessageHandler;
 use App\Entity\Event;
 use App\Message\NewBookingMessage;
 use App\MessageHandler\NewBookingMessageHandler;
+use App\Notification\Email\NewBookingToAttendeeEmailNotificationService;
+use App\Notification\Email\NewBookingToHostEmailNotificationService;
 use App\Repository\EventRepository;
-use App\Service\Notification\Email\NewBookingToAttendeeEmailNotificationService;
-use App\Service\Notification\Email\NewBookingToHostEmailNotificationService;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 

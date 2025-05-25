@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Notification\Email;
+namespace App\Notification\Email;
 
 use App\Entity\Event;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;

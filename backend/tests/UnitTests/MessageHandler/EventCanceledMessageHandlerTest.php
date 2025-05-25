@@ -7,8 +7,8 @@ namespace App\Tests\UnitTests\MessageHandler;
 use App\Entity\Event;
 use App\Message\EventCanceledMessage;
 use App\MessageHandler\EventCanceledMessageHandler;
+use App\Notification\Email\BookingCanceledToHostEmailNotificationService;
 use App\Repository\EventRepository;
-use App\Service\Notification\Email\BookingCanceledToHostEmailNotificationService;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
