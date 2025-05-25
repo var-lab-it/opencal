@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\ApiTests;
 
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
+use App\Tests\ApiTests\Traits\RetrieveTokenTrait;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Response;

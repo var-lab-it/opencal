@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\ApiTests;
+namespace App\Tests\ApiTests\Traits;
 
 trait RetrieveTokenTrait
 {

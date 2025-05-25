@@ -78,7 +78,8 @@ class UserFixtures extends Fixture
                 ->setGivenName($data['givenName'])
                 ->setFamilyName($data['familyName'])
                 ->setEmail($data['email'])
-                ->setPassword($this->passwordHasher->hashPassword($user, 'password'));
+                ->setPassword($this->passwordHasher->hashPassword($user, 'password'))
+                ->setEnabled(true);
             $manager->persist($user);
             $this->addReference('user' . ($index + 1), $user);
         }
