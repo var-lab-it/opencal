@@ -15,11 +15,12 @@ API can also be integrated into other software applications.
 
 ![screenshot-opencal.png](screenshot-opencal.png)
 
-## Content
+## Documentation
 
 - [Configuration](docs/config.md)
-- [Getting started (for developers](docs/dev_setup.md)
+- [Getting started (for developers)](docs/dev_setup.md)
 - [How to contribute](CONTRIBUTING.md)
+- [Admin documentation](docs/admin/index.md)
 
 OpenCal is licensed under the [GNU AGPLv3 License](LICENSE).
 
