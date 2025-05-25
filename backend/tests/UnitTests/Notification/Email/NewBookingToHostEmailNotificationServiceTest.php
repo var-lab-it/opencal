@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\UnitTests\Service\Notification\Email;
+namespace App\Tests\UnitTests\Notification\Email;
 
+use App\CalDav\ExportEventService;
 use App\Entity\Event;
 use App\Entity\EventType;
 use App\Entity\User;
-use App\Service\ICalExportService;
-use App\Service\Notification\Email\NewBookingToAttendeeEmailNotificationService;
+use App\Notification\Email\NewBookingToHostEmailNotificationService;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Safe\DateTime;
@@ -17,24 +17,24 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class NewBookingToAttendeeEmailNotificationServiceTest extends TestCase
+class NewBookingToHostEmailNotificationServiceTest extends TestCase
 {
     use MatchesSnapshots;
 
     private MailerInterface&MockObject $mailerMock;
     private TranslatorInterface&MockObject $translatorMock;
-    private ICalExportService&MockObject $ICalServiceMock;
+    private ExportEventService&MockObject $ICalServiceMock;
     private Filesystem&MockObject $filesystemMock;
 
     protected function setUp(): void
     {
         $this->mailerMock      = $this->createMock(MailerInterface::class);
         $this->translatorMock  = $this->createMock(TranslatorInterface::class);
-        $this->ICalServiceMock = $this->createMock(ICalExportService::class);
+        $this->ICalServiceMock = $this->createMock(ExportEventService::class);
         $this->filesystemMock  = $this->createMock(Filesystem::class);
     }
 
-    public function testSendNewBookingNotificationToAttendeeNoEventType(): void
+    public function testSendNewBookingNotificationToHostNoEventType(): void
     {
         $eventMock = $this->buildEventMock(false);
 
@@ -46,19 +46,7 @@ class NewBookingToAttendeeEmailNotificationServiceTest extends TestCase
         $service->sendNotification($eventMock);
     }
 
-    public function testSendNewBookingNotificationToAttendeeNoEmail(): void
-    {
-        $eventMock = $this->buildEventMock(true, false);
-
-        $service = $this->getService();
-
-        self::expectException(\RuntimeException::class);
-        self::expectExceptionMessage('Event has no participant email');
-
-        $service->sendNotification($eventMock);
-    }
-
-    public function testSendNewBookingNotificationToAttendeeSucceeds(): void
+    public function testSendNewBookingNotificationToHostSucceeds(): void
     {
         $this->mailerMock
             ->expects(self::once())
@@ -101,7 +89,7 @@ class NewBookingToAttendeeEmailNotificationServiceTest extends TestCase
         self::assertMatchesJsonSnapshot($result);
     }
 
-    private function buildEventMock(bool $withEventType = true, bool $withParticipantEmail = true): Event&MockObject
+    private function buildEventMock(bool $withEventType = true): Event&MockObject
     {
         $hostMock = $this->createMock(User::class);
         $hostMock
@@ -127,6 +115,10 @@ class NewBookingToAttendeeEmailNotificationServiceTest extends TestCase
 
         $eventMock = $this->createMock(Event::class);
 
+        $eventMock
+            ->method('getParticipantEmail')
+            ->willReturn('email@unit-test.tld');
+
         if ($withEventType) {
             $eventMock
                 ->method('getEventType')
@@ -139,13 +131,9 @@ class NewBookingToAttendeeEmailNotificationServiceTest extends TestCase
         $eventMock
             ->method('getDay')
             ->willReturn(new DateTime('2025-04-02 00:00:00'));
-
-        if ($withParticipantEmail) {
-            $eventMock
-                ->method('getParticipantEmail')
-                ->willReturn('participant@unit-test.com');
-        }
-
+        $eventMock
+            ->method('getParticipantEmail')
+            ->willReturn('participant@unit-test.com');
         $eventMock
             ->method('getId')
             ->willReturn(123);
@@ -159,9 +147,9 @@ class NewBookingToAttendeeEmailNotificationServiceTest extends TestCase
         return $eventMock;
     }
 
-    private function getService(): NewBookingToAttendeeEmailNotificationService
+    private function getService(): NewBookingToHostEmailNotificationService
     {
-        return new NewBookingToAttendeeEmailNotificationService(
+        return new NewBookingToHostEmailNotificationService(
             $this->mailerMock,
             'unit@test.tld',
             'Unit Test',

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Tests\UnitTests\MessageHandler;
 
+use App\CalDav\CalDavService;
 use App\Entity\CalDavAuth;
 use App\Message\SyncCalDavMessage;
 use App\MessageHandler\SyncCalDavMessageHandler;
 use App\Repository\CalDavAuthRepository;
 use App\Repository\EventRepository;
-use App\Service\CalDavService;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

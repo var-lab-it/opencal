@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service;
+namespace App\CalDav;
 
 use App\Entity\CalDavAuth;
 use App\Entity\User;

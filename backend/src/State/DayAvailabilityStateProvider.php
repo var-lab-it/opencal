@@ -6,9 +6,9 @@ namespace App\State;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
+use App\Availability\AvailabilityService;
 use App\Entity\EventType;
 use App\Repository\EventTypeRepository;
-use App\Service\AvailabilityService;
 use Safe\DateTime;
 
 /** @phpstan-ignore-next-line */

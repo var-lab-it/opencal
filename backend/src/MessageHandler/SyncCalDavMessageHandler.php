@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\MessageHandler;
 
+use App\CalDav\CalDavService;
 use App\Entity\CalDavAuth;
 use App\Entity\Event;
 use App\Message\SyncCalDavMessage;
 use App\Repository\CalDavAuthRepository;
 use App\Repository\EventRepository;
-use App\Service\CalDavService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Safe\DateTime;

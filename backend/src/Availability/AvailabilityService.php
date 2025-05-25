@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service;
+namespace App\Availability;
 
 use App\Entity\Availability;
 use App\Entity\Event;

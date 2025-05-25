@@ -6,8 +6,8 @@ namespace App\MessageHandler;
 
 use App\Entity\Event;
 use App\Message\EventCanceledMessage;
+use App\Notification\Email\BookingCanceledToHostEmailNotificationService;
 use App\Repository\EventRepository;
-use App\Service\Notification\Email\BookingCanceledToHostEmailNotificationService;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]

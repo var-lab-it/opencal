@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Notification\Email;
+namespace App\Notification\Email;
 
+use App\CalDav\ExportEventService;
 use App\Entity\Event;
 use App\Entity\EventType;
-use App\Service\ICalExportService;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -20,7 +20,7 @@ class NewBookingToAttendeeEmailNotificationService extends AbstractEmailNotifica
         string $frontendDomain,
         bool $useSSL,
         private readonly TranslatorInterface $translator,
-        private readonly ICalExportService $iCalService,
+        private readonly ExportEventService $iCalService,
         private readonly Filesystem $filesystem,
         private readonly string $locale,
     ) {

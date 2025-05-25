@@ -6,9 +6,9 @@ namespace App\MessageHandler;
 
 use App\Entity\Event;
 use App\Message\NewBookingMessage;
+use App\Notification\Email\NewBookingToAttendeeEmailNotificationService;
+use App\Notification\Email\NewBookingToHostEmailNotificationService;
 use App\Repository\EventRepository;
-use App\Service\Notification\Email\NewBookingToAttendeeEmailNotificationService;
-use App\Service\Notification\Email\NewBookingToHostEmailNotificationService;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\UnitTests\Service;
+namespace App\Tests\UnitTests\CalDav;
 
+use App\CalDav\ExportEventService;
 use App\Entity\Event;
 use App\Entity\EventType;
 use App\Entity\User;
-use App\Service\ICalExportService;
 use PHPUnit\Framework\TestCase;
 use Safe\DateTime;
 use Spatie\Snapshots\MatchesSnapshots;
@@ -39,7 +39,7 @@ class ICalExportServiceTest extends TestCase
                     ),
             );
 
-        $service = new ICalExportService();
+        $service = new ExportEventService();
         $result  = $service->exportEvent($event);
 
         $iCalContent = file_get_contents($result);
