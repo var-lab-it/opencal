@@ -68,6 +68,7 @@ exports[`Login.vue > renders correctly and displays all necessary elements 1`] =
               data-v-47199182=""
               type="submit"
             >
+              <!--v-if-->
                Login 
             </button>
           </div>
@@ -137,6 +138,7 @@ exports[`Login.vue > renders correctly and displays all necessary elements 1`] =
             data-v-47199182=""
             type="submit"
           >
+            <!--v-if-->
              Login 
           </button>
         </div>

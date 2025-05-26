@@ -30,6 +30,11 @@
           class="btn btn-primary"
           data-testid="login-btn"
         >
+          <span
+            v-if="loadSubmit"
+            class="spinner-grow text-light spinner-grow-sm"
+            role="status"
+          ></span>
           Login
         </button>
       </div>
@@ -52,8 +57,12 @@ const email = ref('');
 const password = ref('');
 const error = ref('');
 
+const loadSubmit = ref(false);
+
 async function handleLogin() {
   error.value = '';
+  loadSubmit.value = true;
+
   try {
     const response = await apiClient.post('/auth', {
       email: email.value,
@@ -71,6 +80,8 @@ async function handleLogin() {
   } catch (err) {
     console.error("Login failed:", err);
     error.value = "Login failed. Please try again.";
+  } finally {
+    loadSubmit.value = false;
   }
 }
 </script>
