@@ -236,4 +236,11 @@ class UserTest extends TestCase
         /** @phpstan-ignore-next-line */
         self::assertInstanceOf(\DateTimeImmutable::class, $user->getUpdatedAt());
     }
+
+    public function testPasswodResetToken(): void
+    {
+        $user = new User();
+        $user->setPasswordResetToken('token');
+        self::assertSame('token', $user->getPasswordResetToken());
+    }
 }
