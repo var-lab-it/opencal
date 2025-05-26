@@ -2,7 +2,7 @@
   <Logo :logo-url="logoUrl" />
   <div class="login-form">
     <h3>
-      {{ $t('login.headline')}}
+      {{ $t('login.headline') }}
     </h3>
     <form @submit.prevent="handleLogin">
       <div class="form-group mb-3">
@@ -43,7 +43,7 @@
       </div>
       <div class="mb-1">
         <router-link to="/password/reset">
-          {{ $t('login.reset_password')}}
+          {{ $t('login.reset_password') }}
         </router-link>
       </div>
     </form>

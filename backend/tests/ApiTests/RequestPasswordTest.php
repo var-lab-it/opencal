@@ -29,6 +29,7 @@ class RequestPasswordTest extends ApiTestCase
         self::assertSame(Response::HTTP_NO_CONTENT, $response->getStatusCode());
         self::transport()->queue()->assertCount(1);
         self::transport()->queue()->assertContains(PasswordRequestedMessage::class);
+        self::transport()->reset();
     }
 
     public function testRequestPasswordWithUserNotFound(): void
@@ -46,5 +47,6 @@ class RequestPasswordTest extends ApiTestCase
 
         self::assertSame(Response::HTTP_NOT_FOUND, $response->getStatusCode());
         self::transport()->queue()->assertCount(0);
+        self::transport()->reset();
     }
 }

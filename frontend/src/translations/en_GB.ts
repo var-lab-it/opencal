@@ -14,6 +14,7 @@ export default {
         "headline": "Password Reset",
         "email": "Email Address",
         "submit_button": "Request password",
+        "message_requested": "You have received an email with a link to reset your password."
     },
     "header": {
         "nav": {

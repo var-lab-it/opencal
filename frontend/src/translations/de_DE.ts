@@ -10,6 +10,12 @@ export default {
         "button": "Anmelden",
         "reset_password": "Paswort zurücksetzen"
     },
+    "password_reset": {
+        "headline": "Passwort zurücksetzen",
+        "email": "E-Mail-Adresse",
+        "submit_button": "Passwort anfordern",
+        "message_requested": "Du hast eine E-Mail mit einem Link zum Zurücksetzen deines Passworts erhalten."
+    },
     "header": {
         "nav": {
             "dashboard": "Übersicht",
