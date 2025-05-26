@@ -40,6 +40,7 @@ class CancelEventAsAttendeeTest extends ApiTestCase
 
         self::assertResponseIsSuccessful();
 
-        $this->transport()->queue()->assertContains(EventCanceledMessage::class);
+        self::transport()->queue()->assertContains(EventCanceledMessage::class);
+        self::transport()->reset();
     }
 }
