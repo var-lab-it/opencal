@@ -28,5 +28,5 @@ export function logout() {
 }
 
 export function redirectAfterLogin() {
-    window.location.href = '/';
+    window.location.href = '/dashboard';
 }

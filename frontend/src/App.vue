@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import AppHeader from "./components/user/AppHeader.vue";
+import AppHeader from "./components/dashboard/AppHeader.vue";
 import {getCurrentUser} from "./composables/CurrentUser.js";
 import {isAuthenticated} from "./services/auth.js";
 

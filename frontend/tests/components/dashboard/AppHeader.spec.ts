@@ -1,6 +1,6 @@
 import {describe, expect, test} from "vitest";
 import {render} from "vitest-browser-vue";
-import AppHeader from "../../../src/components/user/AppHeader.vue";
+import AppHeader from "../../../src/components/dashboard/AppHeader.vue";
 import {User} from "../../../src/types/User";
 
 const userMock: User = {
