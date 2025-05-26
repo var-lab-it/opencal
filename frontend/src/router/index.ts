@@ -6,7 +6,7 @@ import CancelBooking from "../components/booking/CancelBooking.vue";
 import Dashboard from "../components/dashboard/Dashboard.vue";
 import Account from "../components/dashboard/Account.vue";
 import Start from "../components/Start.vue";
-import PasswordReset from "../components/PasswordReset.vue";
+import PasswordRequest from "../components/PasswordRequest.vue";
 
 const routes = [
     {
@@ -22,7 +22,7 @@ const routes = [
     {
         name: 'password_reset',
         path: '/password/reset',
-        component: PasswordReset
+        component: PasswordRequest
     },
     {
         name: 'booking_index',

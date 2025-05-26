@@ -47,7 +47,6 @@
 <script setup lang="ts">
 import Logo from "./Logo.vue";
 import {ref} from "vue";
-import apiClient from "../services/api";
 import {redirectAfterLogin} from "../services/auth";
 import {requestPassword} from "../services/passwordReset";
 

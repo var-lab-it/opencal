@@ -12,6 +12,7 @@ use App\Controller\RequestPasswordController;
 #[ApiResource(
     operations: [
         new Post(
+            uriTemplate: '/password/request',
             controller: RequestPasswordController::class,
             openapi: new Model\Operation(
                 responses: [
