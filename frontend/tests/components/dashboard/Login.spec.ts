@@ -1,8 +1,8 @@
 import {describe, expect, it, vi} from "vitest";
-import Login from "../../src/components/Login.vue";
-import apiClient from "../../src/services/api";
+import Login from "../../../src/components/dashboard/Login.vue";
+import apiClient from "../../../src/services/api";
 import {render} from "vitest-browser-vue";
-import {redirectAfterLogin} from "../../src/services/auth";
+import {redirectAfterLogin} from "../../../src/services/auth";
 
 vi.mock("../../src/services/api", () => ({
     default: {

@@ -38,4 +38,13 @@ class UserService
 
         return $existingUser instanceof User;
     }
+
+    public function generatePasswordResetToken(User $user): string
+    {
+        $token = \hash('sha512', \random_bytes(32));
+
+        $user->setPasswordResetToken($token);
+
+        return $token;
+    }
 }

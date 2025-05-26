@@ -6,24 +6,20 @@ namespace App\Notification\Email;
 
 use App\Entity\Event;
 use App\Entity\EventType;
-use Symfony\Component\Mailer\MailerInterface;
+use App\Mail\MailService;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BookingCanceledToHostEmailNotificationService extends AbstractEmailNotificationService
 {
     public function __construct(
-        MailerInterface $mailer,
-        string $emailSenderAddress,
-        string $emailSenderName,
+        MailService $mailService,
         string $frontendDomain,
         bool $useSSL,
         private readonly TranslatorInterface $translator,
         private readonly string $locale,
     ) {
         parent::__construct(
-            $mailer,
-            $emailSenderAddress,
-            $emailSenderName,
+            $mailService,
             $frontendDomain,
             $useSSL,
         );
@@ -41,7 +37,7 @@ class BookingCanceledToHostEmailNotificationService extends AbstractEmailNotific
 
         $params = $this->getParams($event);
 
-        $this->sentEmail(
+        $this->sendEmail(
             $this->translator->trans('mails.booking.cancellation.to_host.subject', $params, 'messages', $this->locale),
             $this->translator->trans('mails.booking.cancellation.to_host.message', $params, 'messages', $this->locale),
             $event->getParticipantEmail(),

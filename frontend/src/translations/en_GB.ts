@@ -4,9 +4,16 @@ export default {
         "message": "Please use a user's personal link to book appointments."
     },
     "login": {
+        "headline": "Login to OpenCal",
         "email": "Email Address",
         "password": "Password",
-        "button": "Log In"
+        "button": "Log In",
+        "reset_password": "Reset password"
+    },
+    "password_reset": {
+        "headline": "Password Reset",
+        "email": "Email Address",
+        "submit_button": "Request password",
     },
     "header": {
         "nav": {

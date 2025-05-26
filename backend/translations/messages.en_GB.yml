@@ -2,6 +2,15 @@ unknown_attendee: 'Nicht angegeben'
 unknown_email: 'Nicht angegeben'
 
 mails:
+  password_request:
+    subject: New Password Requested
+    message: |
+      Hello {user_name},
+      
+      Please click the following link to set a new password for your OpenCal account: {reset_url}
+      ---
+          This email was automatically sent using the open-source booking tool OpenCal.
+
   booking:
     new:
       to_host:
@@ -56,4 +65,4 @@ mails:
           
           Manage appointments: {frontend_url}/login
           ---
-          This email was automatically sent via the open-source booking tool OpenCal.
+          This email was automatically sent using the open-source booking tool OpenCal.
