@@ -80,6 +80,17 @@ class UserServiceTest extends TestCase
         self::assertFalse($result);
     }
 
+    public function testGeneratePasswordResetToken(): void
+    {
+        $userMock = $this->createMock(User::class);
+        $userMock
+            ->expects(self::once())
+            ->method('setPasswordResetToken');
+
+        $service = $this->getService();
+        $service->generatePasswordResetToken($userMock);
+    }
+
     private function getService(): UserService
     {
         return new UserService(

@@ -6,6 +6,7 @@ namespace App\Notification\Email;
 
 use App\Entity\Event;
 use App\Mail\MailService;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 abstract class AbstractEmailNotificationService
 {
@@ -29,6 +30,11 @@ abstract class AbstractEmailNotificationService
         );
     }
 
+    /**
+     * @param array<string, string> $attachments
+     *
+     * @throws TransportExceptionInterface
+     */
     protected function sendEmail(
         string $subject,
         string $message,
