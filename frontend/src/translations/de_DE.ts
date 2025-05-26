@@ -1,4 +1,8 @@
 export default {
+    "start": {
+        "headline": "Willkommen bei OpenCal",
+        "message": "Bitte verwenden Sie den persönlichen Link eines Benutzers, um Termine zu buchen."
+    },
     "login": {
         "email": "E-Mail-Adresse",
         "password": "Passwort",

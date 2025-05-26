@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <router-link
         class="navbar-brand"
-        to="/"
+        to="/dashboard"
       >
         <font-awesome-icon icon="calendar-check" />
         OpenCal
@@ -27,7 +27,7 @@
           <li class="nav-item">
             <router-link
               class="nav-link"
-              to="/"
+              to="/dashboard"
               active-class="active"
             >
               {{ $t('header.nav.dashboard') }}
@@ -36,7 +36,7 @@
           <li class="nav-item">
             <router-link
               class="nav-link"
-              to="/appointments"
+              to="/dashboard/appointments"
               active-class="active"
             >
               {{ $t('header.nav.appointments') }}

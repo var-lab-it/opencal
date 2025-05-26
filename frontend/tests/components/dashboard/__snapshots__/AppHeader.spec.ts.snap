@@ -16,7 +16,7 @@ exports[`header > renders the header component 1`] = `
         >
           <router-link
             class="navbar-brand"
-            to="/"
+            to="/dashboard"
           >
             <!---->
              OpenCal 
@@ -47,7 +47,7 @@ exports[`header > renders the header component 1`] = `
                 <router-link
                   active-class="active"
                   class="nav-link"
-                  to="/"
+                  to="/dashboard"
                 >
                   header.nav.dashboard
                 </router-link>
@@ -58,7 +58,7 @@ exports[`header > renders the header component 1`] = `
                 <router-link
                   active-class="active"
                   class="nav-link"
-                  to="/appointments"
+                  to="/dashboard/appointments"
                 >
                   header.nav.appointments
                 </router-link>
@@ -119,7 +119,7 @@ exports[`header > renders the header component 1`] = `
       >
         <router-link
           class="navbar-brand"
-          to="/"
+          to="/dashboard"
         >
           <!---->
            OpenCal 
@@ -150,7 +150,7 @@ exports[`header > renders the header component 1`] = `
               <router-link
                 active-class="active"
                 class="nav-link"
-                to="/"
+                to="/dashboard"
               >
                 header.nav.dashboard
               </router-link>
@@ -161,7 +161,7 @@ exports[`header > renders the header component 1`] = `
               <router-link
                 active-class="active"
                 class="nav-link"
-                to="/appointments"
+                to="/dashboard/appointments"
               >
                 header.nav.appointments
               </router-link>
