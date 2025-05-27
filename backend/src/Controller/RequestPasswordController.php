@@ -28,12 +28,12 @@ class RequestPasswordController extends AbstractController
 
     public function __invoke(RequestPassword $requestPassword): Response
     {
-        $user = $this->userRepository->findOneByEmail($requestPassword->getEmail());
+        $user = $this->userRepository->findOneByEmail($requestPassword->email);
 
         if (!$user instanceof User) {
             throw $this->createNotFoundException(\sprintf(
                 'User with email "%s" not found.',
-                $requestPassword->getEmail(),
+                $requestPassword->email,
             ));
         }
 

@@ -11,12 +11,12 @@ class RequestPasswordTest extends TestCase
 {
     public function testEmail(): void
     {
-        $resource = new RequestPassword();
-        $resource->setEmail('test@unit.tld');
+        $resource        = new RequestPassword();
+        $resource->email = 'test@unit.tld';
 
         self::assertSame(
             'test@unit.tld',
-            $resource->getEmail(),
+            $resource->email,
         );
     }
 }

@@ -9,7 +9,7 @@ use App\Message\PasswordRequestedMessage;
 use Symfony\Component\HttpFoundation\Response;
 use Zenstruck\Messenger\Test\InteractsWithMessenger;
 
-class RequestPasswordTest extends ApiTestCase
+class ResetPasswordTest extends ApiTestCase
 {
     use InteractsWithMessenger;
 

@@ -7,12 +7,14 @@ namespace App\User;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserService
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly UserRepository $userRepository,
+        private readonly UserPasswordHasherInterface $userPasswordHasher,
     ) {
     }
 
@@ -46,5 +48,14 @@ class UserService
         $user->setPasswordResetToken($token);
 
         return $token;
+    }
+
+    public function setPassword(User $user, string $plainPassword): User
+    {
+        $hashedPassword = $this->userPasswordHasher->hashPassword($user, $plainPassword);
+
+        $user->setPassword($hashedPassword);
+
+        return $user;
     }
 }
