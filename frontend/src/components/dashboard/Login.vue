@@ -1,6 +1,9 @@
 <template>
+  <Logo :logo-url="logoUrl" />
   <div class="login-form">
-    <h2>Login</h2>
+    <h3>
+      {{ $t('login.headline') }}
+    </h3>
     <form @submit.prevent="handleLogin">
       <div class="form-group mb-3">
         <label for="email">Email:</label>
@@ -24,7 +27,7 @@
           data-testid="password-input"
         />
       </div>
-      <div class="d-grid">
+      <div class="d-grid mb-3">
         <button
           type="submit"
           class="btn btn-primary"
@@ -38,6 +41,11 @@
           Login
         </button>
       </div>
+      <div class="mb-1">
+        <router-link to="/password/request">
+          {{ $t('login.reset_password') }}
+        </router-link>
+      </div>
     </form>
     <p
       v-if="error"
@@ -50,14 +58,17 @@
 
 <script setup lang="ts">
 import {ref} from "vue";
-import apiClient from "../services/api";
-import {redirectAfterLogin} from "../services/auth";
+import apiClient from "../../services/api";
+import {redirectAfterLogin} from "../../services/auth";
+import Logo from "../Logo.vue";
 
 const email = ref('');
 const password = ref('');
 const error = ref('');
 
 const loadSubmit = ref(false);
+
+const logoUrl = ref(import.meta.env.VITE_LOGO_URL || null);
 
 async function handleLogin() {
   error.value = '';

@@ -7,16 +7,14 @@ namespace App\Notification\Email;
 use App\CalDav\ExportEventService;
 use App\Entity\Event;
 use App\Entity\EventType;
+use App\Mail\MailService;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class NewBookingToHostEmailNotificationService extends AbstractEmailNotificationService
 {
     public function __construct(
-        MailerInterface $mailer,
-        string $emailSenderAddress,
-        string $emailSenderName,
+        MailService $mailService,
         string $frontendDomain,
         bool $useSSL,
         private readonly TranslatorInterface $translator,
@@ -25,9 +23,7 @@ class NewBookingToHostEmailNotificationService extends AbstractEmailNotification
         private readonly string $locale,
     ) {
         parent::__construct(
-            $mailer,
-            $emailSenderAddress,
-            $emailSenderName,
+            $mailService,
             $frontendDomain,
             $useSSL,
         );
@@ -43,7 +39,7 @@ class NewBookingToHostEmailNotificationService extends AbstractEmailNotification
 
         $iCalTmpFilePath = $this->iCalService->exportEvent($event);
 
-        $this->sentEmail(
+        $this->sendEmail(
             $this->translator->trans('mails.booking.new.to_host.subject', $params, 'messages', $this->locale),
             $this->translator->trans('mails.booking.new.to_host.message', $params, 'messages', $this->locale),
             $event->getEventType()->getHost()->getEmail(),

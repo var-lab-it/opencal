@@ -7,24 +7,24 @@ namespace App\Tests\UnitTests\Notification\Email;
 use App\Entity\Event;
 use App\Entity\EventType;
 use App\Entity\User;
+use App\Mail\MailService;
 use App\Notification\Email\BookingCanceledToHostEmailNotificationService;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Safe\DateTime;
 use Spatie\Snapshots\MatchesSnapshots;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BookingCanceledToHostEmailNotificationServiceTest extends TestCase
 {
     use MatchesSnapshots;
 
-    private MailerInterface&MockObject $mailerMock;
+    private MailService&MockObject $mailService;
     private TranslatorInterface&MockObject $translatorMock;
 
     protected function setUp(): void
     {
-        $this->mailerMock     = $this->createMock(MailerInterface::class);
+        $this->mailService    = $this->createMock(MailService::class);
         $this->translatorMock = $this->createMock(TranslatorInterface::class);
     }
 
@@ -54,9 +54,9 @@ class BookingCanceledToHostEmailNotificationServiceTest extends TestCase
 
     public function testSendNewBookingNotificationToAttendeeSucceeds(): void
     {
-        $this->mailerMock
+        $this->mailService
             ->expects(self::once())
-            ->method('send');
+            ->method('sendEmail');
 
         $eventMock = $this->buildEventMock();
 
@@ -156,9 +156,7 @@ class BookingCanceledToHostEmailNotificationServiceTest extends TestCase
     private function getService(): BookingCanceledToHostEmailNotificationService
     {
         return new BookingCanceledToHostEmailNotificationService(
-            $this->mailerMock,
-            'unit@test.tld',
-            'Unit Test',
+            $this->mailService,
             'http://frontend.tld',
             false,
             $this->translatorMock,

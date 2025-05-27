@@ -1,11 +1,13 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import Login from '../components/Login.vue';
-import { isAuthenticated } from '../services/auth';
+import {createRouter, createWebHistory} from 'vue-router';
+import Login from '../components/dashboard/Login.vue';
+import {isAuthenticated} from '../services/auth';
 import BookingIndex from "../components/booking/BookingIndex.vue";
 import CancelBooking from "../components/booking/CancelBooking.vue";
 import Dashboard from "../components/dashboard/Dashboard.vue";
 import Account from "../components/dashboard/Account.vue";
 import Start from "../components/Start.vue";
+import PasswordRequest from "../components/PasswordRequest.vue";
+import PasswordResest from "../components/PasswordResest.vue";
 
 const routes = [
     {
@@ -17,6 +19,16 @@ const routes = [
         name: 'login',
         path: '/dashboard/login',
         component: Login
+    },
+    {
+        name: 'password_request',
+        path: '/password/request',
+        component: PasswordRequest
+    },
+    {
+        name: 'password_reset',
+        path: '/password/reset/:token/:email',
+        component: PasswordResest
     },
     {
         name: 'booking_index',
@@ -32,13 +44,13 @@ const routes = [
         name: 'dashboard',
         path: '/dashboard',
         component: Dashboard,
-        meta: { requiresAuth: true }
+        meta: {requiresAuth: true}
     },
     {
         name: 'account',
         path: '/dashboard/account',
         component: Account,
-        meta: { requiresAuth: true }
+        meta: {requiresAuth: true}
     },
 ];
 

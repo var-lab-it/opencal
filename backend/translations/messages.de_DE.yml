@@ -2,6 +2,15 @@ unknown_attendee: 'Unbekannter Teilnehmer'
 unknown_email: 'Unbekannte E-Mail'
 
 mails:
+  password_request:
+    subject: Neues Password angefordert
+    message: |
+      Hallo {user_name},
+      
+      bitte klicke auf folgenden Link, um ein neues Passwort für deinen OpenCal-Account festzulegen: {reset_url}
+      ---
+      Diese E-Mail wurde automatisch über das Open-Source-Buchungstool OpenCal versendet.
+
   booking:
     new:
       to_host:

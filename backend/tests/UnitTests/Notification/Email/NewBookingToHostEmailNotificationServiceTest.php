@@ -8,27 +8,27 @@ use App\CalDav\ExportEventService;
 use App\Entity\Event;
 use App\Entity\EventType;
 use App\Entity\User;
+use App\Mail\MailService;
 use App\Notification\Email\NewBookingToHostEmailNotificationService;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Safe\DateTime;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class NewBookingToHostEmailNotificationServiceTest extends TestCase
 {
     use MatchesSnapshots;
 
-    private MailerInterface&MockObject $mailerMock;
+    private MailService&MockObject $mailService;
     private TranslatorInterface&MockObject $translatorMock;
     private ExportEventService&MockObject $ICalServiceMock;
     private Filesystem&MockObject $filesystemMock;
 
     protected function setUp(): void
     {
-        $this->mailerMock      = $this->createMock(MailerInterface::class);
+        $this->mailService     = $this->createMock(MailService::class);
         $this->translatorMock  = $this->createMock(TranslatorInterface::class);
         $this->ICalServiceMock = $this->createMock(ExportEventService::class);
         $this->filesystemMock  = $this->createMock(Filesystem::class);
@@ -48,9 +48,9 @@ class NewBookingToHostEmailNotificationServiceTest extends TestCase
 
     public function testSendNewBookingNotificationToHostSucceeds(): void
     {
-        $this->mailerMock
+        $this->mailService
             ->expects(self::once())
-            ->method('send');
+            ->method('sendEmail');
 
         $eventMock = $this->buildEventMock();
 
@@ -150,9 +150,7 @@ class NewBookingToHostEmailNotificationServiceTest extends TestCase
     private function getService(): NewBookingToHostEmailNotificationService
     {
         return new NewBookingToHostEmailNotificationService(
-            $this->mailerMock,
-            'unit@test.tld',
-            'Unit Test',
+            $this->mailService,
             'http://frontend.tld',
             false,
             $this->translatorMock,
