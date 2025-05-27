@@ -10,11 +10,21 @@ export default {
         "button": "Anmelden",
         "reset_password": "Paswort zurücksetzen"
     },
-    "password_reset": {
+    "password_request": {
         "headline": "Passwort zurücksetzen",
         "email": "E-Mail-Adresse",
         "submit_button": "Passwort anfordern",
-        "message_requested": "Du hast eine E-Mail mit einem Link zum Zurücksetzen deines Passworts erhalten."
+        "message_requested": "Sie haben eine E-Mail mit einem Link zum Zurücksetzen Ihres Passworts erhalten."
+    },
+    "password_reset": {
+        "headline": "Passwort zurücksetzen",
+        "email": "E-Mail-Adresse",
+        "submit_button": "Passwort zurücksetzen",
+        "message_changed": "Das Passwort wurde erfolgreich zurückgesetzt.",
+        "errors": {
+            "email_invalid": "Bitte geben Sie die korrekte E-Mail-Adresse an.",
+            "password_dont_match": "Die Passwörter stimmen nicht überein."
+        }
     },
     "header": {
         "nav": {

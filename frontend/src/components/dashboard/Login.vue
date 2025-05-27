@@ -42,7 +42,7 @@
         </button>
       </div>
       <div class="mb-1">
-        <router-link to="/password/reset">
+        <router-link to="/password/request">
           {{ $t('login.reset_password') }}
         </router-link>
       </div>

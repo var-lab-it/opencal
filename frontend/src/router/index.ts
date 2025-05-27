@@ -7,6 +7,7 @@ import Dashboard from "../components/dashboard/Dashboard.vue";
 import Account from "../components/dashboard/Account.vue";
 import Start from "../components/Start.vue";
 import PasswordRequest from "../components/PasswordRequest.vue";
+import PasswordResest from "../components/PasswordResest.vue";
 
 const routes = [
     {
@@ -20,9 +21,14 @@ const routes = [
         component: Login
     },
     {
-        name: 'password_reset',
-        path: '/password/reset',
+        name: 'password_request',
+        path: '/password/request',
         component: PasswordRequest
+    },
+    {
+        name: 'password_reset',
+        path: '/password/reset/:token/:email',
+        component: PasswordResest
     },
     {
         name: 'booking_index',

@@ -7,14 +7,24 @@ export default {
         "headline": "Login to OpenCal",
         "email": "Email Address",
         "password": "Password",
-        "button": "Log In",
+        "button": "Login",
         "reset_password": "Reset password"
     },
-    "password_reset": {
+    "password_request": {
         "headline": "Password Reset",
         "email": "Email Address",
         "submit_button": "Request password",
         "message_requested": "You have received an email with a link to reset your password."
+    },
+    "password_reset": {
+        "headline": "Passwort Reset",
+        "email": "E-Mail Address",
+        "submit_button": "Reset Password",
+        "message_changed": "The password has been successfully reset.",
+        "errors": {
+            "email_invalid": "Please enter the correct email address.",
+            "password_dont_match": "The password doesn't match."
+        }
     },
     "header": {
         "nav": {

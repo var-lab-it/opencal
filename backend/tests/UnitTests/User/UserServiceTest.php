@@ -10,16 +10,19 @@ use App\User\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserServiceTest extends TestCase
 {
     private EntityManagerInterface&MockObject $entityManagerMock;
     private UserRepository&MockObject $userRepositoryMock;
+    private UserPasswordHasherInterface&MockObject $userPasswordHasherMock;
 
     protected function setUp(): void
     {
-        $this->entityManagerMock  = $this->createMock(EntityManagerInterface::class);
-        $this->userRepositoryMock = $this->createMock(UserRepository::class);
+        $this->entityManagerMock      = $this->createMock(EntityManagerInterface::class);
+        $this->userRepositoryMock     = $this->createMock(UserRepository::class);
+        $this->userPasswordHasherMock = $this->createMock(UserPasswordHasherInterface::class);
     }
 
     public function testCreateUser(): void
@@ -91,11 +94,28 @@ class UserServiceTest extends TestCase
         $service->generatePasswordResetToken($userMock);
     }
 
+    public function testSetPassword(): void
+    {
+        $userMock = $this->createMock(User::class);
+        $userMock
+            ->expects(self::once())
+            ->method('setPassword');
+
+        $this->userPasswordHasherMock
+            ->expects(self::once())
+            ->method('hashPassword')
+            ->with($userMock, 'password');
+
+        $service = $this->getService();
+        $service->setPassword($userMock, 'password');
+    }
+
     private function getService(): UserService
     {
         return new UserService(
             $this->entityManagerMock,
             $this->userRepositoryMock,
+            $this->userPasswordHasherMock,
         );
     }
 }

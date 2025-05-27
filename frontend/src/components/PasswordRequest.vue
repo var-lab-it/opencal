@@ -6,14 +6,14 @@
       <div class="card shadow-sm mb-3">
         <div class="card-body">
           <h3>
-            {{ $t('password_reset.headline') }}
+            {{ $t('password_request.headline') }}
           </h3>
 
           <div
             v-if="success"
             class="alert alert-success"
           >
-            {{ $t('password_reset.message_requested') }}
+            {{ $t('password_request.message_requested') }}
           </div>
           <div
             v-if="error"
@@ -46,7 +46,7 @@
                   class="spinner-grow text-light spinner-grow-sm"
                   role="status"
                 ></span>
-                {{ $t('password_reset.submit_button') }}
+                {{ $t('password_request.submit_button') }}
               </button>
             </div>
           </form>
@@ -78,7 +78,7 @@ async function handlePasswordRequest() {
   try {
     const response = await requestPassword(email.value);
 
-    success.value = t('password_reset.message_requested');
+    success.value = t('password_request.message_requested');
   } catch (err) {
     console.error("Request failed:", err);
     error.value = "An error occurred. Please check your email and try again.";
