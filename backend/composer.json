@@ -38,7 +38,7 @@
     "symfony/messenger": "^7.2",
     "symfony/monolog-bundle": "^3.10",
     "symfony/runtime": "^7.2",
-    "symfony/scheduler": "~7.2.0",
+    "symfony/scheduler": "~7.3.0",
     "symfony/security-bundle": "^7.2",
     "symfony/string": "~7.2.0",
     "symfony/translation": "~7.2.0",
