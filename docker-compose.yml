@@ -19,10 +19,10 @@ services:
     ports:
       - '3306:3306'
 
-  php_backend:
+  php_api:
     build:
       target: php_dev
-      context: ./backend
+      context: .
     depends_on:
       database:
         condition: service_healthy
@@ -32,44 +32,30 @@ services:
         client_host=host.docker.internal
         client_port=9003
         idekey=PHPSTORM
-      PHP_IDE_CONFIG: "serverName=opencal-backend"
+      PHP_IDE_CONFIG: "serverName=opencal-api"
       TIMEZONE: Europe/Berlin
-      PS1: '[opencal-backend]::$$(pwd) # '
+      PS1: '[opencal-api]::$$(pwd) # '
       FRONTEND_HOST: 'localhost'
       USE_SSL: false
       APP_ENV: dev
     volumes:
       - php_socket:/var/run/php
-      - ./backend:/srv/app
+      - ./:/srv/app
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
-  nginx_backend:
+  nginx_api:
     build:
       target: nginx_dev
-      context: ./backend
+      context: .
     depends_on:
-      - php_backend
+      - php_api
     # Comment out this volume in production
     volumes:
       - php_socket:/var/run/php
-      - ./backend/public:/srv/app/public
+      - ./public:/srv/app/public
     ports:
       - '8080:80'
-
-  frontend:
-    build:
-      target: development
-      context: ./frontend
-    ports:
-      - "80:5173"
-    volumes:
-      - ./frontend:/app
-    environment:
-      NODE_ENV: development
-      DEBUG: "vite:*"
-    depends_on:
-      - nginx_backend
 
   mailer:
     image: axllent/mailpit

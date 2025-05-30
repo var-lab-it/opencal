@@ -53,7 +53,7 @@ You can contribute in many ways:
 To run tests:
 
 ```bash
-make backend.sh
+make api.sh
 # and then
 composer run tests
 ```
@@ -61,7 +61,7 @@ composer run tests
 To run phpstan:
 
 ```bash
-make backend.sh
+make api.sh
 # and then
 composer run phpstan
 ```
@@ -69,7 +69,7 @@ composer run phpstan
 To run PHP linter:
 
 ```bash
-make backend.sh
+make api.sh
 # and then
 composer run lint:php
 composer run lint:php:fix

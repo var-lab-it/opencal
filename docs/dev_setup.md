@@ -25,28 +25,18 @@ make build
 ## 3. Install Dependencies
 
 After building, you must reinstall dependencies because local folders are mounted as volumes in the Docker containers.
-The dependencies for backend and frontend must exist outside the container.
+The dependencies must exist outside the container.
 
 Avoid using a locally installed Composer, as your PHP version may differ from the required version.
 
-Install backend and frontend dependencies with:
-
 ```bash
-make install
-```
-
-Alternatively:
-
-```bash
-make backend.install
-make frontend.install
+make api.install
 ```
 
 Or:
 
 ```
-docker compose run --entrypoint="composer" php_backend install
-docker compose run --entrypoint="npm" frontend install
+docker compose run --entrypoint="composer" php_api install
 ```
 
 ## 4. Generate .ics Files for Radicale (CalDAV)
@@ -70,7 +60,7 @@ docker compose up -d
 make up
 ```
 
-When the development environment starts, backend fixtures - including a default user - are loaded.
+When the development environment starts, api fixtures - including a default user - are loaded.
 
 To verify, try to login:
 
@@ -78,4 +68,4 @@ To verify, try to login:
 - User: `user@example.tld`
 - Password: `password`
 
-More users are defined in [UserFixtures](backend/src/DataFixtures/UserFixtures.php).
+More users are defined in [UserFixtures](src/DataFixtures/UserFixtures.php).
