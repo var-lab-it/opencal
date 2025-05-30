@@ -25,28 +25,18 @@ make build
 ## 3. Install Dependencies
 
 After building, you must reinstall dependencies because local folders are mounted as volumes in the Docker containers.
-The dependencies for backend and frontend must exist outside the container.
+The dependencies must exist outside the container.
 
 Avoid using a locally installed Composer, as your PHP version may differ from the required version.
 
-Install backend and frontend dependencies with:
-
-```bash
-make install
-```
-
-Alternatively:
-
 ```bash
 make backend.install
-make frontend.install
 ```
 
 Or:
 
 ```
 docker compose run --entrypoint="composer" php_backend install
-docker compose run --entrypoint="npm" frontend install
 ```
 
 ## 4. Generate .ics Files for Radicale (CalDAV)
