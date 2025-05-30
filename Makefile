@@ -2,45 +2,26 @@
 # Backend targets (Symfony)
 # ---------------------------
 
-backend.build:
-	docker compose build php_backend
+api.build:
+	docker compose build php_api
 
-backend.sh:
-	make up && docker compose exec -it php_backend sh
+api.sh:
+	make up && docker compose exec -it php_api sh
 
-backend.phpunit:
-	docker compose exec php_backend bin/phpunit
+api.phpunit:
+	docker compose exec php_api bin/phpunit
 
-backend.fixtures:
-	docker compose exec php_backend bin/console doctrine:fixtures:load -n
+api.fixtures:
+	docker compose exec php_api bin/console doctrine:fixtures:load -n
 
-backend.db.recreate:
-	docker compose exec php_backend composer db:recreate:dev
+api.db.recreate:
+	docker compose exec php_api composer db:recreate:dev
 
-backend.migrate:
-	docker compose exec php_backend bin/console doctrine:migrations:migrate -n
+api.migrate:
+	docker compose exec php_api bin/console doctrine:migrations:migrate -n
 
-backend.install:
-	docker compose run --entrypoint="composer" php_backend install
-
-# ---------------------------
-# Frontend targets (Vue.js)
-# ---------------------------
-
-frontend.build:
-	docker build -f frontend/Dockerfile --target production -t opencal-frontend:latest frontend
-
-frontend.bash:
-	docker compose exec -it frontend bash
-
-frontend.install:
-	docker compose run --entrypoint="npm" frontend install
-
-frontend.lint:
-	docker compose exec frontend npm run lint
-
-frontend.audit:
-	docker compose exec frontend npm audit --audit-level=low
+api.install:
+	docker compose run --entrypoint="composer" php_api install
 
 # ---------------------------
 # Common targets
@@ -56,10 +37,10 @@ ps:
 	docker compose ps
 
 build:
-	make backend.build && docker compose build nginx_backend && make frontend.build
+	make api.build && docker compose build nginx_api
 
 install:
-	make backend.install && make frontend.install
+	make api.install
 
 make ics:
 	bash generate-ics.sh
