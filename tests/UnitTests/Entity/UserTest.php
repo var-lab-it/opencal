@@ -88,6 +88,7 @@ class UserTest extends TestCase
 
         self::expectNotToPerformAssertions();
 
+        /** @phpstan-ignore-next-line */
         $user->eraseCredentials();
     }
 
