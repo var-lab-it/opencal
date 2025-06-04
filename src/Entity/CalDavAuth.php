@@ -4,31 +4,64 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Repository\CalDavAuthRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
+#[ApiResource(
+    operations: [
+        new GetCollection(),
+        new Get(),
+        new Post(),
+        new Patch(),
+        new Delete(),
+    ],
+    normalizationContext: [
+        'groups' => [
+            'cal-dav-auth:read',
+        ],
+    ],
+    denormalizationContext: [
+        'groups' => [
+            'cal-dav-auth:write',
+        ],
+    ],
+    security: "is_granted('IS_AUTHENTICATED_FULLY')",
+)]
 #[ORM\Entity(repositoryClass: CalDavAuthRepository::class)]
 class CalDavAuth
 {
+    #[Groups(['cal-dav-auth:read'])]
     #[ORM\Column]
     #[ORM\GeneratedValue]
     #[ORM\Id]
     private int $id;
 
+    #[Groups(['cal-dav-auth:read', 'cal-dav-auth:write'])]
     #[ORM\Column]
     private bool $enabled;
 
+    #[Groups(['cal-dav-auth:read', 'cal-dav-auth:write'])]
     #[ORM\Column(length: 255)]
     private string $baseUri;
 
+    #[Groups(['cal-dav-auth:read', 'cal-dav-auth:write'])]
     #[ORM\Column(length: 255)]
     private string $username;
 
+    #[Groups(['cal-dav-auth:read', 'cal-dav-auth:write'])]
     #[ORM\Column(length: 255)]
     private string $password;
 
+    #[Groups(['cal-dav-auth:write'])]
     #[ORM\JoinColumn(nullable: false)]
     #[ORM\ManyToOne(inversedBy: 'calDavAuths')]
     private User $user;

@@ -1,0 +1,6 @@
+{
+    "enabled": true,
+    "baseUri": "http://example.com",
+    "username": "user",
+    "password": "password"
+}
