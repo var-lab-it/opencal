@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Availability;
+namespace App\Tests\UnitTests\Availability;
 
 use App\Availability\AvailabilityService;
 use App\Entity\Availability;

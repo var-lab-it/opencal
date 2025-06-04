@@ -1,0 +1,9 @@
+[
+    {
+        "id": 2,
+        "enabled": true,
+        "baseUri": "http://caldav.calendar",
+        "username": "user2",
+        "password": "password"
+    }
+]

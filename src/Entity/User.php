@@ -29,6 +29,7 @@ use Symfony\Component\Validator\Constraints as Assert;
             uriTemplate: '/me/{id}',
             security: "is_granted('IS_AUTHENTICATED_FULLY')",
         ),
+        new Get(),
     ],
     normalizationContext: [
         'groups' => [

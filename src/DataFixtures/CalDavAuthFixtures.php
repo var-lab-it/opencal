@@ -21,17 +21,26 @@ class CalDavAuthFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        $user = $this->getReference('user1', User::class);
-
+        $user1      = $this->getReference('user1', User::class);
         $calDavAuth = new CalDavAuth();
         $calDavAuth
             ->setEnabled(true)
             ->setUsername('dev')
             ->setPassword('dev')
             ->setBaseUri('http://radicale:5232/dev/example/')
-            ->setUser($user);
-
+            ->setUser($user1);
         $manager->persist($calDavAuth);
+
+        $user2      = $this->getReference('user2', User::class);
+        $calDavAuth = new CalDavAuth();
+        $calDavAuth
+            ->setEnabled(true)
+            ->setUsername('user2')
+            ->setPassword('password')
+            ->setBaseUri('http://caldav.calendar')
+            ->setUser($user2);
+        $manager->persist($calDavAuth);
+
         $manager->flush();
     }
 }

@@ -1,0 +1,9 @@
+[
+    {
+        "id": 1,
+        "enabled": true,
+        "baseUri": "http://radicale:5232/dev/example/",
+        "username": "dev",
+        "password": "dev"
+    }
+]
