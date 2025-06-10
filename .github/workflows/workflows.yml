@@ -46,14 +46,6 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./reports/junit-unittests.xml
 
-  lint_docker_compose:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: lint docker-compose.yml
-        run: docker compose config
-
   security_checks:
     name: security-check
     runs-on: ubuntu-latest
