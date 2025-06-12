@@ -15,6 +15,8 @@ class ResetPasswordTest extends ApiTestCase
 
     public function testRequestPasswordWithExistingUser(): void
     {
+        self::transport()->reset();
+
         $client = static::createClient();
 
         $response = $client->request('POST', '/password/request', [
@@ -29,11 +31,12 @@ class ResetPasswordTest extends ApiTestCase
         self::assertSame(Response::HTTP_NO_CONTENT, $response->getStatusCode());
         self::transport()->queue()->assertCount(1);
         self::transport()->queue()->assertContains(PasswordRequestedMessage::class);
-        self::transport()->reset();
     }
 
     public function testRequestPasswordWithUserNotFound(): void
     {
+        self::transport()->reset();
+
         $client = static::createClient();
 
         $response = $client->request('POST', '/password/request', [
@@ -47,6 +50,5 @@ class ResetPasswordTest extends ApiTestCase
 
         self::assertSame(Response::HTTP_NOT_FOUND, $response->getStatusCode());
         self::transport()->queue()->assertCount(0);
-        self::transport()->reset();
     }
 }
