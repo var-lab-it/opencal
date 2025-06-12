@@ -15,6 +15,8 @@ class CancelEventAsAttendeeTest extends ApiTestCase
 
     public function testCancelEventAsAttendee(): void
     {
+        self::transport()->reset();
+
         $client    = static::createClient();
         $container = $client->getContainer();
 
@@ -41,6 +43,5 @@ class CancelEventAsAttendeeTest extends ApiTestCase
         self::assertResponseIsSuccessful();
 
         self::transport()->queue()->assertContains(EventCanceledMessage::class);
-        self::transport()->reset();
     }
 }
