@@ -147,6 +147,46 @@ jobs:
           DATABASE_URL: mysql://root:symfony@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/symfony?serverVersion=8.2
         run: composer run tests:api:ci
 
+  openapi_diff:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          extensions: mbstring, xml, ctype, iconv, intl, mysqli, pdo, pdo_mysql, posix, pcntl, mysql
+          coverage: 'xdebug'
+          php-version: 8.4
+        env:
+          fail-fast: true
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          # Use composer.json for key, if composer.lock is not committed.
+          # key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Export openapi-temp.yml
+        run: php bin/console api:openapi:export -y -o openapi-temp.yml
+
+      - name: Lint OpenAPI YAML-Files
+        run: php bin/console lint:yaml openapi.yml && php bin/console lint:yaml openapi-temp.yml
+
+      - name: Check if differs
+        run: diff openapi.yml openapi-temp.yml
+
   build_api:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
