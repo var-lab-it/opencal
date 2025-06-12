@@ -1,0 +1,2405 @@
+openapi: 3.1.0
+info:
+  title: 'OpenCal API'
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: /
+    description: ''
+paths:
+  /availability/day:
+    get:
+      operationId: api_availabilityday_get_collection
+      tags:
+        - Availability
+      responses:
+        '200':
+          description: 'Availability collection'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Availability-availability.read'
+            application/ld+json:
+              schema:
+                type: object
+                properties:
+                  member: { type: array, items: { $ref: '#/components/schemas/Availability.jsonld-availability.read' } }
+                  totalItems: { type: integer, minimum: 0 }
+                  view: { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, first: { type: string, format: iri-reference }, last: { type: string, format: iri-reference }, previous: { type: string, format: iri-reference }, next: { type: string, format: iri-reference } }, example: { '@id': string, type: string, first: string, last: string, previous: string, next: string } }
+                  search: { type: object, properties: { '@type': { type: string }, template: { type: string }, variableRepresentation: { type: string }, mapping: { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: [string, 'null'] }, required: { type: boolean } } } } } }
+                required:
+                  - member
+      summary: 'Retrieves the collection of Availability resources.'
+      description: 'Retrieves the collection of Availability resources.'
+      parameters:
+        -
+          name: page
+          in: query
+          description: 'The collection page number'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: integer
+            default: 1
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: event_type_id
+          in: query
+          description: 'Availability event_type_id'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: date
+          in: query
+          description: 'Availability date'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: email
+          in: query
+          description: 'Availability email'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+      deprecated: false
+  /cal_dav_auths:
+    get:
+      operationId: api_cal_dav_auths_get_collection
+      tags:
+        - CalDavAuth
+      responses:
+        '200':
+          description: 'CalDavAuth collection'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CalDavAuth-cal-dav-auth.read'
+            application/ld+json:
+              schema:
+                type: object
+                properties:
+                  member: { type: array, items: { $ref: '#/components/schemas/CalDavAuth.jsonld-cal-dav-auth.read' } }
+                  totalItems: { type: integer, minimum: 0 }
+                  view: { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, first: { type: string, format: iri-reference }, last: { type: string, format: iri-reference }, previous: { type: string, format: iri-reference }, next: { type: string, format: iri-reference } }, example: { '@id': string, type: string, first: string, last: string, previous: string, next: string } }
+                  search: { type: object, properties: { '@type': { type: string }, template: { type: string }, variableRepresentation: { type: string }, mapping: { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: [string, 'null'] }, required: { type: boolean } } } } } }
+                required:
+                  - member
+        '403':
+          description: Forbidden
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+      summary: 'Retrieves the collection of CalDavAuth resources.'
+      description: 'Retrieves the collection of CalDavAuth resources.'
+      parameters:
+        -
+          name: page
+          in: query
+          description: 'The collection page number'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: integer
+            default: 1
+          style: form
+          explode: false
+          allowReserved: false
+      deprecated: false
+    post:
+      operationId: api_cal_dav_auths_post
+      tags:
+        - CalDavAuth
+      responses:
+        '201':
+          description: 'CalDavAuth resource created'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalDavAuth-cal-dav-auth.read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/CalDavAuth.jsonld-cal-dav-auth.read'
+          links: {  }
+        '400':
+          description: 'Invalid input'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+        '422':
+          description: 'An error occurred'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation.jsonld-jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation-json'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation-json'
+          links: {  }
+        '403':
+          description: Forbidden
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+      summary: 'Creates a CalDavAuth resource.'
+      description: 'Creates a CalDavAuth resource.'
+      parameters: []
+      requestBody:
+        description: 'The new CalDavAuth resource'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CalDavAuth-cal-dav-auth.write'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/CalDavAuth.jsonld-cal-dav-auth.write'
+        required: true
+      deprecated: false
+  '/cal_dav_auths/{id}':
+    get:
+      operationId: api_cal_dav_auths_id_get
+      tags:
+        - CalDavAuth
+      responses:
+        '200':
+          description: 'CalDavAuth resource'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalDavAuth-cal-dav-auth.read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/CalDavAuth.jsonld-cal-dav-auth.read'
+        '403':
+          description: Forbidden
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+        '404':
+          description: 'Not found'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+      summary: 'Retrieves a CalDavAuth resource.'
+      description: 'Retrieves a CalDavAuth resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'CalDavAuth identifier'
+          required: true
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: simple
+          explode: false
+          allowReserved: false
+      deprecated: false
+    delete:
+      operationId: api_cal_dav_auths_id_delete
+      tags:
+        - CalDavAuth
+      responses:
+        '204':
+          description: 'CalDavAuth resource deleted'
+        '403':
+          description: Forbidden
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+        '404':
+          description: 'Not found'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+      summary: 'Removes the CalDavAuth resource.'
+      description: 'Removes the CalDavAuth resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'CalDavAuth identifier'
+          required: true
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: simple
+          explode: false
+          allowReserved: false
+      deprecated: false
+    patch:
+      operationId: api_cal_dav_auths_id_patch
+      tags:
+        - CalDavAuth
+      responses:
+        '200':
+          description: 'CalDavAuth resource updated'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalDavAuth-cal-dav-auth.read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/CalDavAuth.jsonld-cal-dav-auth.read'
+          links: {  }
+        '400':
+          description: 'Invalid input'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+        '422':
+          description: 'An error occurred'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation.jsonld-jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation-json'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation-json'
+          links: {  }
+        '403':
+          description: Forbidden
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+        '404':
+          description: 'Not found'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+      summary: 'Updates the CalDavAuth resource.'
+      description: 'Updates the CalDavAuth resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'CalDavAuth identifier'
+          required: true
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: simple
+          explode: false
+          allowReserved: false
+      requestBody:
+        description: 'The updated CalDavAuth resource'
+        content:
+          application/merge-patch+json:
+            schema:
+              $ref: '#/components/schemas/CalDavAuth-cal-dav-auth.write'
+        required: true
+      deprecated: false
+  '/events/{id}/cancel':
+    post:
+      operationId: api_events_idcancel_post
+      tags:
+        - CancelEvent
+      responses:
+        '201':
+          description: 'CancelEvent resource created'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelEvent'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/CancelEvent.jsonld'
+          links: {  }
+        '400':
+          description: 'Invalid input'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+        '422':
+          description: 'An error occurred'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation.jsonld-jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation-json'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation-json'
+          links: {  }
+      summary: 'Creates a CancelEvent resource.'
+      description: 'Cancels a specific event. Requires a valid cancellationHash to authorize the cancellation.'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'CancelEvent identifier'
+          required: true
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: simple
+          explode: false
+          allowReserved: false
+      requestBody:
+        description: 'The cancellation hash'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelEvent'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/CancelEvent.jsonld'
+        required: false
+      deprecated: false
+  /events:
+    get:
+      operationId: api_events_get_collection
+      tags:
+        - Event
+      responses:
+        '200':
+          description: 'Event collection'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event-event.read'
+            application/ld+json:
+              schema:
+                type: object
+                properties:
+                  member: { type: array, items: { $ref: '#/components/schemas/Event.jsonld-event.read' } }
+                  totalItems: { type: integer, minimum: 0 }
+                  view: { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, first: { type: string, format: iri-reference }, last: { type: string, format: iri-reference }, previous: { type: string, format: iri-reference }, next: { type: string, format: iri-reference } }, example: { '@id': string, type: string, first: string, last: string, previous: string, next: string } }
+                  search: { type: object, properties: { '@type': { type: string }, template: { type: string }, variableRepresentation: { type: string }, mapping: { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: [string, 'null'] }, required: { type: boolean } } } } } }
+                required:
+                  - member
+        '403':
+          description: Forbidden
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+      summary: 'Retrieves the collection of Event resources.'
+      description: 'Retrieves the collection of Event resources.'
+      parameters:
+        -
+          name: page
+          in: query
+          description: 'The collection page number'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: integer
+            default: 1
+          style: form
+          explode: false
+          allowReserved: false
+      deprecated: false
+    post:
+      operationId: api_events_post
+      tags:
+        - Event
+      responses:
+        '201':
+          description: 'Event resource created'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event-event.read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Event.jsonld-event.read'
+          links: {  }
+        '400':
+          description: 'Invalid input'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+        '422':
+          description: 'An error occurred'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation.jsonld-jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation-json'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation-json'
+          links: {  }
+      summary: 'Creates a Event resource.'
+      description: 'Creates a Event resource.'
+      parameters: []
+      requestBody:
+        description: 'The new Event resource'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event-event.write'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Event.jsonld-event.write'
+        required: true
+      deprecated: false
+  '/events/{id}':
+    get:
+      operationId: api_events_id_get
+      tags:
+        - Event
+      responses:
+        '200':
+          description: 'Event resource'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event-event.read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Event.jsonld-event.read'
+        '404':
+          description: 'Not found'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+      summary: 'Retrieves a Event resource.'
+      description: 'Retrieves a Event resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Event identifier'
+          required: true
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: simple
+          explode: false
+          allowReserved: false
+      deprecated: false
+    delete:
+      operationId: api_events_id_delete
+      tags:
+        - Event
+      responses:
+        '204':
+          description: 'Event resource deleted'
+        '403':
+          description: Forbidden
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+        '404':
+          description: 'Not found'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+      summary: 'Removes the Event resource.'
+      description: 'Removes the Event resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Event identifier'
+          required: true
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: simple
+          explode: false
+          allowReserved: false
+      deprecated: false
+    patch:
+      operationId: api_events_id_patch
+      tags:
+        - Event
+      responses:
+        '200':
+          description: 'Event resource updated'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event-event.read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Event.jsonld-event.read'
+          links: {  }
+        '400':
+          description: 'Invalid input'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+        '422':
+          description: 'An error occurred'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation.jsonld-jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation-json'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation-json'
+          links: {  }
+        '404':
+          description: 'Not found'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+      summary: 'Updates the Event resource.'
+      description: 'Updates the Event resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Event identifier'
+          required: true
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: simple
+          explode: false
+          allowReserved: false
+      requestBody:
+        description: 'The updated Event resource'
+        content:
+          application/merge-patch+json:
+            schema:
+              $ref: '#/components/schemas/Event-event.write'
+        required: true
+      deprecated: false
+  /event_types:
+    get:
+      operationId: api_event_types_get_collection
+      tags:
+        - EventType
+      responses:
+        '200':
+          description: 'EventType collection'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EventType-event_type.read'
+            application/ld+json:
+              schema:
+                type: object
+                properties:
+                  member: { type: array, items: { $ref: '#/components/schemas/EventType.jsonld-event_type.read' } }
+                  totalItems: { type: integer, minimum: 0 }
+                  view: { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, first: { type: string, format: iri-reference }, last: { type: string, format: iri-reference }, previous: { type: string, format: iri-reference }, next: { type: string, format: iri-reference } }, example: { '@id': string, type: string, first: string, last: string, previous: string, next: string } }
+                  search: { type: object, properties: { '@type': { type: string }, template: { type: string }, variableRepresentation: { type: string }, mapping: { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: [string, 'null'] }, required: { type: boolean } } } } } }
+                required:
+                  - member
+      summary: 'Retrieves the collection of EventType resources.'
+      description: 'Retrieves the collection of EventType resources.'
+      parameters:
+        -
+          name: page
+          in: query
+          description: 'The collection page number'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: integer
+            default: 1
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: host.email
+          in: query
+          description: ''
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'host.email[]'
+          in: query
+          description: ''
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+          allowReserved: false
+        -
+          name: slug
+          in: query
+          description: ''
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'slug[]'
+          in: query
+          description: ''
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+          allowReserved: false
+      deprecated: false
+    post:
+      operationId: api_event_types_post
+      tags:
+        - EventType
+      responses:
+        '201':
+          description: 'EventType resource created'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventType-event_type.read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/EventType.jsonld-event_type.read'
+          links: {  }
+        '400':
+          description: 'Invalid input'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+        '422':
+          description: 'An error occurred'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation.jsonld-jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation-json'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation-json'
+          links: {  }
+        '403':
+          description: Forbidden
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+      summary: 'Creates a EventType resource.'
+      description: 'Creates a EventType resource.'
+      parameters: []
+      requestBody:
+        description: 'The new EventType resource'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventType-event_type.write'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/EventType.jsonld-event_type.write'
+        required: true
+      deprecated: false
+  '/event_types/{id}':
+    get:
+      operationId: api_event_types_id_get
+      tags:
+        - EventType
+      responses:
+        '200':
+          description: 'EventType resource'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventType-event_type.read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/EventType.jsonld-event_type.read'
+        '404':
+          description: 'Not found'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+      summary: 'Retrieves a EventType resource.'
+      description: 'Retrieves a EventType resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'EventType identifier'
+          required: true
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: simple
+          explode: false
+          allowReserved: false
+      deprecated: false
+    delete:
+      operationId: api_event_types_id_delete
+      tags:
+        - EventType
+      responses:
+        '204':
+          description: 'EventType resource deleted'
+        '403':
+          description: Forbidden
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+        '404':
+          description: 'Not found'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+      summary: 'Removes the EventType resource.'
+      description: 'Removes the EventType resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'EventType identifier'
+          required: true
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: simple
+          explode: false
+          allowReserved: false
+      deprecated: false
+    patch:
+      operationId: api_event_types_id_patch
+      tags:
+        - EventType
+      responses:
+        '200':
+          description: 'EventType resource updated'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventType-event_type.read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/EventType.jsonld-event_type.read'
+          links: {  }
+        '400':
+          description: 'Invalid input'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+        '422':
+          description: 'An error occurred'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation.jsonld-jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation-json'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation-json'
+          links: {  }
+        '403':
+          description: Forbidden
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+        '404':
+          description: 'Not found'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+      summary: 'Updates the EventType resource.'
+      description: 'Updates the EventType resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'EventType identifier'
+          required: true
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: simple
+          explode: false
+          allowReserved: false
+      requestBody:
+        description: 'The updated EventType resource'
+        content:
+          application/merge-patch+json:
+            schema:
+              $ref: '#/components/schemas/EventType-event_type.write'
+        required: true
+      deprecated: false
+  /auth:
+    post:
+      operationId: login_check_post
+      tags:
+        - 'Login Check'
+      responses:
+        '200':
+          description: 'User token created'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token: { readOnly: true, type: string, nullable: false }
+                required:
+                  - token
+      summary: 'Creates a user token.'
+      description: 'Creates a user token.'
+      requestBody:
+        description: 'The login data'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  nullable: false
+                password:
+                  type: string
+                  nullable: false
+              required:
+                - email
+                - password
+        required: true
+  /password/request:
+    post:
+      operationId: api_passwordrequest_post
+      tags:
+        - RequestPassword
+      responses:
+        '204':
+          description: 'No content. Password reset request accepted.'
+        '201':
+          description: 'RequestPassword resource created'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestPassword'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/RequestPassword.jsonld'
+          links: {  }
+        '400':
+          description: 'Invalid input'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+        '422':
+          description: 'An error occurred'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation.jsonld-jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation-json'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation-json'
+          links: {  }
+      summary: 'Creates a RequestPassword resource.'
+      description: 'Creates a RequestPassword resource.'
+      parameters: []
+      requestBody:
+        description: 'The new RequestPassword resource'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestPassword'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/RequestPassword.jsonld'
+        required: true
+      deprecated: false
+  /password/reset:
+    post:
+      operationId: api_passwordreset_post
+      tags:
+        - ResetPassword
+      responses:
+        '204':
+          description: 'No content. Password reset is done.'
+        '201':
+          description: 'ResetPassword resource created'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResetPassword'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/ResetPassword.jsonld'
+          links: {  }
+        '400':
+          description: 'Invalid input'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+        '422':
+          description: 'An error occurred'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation.jsonld-jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation-json'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation-json'
+          links: {  }
+      summary: 'Creates a ResetPassword resource.'
+      description: 'Creates a ResetPassword resource.'
+      parameters: []
+      requestBody:
+        description: 'The new ResetPassword resource'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPassword'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/ResetPassword.jsonld'
+        required: true
+      deprecated: false
+  /me:
+    get:
+      operationId: api_me_get
+      tags:
+        - User
+      responses:
+        '200':
+          description: 'User resource'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User-me.read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/User.jsonld-me.read'
+        '403':
+          description: Forbidden
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+        '404':
+          description: 'Not found'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+      summary: 'Retrieves a User resource.'
+      description: 'Retrieves a User resource.'
+      parameters: []
+      deprecated: false
+  '/me/{id}':
+    patch:
+      operationId: api_me_id_patch
+      tags:
+        - User
+      responses:
+        '200':
+          description: 'User resource updated'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User-me.read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/User.jsonld-me.read'
+          links: {  }
+        '400':
+          description: 'Invalid input'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+        '422':
+          description: 'An error occurred'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation.jsonld-jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation-json'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConstraintViolation-json'
+          links: {  }
+        '403':
+          description: Forbidden
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+        '404':
+          description: 'Not found'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+      summary: 'Updates the User resource.'
+      description: 'Updates the User resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'User identifier'
+          required: true
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: simple
+          explode: false
+          allowReserved: false
+      requestBody:
+        description: 'The updated User resource'
+        content:
+          application/merge-patch+json:
+            schema:
+              $ref: '#/components/schemas/User-me.write'
+        required: true
+      deprecated: false
+  '/users/{id}':
+    get:
+      operationId: api_users_id_get
+      tags:
+        - User
+      responses:
+        '200':
+          description: 'User resource'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User-me.read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/User.jsonld-me.read'
+        '404':
+          description: 'Not found'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
+      summary: 'Retrieves a User resource.'
+      description: 'Retrieves a User resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'User identifier'
+          required: true
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: simple
+          explode: false
+          allowReserved: false
+      deprecated: false
+components:
+  schemas:
+    Availability-availability.read:
+      type: object
+      description: ''
+      deprecated: false
+    Availability.jsonld-availability.read:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+    CalDavAuth-cal-dav-auth.read:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        id:
+          readOnly: true
+          type: integer
+        enabled:
+          type: boolean
+        baseUri:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+    CalDavAuth-cal-dav-auth.write:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        enabled:
+          type: boolean
+        baseUri:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        user:
+          type: string
+          format: iri-reference
+          example: 'https://example.com/'
+    CalDavAuth.jsonld-cal-dav-auth.read:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        '@context':
+          readOnly: true
+          oneOf:
+            -
+              type: string
+            -
+              type: object
+              properties:
+                '@vocab':
+                  type: string
+                hydra:
+                  type: string
+                  enum: ['http://www.w3.org/ns/hydra/core#']
+              required:
+                - '@vocab'
+                - hydra
+              additionalProperties: true
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        enabled:
+          type: boolean
+        baseUri:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+    CalDavAuth.jsonld-cal-dav-auth.write:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        enabled:
+          type: boolean
+        baseUri:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        user:
+          type: string
+          format: iri-reference
+          example: 'https://example.com/'
+    CancelEvent:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        cancellationHash:
+          type: string
+    CancelEvent.jsonld:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        '@context':
+          readOnly: true
+          oneOf:
+            -
+              type: string
+            -
+              type: object
+              properties:
+                '@vocab':
+                  type: string
+                hydra:
+                  type: string
+                  enum: ['http://www.w3.org/ns/hydra/core#']
+              required:
+                - '@vocab'
+                - hydra
+              additionalProperties: true
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        cancellationHash:
+          type: string
+    ConstraintViolation-json:
+      type: object
+      description: 'Unprocessable entity'
+      deprecated: false
+      properties:
+        status:
+          default: 422
+          example: 422
+          type: integer
+        violations:
+          type: array
+          items:
+            type: object
+            properties:
+              propertyPath:
+                type: string
+                description: 'The property path of the violation'
+              message:
+                type: string
+                description: 'The message associated with the violation'
+        detail:
+          readOnly: true
+          type: string
+        type:
+          readOnly: true
+          type: string
+        title:
+          readOnly: true
+          type:
+            - string
+            - 'null'
+        instance:
+          readOnly: true
+          type:
+            - string
+            - 'null'
+    ConstraintViolation.jsonld-jsonld:
+      type: object
+      description: 'Unprocessable entity'
+      deprecated: false
+      properties:
+        '@context':
+          readOnly: true
+          oneOf:
+            -
+              type: string
+            -
+              type: object
+              properties:
+                '@vocab':
+                  type: string
+                hydra:
+                  type: string
+                  enum: ['http://www.w3.org/ns/hydra/core#']
+              required:
+                - '@vocab'
+                - hydra
+              additionalProperties: true
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        status:
+          default: 422
+          example: 422
+          type: integer
+        violations:
+          type: array
+          items:
+            type: object
+            properties:
+              propertyPath:
+                type: string
+                description: 'The property path of the violation'
+              message:
+                type: string
+                description: 'The message associated with the violation'
+        detail:
+          readOnly: true
+          type: string
+        description:
+          readOnly: true
+          type: string
+        type:
+          readOnly: true
+          type: string
+        title:
+          readOnly: true
+          type:
+            - string
+            - 'null'
+        instance:
+          readOnly: true
+          type:
+            - string
+            - 'null'
+    Error:
+      type: object
+      description: 'A representation of common errors.'
+      deprecated: false
+      properties:
+        title:
+          readOnly: true
+          description: 'A short, human-readable summary of the problem.'
+          type: string
+        detail:
+          readOnly: true
+          description: 'A human-readable explanation specific to this occurrence of the problem.'
+          type: string
+        status:
+          type: number
+          examples:
+            - 404
+          default: 400
+        instance:
+          readOnly: true
+          description: 'A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.'
+          type:
+            - string
+            - 'null'
+        type:
+          readOnly: true
+          description: 'A URI reference that identifies the problem type'
+          type: string
+    Error.jsonld:
+      type: object
+      description: 'A representation of common errors.'
+      deprecated: false
+      properties:
+        '@context':
+          readOnly: true
+          oneOf:
+            -
+              type: string
+            -
+              type: object
+              properties:
+                '@vocab':
+                  type: string
+                hydra:
+                  type: string
+                  enum: ['http://www.w3.org/ns/hydra/core#']
+              required:
+                - '@vocab'
+                - hydra
+              additionalProperties: true
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        title:
+          readOnly: true
+          description: 'A short, human-readable summary of the problem.'
+          type: string
+        detail:
+          readOnly: true
+          description: 'A human-readable explanation specific to this occurrence of the problem.'
+          type: string
+        status:
+          type: number
+          examples:
+            - 404
+          default: 400
+        instance:
+          readOnly: true
+          description: 'A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.'
+          type:
+            - string
+            - 'null'
+        type:
+          readOnly: true
+          description: 'A URI reference that identifies the problem type'
+          type: string
+        description:
+          readOnly: true
+          type:
+            - string
+            - 'null'
+    Event-event.read:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        id:
+          readOnly: true
+          type: integer
+        eventType:
+          anyOf:
+            -
+              $ref: '#/components/schemas/EventType-event.read'
+            -
+              type: 'null'
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        day:
+          type: string
+          format: date-time
+        participantName:
+          type:
+            - string
+            - 'null'
+        participantEmail:
+          format: email
+          externalDocs:
+            url: 'https://schema.org/email'
+          type:
+            - string
+            - 'null'
+        participantMessage:
+          type:
+            - string
+            - 'null'
+        cancellationHash:
+          type:
+            - string
+            - 'null'
+        cancelledByAttendee:
+          readOnly: true
+          type:
+            - boolean
+            - 'null'
+      required:
+        - eventType
+        - startTime
+        - endTime
+        - participantName
+        - participantEmail
+    Event-event.write:
+      type: object
+      description: ''
+      deprecated: false
+      required:
+        - eventType
+        - startTime
+        - endTime
+        - participantName
+        - participantEmail
+      properties:
+        eventType:
+          type:
+            - string
+            - 'null'
+          format: iri-reference
+          example: 'https://example.com/'
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        day:
+          type: string
+          format: date-time
+        participantName:
+          type:
+            - string
+            - 'null'
+        participantEmail:
+          format: email
+          externalDocs:
+            url: 'https://schema.org/email'
+          type:
+            - string
+            - 'null'
+        participantMessage:
+          type:
+            - string
+            - 'null'
+    Event.jsonld-event.read:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        '@context':
+          readOnly: true
+          oneOf:
+            -
+              type: string
+            -
+              type: object
+              properties:
+                '@vocab':
+                  type: string
+                hydra:
+                  type: string
+                  enum: ['http://www.w3.org/ns/hydra/core#']
+              required:
+                - '@vocab'
+                - hydra
+              additionalProperties: true
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        eventType:
+          anyOf:
+            -
+              $ref: '#/components/schemas/EventType.jsonld-event.read'
+            -
+              type: 'null'
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        day:
+          type: string
+          format: date-time
+        participantName:
+          type:
+            - string
+            - 'null'
+        participantEmail:
+          format: email
+          externalDocs:
+            url: 'https://schema.org/email'
+          type:
+            - string
+            - 'null'
+        participantMessage:
+          type:
+            - string
+            - 'null'
+        cancellationHash:
+          type:
+            - string
+            - 'null'
+        cancelledByAttendee:
+          readOnly: true
+          type:
+            - boolean
+            - 'null'
+      required:
+        - eventType
+        - startTime
+        - endTime
+        - participantName
+        - participantEmail
+    Event.jsonld-event.write:
+      type: object
+      description: ''
+      deprecated: false
+      required:
+        - eventType
+        - startTime
+        - endTime
+        - participantName
+        - participantEmail
+      properties:
+        eventType:
+          type:
+            - string
+            - 'null'
+          format: iri-reference
+          example: 'https://example.com/'
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        day:
+          type: string
+          format: date-time
+        participantName:
+          type:
+            - string
+            - 'null'
+        participantEmail:
+          format: email
+          externalDocs:
+            url: 'https://schema.org/email'
+          type:
+            - string
+            - 'null'
+        participantMessage:
+          type:
+            - string
+            - 'null'
+    EventType-event.read:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        id:
+          readOnly: true
+          type: integer
+        name:
+          type: string
+        description:
+          type:
+            - string
+            - 'null'
+        duration:
+          minimum: 5
+          type: integer
+        slug:
+          pattern: '^([a-z0-9-]+)$'
+          type: string
+      required:
+        - name
+        - duration
+        - slug
+    EventType-event_type.read:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        id:
+          readOnly: true
+          type: integer
+        name:
+          type: string
+        description:
+          type:
+            - string
+            - 'null'
+        duration:
+          minimum: 5
+          type: integer
+        slug:
+          pattern: '^([a-z0-9-]+)$'
+          type: string
+        host:
+          $ref: '#/components/schemas/User-event_type.read'
+      required:
+        - name
+        - duration
+        - slug
+    EventType-event_type.write:
+      type: object
+      description: ''
+      deprecated: false
+      required:
+        - name
+        - duration
+        - slug
+      properties:
+        name:
+          type: string
+        description:
+          type:
+            - string
+            - 'null'
+        duration:
+          minimum: 5
+          type: integer
+        slug:
+          pattern: '^([a-z0-9-]+)$'
+          type: string
+    EventType.jsonld-event.read:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        '@context':
+          readOnly: true
+          oneOf:
+            -
+              type: string
+            -
+              type: object
+              properties:
+                '@vocab':
+                  type: string
+                hydra:
+                  type: string
+                  enum: ['http://www.w3.org/ns/hydra/core#']
+              required:
+                - '@vocab'
+                - hydra
+              additionalProperties: true
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        name:
+          type: string
+        description:
+          type:
+            - string
+            - 'null'
+        duration:
+          minimum: 5
+          type: integer
+        slug:
+          pattern: '^([a-z0-9-]+)$'
+          type: string
+      required:
+        - name
+        - duration
+        - slug
+    EventType.jsonld-event_type.read:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        '@context':
+          readOnly: true
+          oneOf:
+            -
+              type: string
+            -
+              type: object
+              properties:
+                '@vocab':
+                  type: string
+                hydra:
+                  type: string
+                  enum: ['http://www.w3.org/ns/hydra/core#']
+              required:
+                - '@vocab'
+                - hydra
+              additionalProperties: true
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        name:
+          type: string
+        description:
+          type:
+            - string
+            - 'null'
+        duration:
+          minimum: 5
+          type: integer
+        slug:
+          pattern: '^([a-z0-9-]+)$'
+          type: string
+        host:
+          $ref: '#/components/schemas/User.jsonld-event_type.read'
+      required:
+        - name
+        - duration
+        - slug
+    EventType.jsonld-event_type.write:
+      type: object
+      description: ''
+      deprecated: false
+      required:
+        - name
+        - duration
+        - slug
+      properties:
+        name:
+          type: string
+        description:
+          type:
+            - string
+            - 'null'
+        duration:
+          minimum: 5
+          type: integer
+        slug:
+          pattern: '^([a-z0-9-]+)$'
+          type: string
+    RequestPassword:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        email:
+          type: string
+    RequestPassword.jsonld:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        '@context':
+          readOnly: true
+          oneOf:
+            -
+              type: string
+            -
+              type: object
+              properties:
+                '@vocab':
+                  type: string
+                hydra:
+                  type: string
+                  enum: ['http://www.w3.org/ns/hydra/core#']
+              required:
+                - '@vocab'
+                - hydra
+              additionalProperties: true
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        email:
+          type: string
+    ResetPassword:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        token:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+    ResetPassword.jsonld:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        '@context':
+          readOnly: true
+          oneOf:
+            -
+              type: string
+            -
+              type: object
+              properties:
+                '@vocab':
+                  type: string
+                hydra:
+                  type: string
+                  enum: ['http://www.w3.org/ns/hydra/core#']
+              required:
+                - '@vocab'
+                - hydra
+              additionalProperties: true
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        token:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+    User-event_type.read:
+      type: object
+      description: ''
+      deprecated: false
+      required:
+        - givenName
+        - familyName
+      properties:
+        givenName:
+          type: string
+        familyName:
+          type: string
+    User-me.read:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        id:
+          readOnly: true
+          type: integer
+        email:
+          format: email
+          externalDocs:
+            url: 'https://schema.org/email'
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
+        givenName:
+          type: string
+        familyName:
+          type: string
+      required:
+        - email
+        - givenName
+        - familyName
+    User-me.write:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        id:
+          readOnly: true
+          type: integer
+        email:
+          format: email
+          externalDocs:
+            url: 'https://schema.org/email'
+          type: string
+        givenName:
+          type: string
+        familyName:
+          type: string
+      required:
+        - email
+        - givenName
+        - familyName
+    User.jsonld-event_type.read:
+      type: object
+      description: ''
+      deprecated: false
+      required:
+        - givenName
+        - familyName
+      properties:
+        '@context':
+          readOnly: true
+          oneOf:
+            -
+              type: string
+            -
+              type: object
+              properties:
+                '@vocab':
+                  type: string
+                hydra:
+                  type: string
+                  enum: ['http://www.w3.org/ns/hydra/core#']
+              required:
+                - '@vocab'
+                - hydra
+              additionalProperties: true
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        givenName:
+          type: string
+        familyName:
+          type: string
+    User.jsonld-me.read:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        '@context':
+          readOnly: true
+          oneOf:
+            -
+              type: string
+            -
+              type: object
+              properties:
+                '@vocab':
+                  type: string
+                hydra:
+                  type: string
+                  enum: ['http://www.w3.org/ns/hydra/core#']
+              required:
+                - '@vocab'
+                - hydra
+              additionalProperties: true
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        email:
+          format: email
+          externalDocs:
+            url: 'https://schema.org/email'
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
+        givenName:
+          type: string
+        familyName:
+          type: string
+      required:
+        - email
+        - givenName
+        - familyName
+  responses: {  }
+  parameters: {  }
+  examples: {  }
+  requestBodies: {  }
+  headers: {  }
+  securitySchemes:
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  -
+    JWT: []
+tags:
+  -
+    name: Availability
+  -
+    name: CancelEvent
+  -
+    name: RequestPassword
+  -
+    name: ResetPassword
+  -
+    name: CalDavAuth
+  -
+    name: Event
+  -
+    name: EventType
+  -
+    name: User
+webhooks: {  }
