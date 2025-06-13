@@ -10,6 +10,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use App\Controller\CreateCalDavAuthController;
 use App\Repository\CalDavAuthRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -20,7 +21,9 @@ use Symfony\Component\Serializer\Attribute\Groups;
     operations: [
         new GetCollection(),
         new Get(),
-        new Post(),
+        new Post(
+            controller: CreateCalDavAuthController::class,
+        ),
         new Patch(),
         new Delete(),
     ],
@@ -61,7 +64,6 @@ class CalDavAuth
     #[ORM\Column(length: 255)]
     private string $password;
 
-    #[Groups(['cal-dav-auth:write'])]
     #[ORM\JoinColumn(nullable: false)]
     #[ORM\ManyToOne(inversedBy: 'calDavAuths')]
     private User $user;

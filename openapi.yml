@@ -1471,10 +1471,6 @@ components:
           type: string
         password:
           type: string
-        user:
-          type: string
-          format: iri-reference
-          example: 'https://example.com/'
     CalDavAuth.jsonld-cal-dav-auth.read:
       type: object
       description: ''
@@ -1527,10 +1523,6 @@ components:
           type: string
         password:
           type: string
-        user:
-          type: string
-          format: iri-reference
-          example: 'https://example.com/'
     CancelEvent:
       type: object
       description: ''

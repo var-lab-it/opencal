@@ -124,7 +124,6 @@ class CalDavAuthTest extends ApiTestCase
                 'baseUri'  => 'http://example.com',
                 'username' => 'user',
                 'password' => 'password',
-                'user'     => 'users/1',
             ],
         ]);
 
@@ -181,7 +180,6 @@ class CalDavAuthTest extends ApiTestCase
                 'baseUri'  => 'http://example.com',
                 'username' => 'user',
                 'password' => 'password',
-                'user'     => 'users/1',
             ],
         ]);
 
