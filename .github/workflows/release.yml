@@ -1,0 +1,122 @@
+name: Release and Docker Build
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Validate version tag
+        run: |
+          TAG=${GITHUB_REF#refs/tags/v}
+          if ! [[ "$TAG" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Invalid version tag format. Expected format: vX.Y.Z (e.g., v1.0.0)"
+            exit 1
+          fi
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          # Extrahiere die Versionsnummer aus dem Tag (z.B. v1.0.0 -> 1.0.0)
+          TAG=${GITHUB_REF#refs/tags/v}
+          echo "VERSION=$TAG" >> $GITHUB_ENV
+          echo "::set-output name=version::$TAG"
+
+          # Extrahiere Major, Minor und Patch
+          IFS='.' read -r -a VERSION_PARTS <<< "$TAG"
+          MAJOR=${VERSION_PARTS[0]}
+          MINOR=${VERSION_PARTS[1]}
+          PATCH=${VERSION_PARTS[2]}
+
+          # Setze Major und Minor Version für das zusätzliche Tag
+          MAJOR_MINOR="$MAJOR.$MINOR"
+          echo "MAJOR_MINOR_VERSION=$MAJOR_MINOR" >> $GITHUB_ENV
+          echo "MAJOR_VERSION=$MAJOR" >> $GITHUB_ENV
+
+      - name: Generate Release Notes
+        id: release_notes
+        run: |
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          COMMITS_SINCE_LAST_TAG=$(git log --pretty=format:"- %s" $LAST_TAG..HEAD)
+          echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
+          echo "$COMMITS_SINCE_LAST_TAG" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ env.VERSION }}
+          release_name: Release ${{ env.VERSION }}
+          body: |
+            Release notes for version ${{ env.VERSION }}.
+            # Changes:
+            ${{ env.RELEASE_NOTES }}
+          draft: false
+          prerelease: false
+
+      - name: 'Login to GitHub Container Registry'
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{github.actor}}
+          password: ${{secrets.REGISTRY_TOKEN}}
+
+      - name: Create release
+        uses: ncipollo/release-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ env.VERSION }}
+          name: OpenCal ${{ env.VERSION }}
+
+      - name: Determine highest major version
+        id: check_highest_major
+        run: |
+          git fetch --tags
+          TAGS=$(git tag -l 'v*' | sed 's/^v//' | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$')
+
+          if [ -z "$TAGS" ]; then
+            echo "HIGHEST_MAJOR=0" >> $GITHUB_ENV
+          else
+            HIGHEST_MAJOR=0
+            for TAG in $TAGS; do
+              IFS='.' read -r -a VERSION_PARTS <<< "$TAG"
+              MAJOR=${VERSION_PARTS[0]}
+              if [ "$MAJOR" -gt "$HIGHEST_MAJOR" ]; then
+                HIGHEST_MAJOR=$MAJOR
+              fi
+            done
+            echo "HIGHEST_MAJOR=$HIGHEST_MAJOR" >> $GITHUB_ENV
+          fi
+
+          CURRENT_MAJOR=${{ env.MAJOR_VERSION }}
+          if [ "$CURRENT_MAJOR" -ge "$HIGHEST_MAJOR" ]; then
+            echo "IS_HIGHEST_MAJOR=true" >> $GITHUB_ENV
+          else
+            echo "IS_HIGHEST_MAJOR=false" >> $GITHUB_ENV
+          fi
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t opencal:${{ env.VERSION }} --build_arg OPENCAL_VERSION=${{ env.VERSION }} .
+
+          docker tag opencal:${{ env.VERSION }} ghcr.io/var-lab-it/opencal:${{ env.MAJOR_MINOR_VERSION }}
+
+          docker tag opencal:${{ env.VERSION }} ghcr.io/var-lab-it/opencal:${{ env.VERSION }}
+
+          if [ "${{ env.IS_HIGHEST_MAJOR }}" = "true" ]; then
+            docker tag opencal:${{ env.VERSION }} ghcr.io/var-lab-it/opencal:latest
+          fi
+          
+          docker push ghcr.io/var-lab-it/opencal:${{ env.MAJOR_MINOR_VERSION }}
+          docker push ghcr.io/var-lab-it/opencal:${{ env.VERSION }}
+          if [ "${{ env.IS_HIGHEST_MAJOR }}" = "true" ]; then
+            docker push ghcr.io/var-lab-it/opencal:latest
+          fi

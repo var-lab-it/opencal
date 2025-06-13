@@ -5,6 +5,9 @@ ARG NGINX_VERSION=1.24
 # -------------
 FROM php:8.4-fpm-alpine AS generic
 
+ARG OPENCAL_VERSION=
+ENV OPENCAL_VERSION=${OPENCAL_VERSION}
+
 RUN apk update && \
   apk add --no-cache \
   fcgi git
