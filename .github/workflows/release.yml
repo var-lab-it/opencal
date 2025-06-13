@@ -50,20 +50,6 @@ jobs:
           echo "$COMMITS_SINCE_LAST_TAG" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
-      - name: Create GitHub Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{ env.VERSION }}
-          release_name: Release ${{ env.VERSION }}
-          body: |
-            Release notes for version ${{ env.VERSION }}.
-            # Changes:
-            ${{ env.RELEASE_NOTES }}
-          draft: false
-          prerelease: false
-
       - name: 'Login to GitHub Container Registry'
         uses: docker/login-action@v1
         with:
@@ -115,3 +101,18 @@ jobs:
           if [ "${{ env.IS_HIGHEST_MAJOR }}" = "true" ]; then
             docker push ghcr.io/var-lab-it/opencal:latest
           fi
+
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ env.VERSION }}
+          release_name: Release ${{ env.VERSION }}
+          body: |
+            Release notes for version ${{ env.VERSION }}.
+            # Changes:
+            ${{ env.RELEASE_NOTES }}
+          draft: false
+          prerelease: false
