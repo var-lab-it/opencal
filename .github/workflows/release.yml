@@ -98,7 +98,7 @@ jobs:
             echo "IS_HIGHEST_MAJOR=false" >> $GITHUB_ENV
           fi
 
-      - name: Build and push Docker image
+      - name: Build and push Docker image (php)
         run: |
           docker build --build-arg OPENCAL_VERSION=${{ env.VERSION }} -t opencal:${{ env.VERSION }} .
 
@@ -114,4 +114,22 @@ jobs:
           docker push ghcr.io/var-lab-it/opencal:${{ env.VERSION }}
           if [ "${{ env.IS_HIGHEST_MAJOR }}" = "true" ]; then
             docker push ghcr.io/var-lab-it/opencal:latest
+          fi
+
+      - name: Build and push Docker image (nginx)
+        run: |
+          docker build --build-arg OPENCAL_VERSION=${{ env.VERSION }} -t opencal:nginx-${{ env.VERSION }} .
+
+          docker tag opencal:nginx-${{ env.VERSION }} ghcr.io/var-lab-it/opencal:nginx-${{ env.MAJOR_MINOR_VERSION }}
+
+          docker tag opencal:nginx-${{ env.VERSION }} ghcr.io/var-lab-it/opencal:nginx-${{ env.VERSION }}
+
+          if [ "${{ env.IS_HIGHEST_MAJOR }}" = "true" ]; then
+            docker tag opencal:nginx-${{ env.VERSION }} ghcr.io/var-lab-it/opencal:nginx-latest
+          fi
+          
+          docker push ghcr.io/var-lab-it/opencal:nginx-${{ env.MAJOR_MINOR_VERSION }}
+          docker push ghcr.io/var-lab-it/opencal:nginx-${{ env.VERSION }}
+          if [ "${{ env.IS_HIGHEST_MAJOR }}" = "true" ]; then
+            docker push ghcr.io/var-lab-it/opencal:nginx-latest
           fi
