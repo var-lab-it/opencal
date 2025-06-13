@@ -75,7 +75,6 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ env.VERSION }}
           name: OpenCal ${{ env.VERSION }}
 
       - name: Determine highest major version
@@ -107,7 +106,7 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build -t opencal:${{ env.VERSION }} --build_arg OPENCAL_VERSION=${{ env.VERSION }} .
+          docker build --build-arg OPENCAL_VERSION=${{ env.VERSION }} -t opencal:${{ env.VERSION }} .
 
           docker tag opencal:${{ env.VERSION }} ghcr.io/var-lab-it/opencal:${{ env.MAJOR_MINOR_VERSION }}
 
