@@ -71,12 +71,6 @@ jobs:
           username: ${{github.actor}}
           password: ${{secrets.REGISTRY_TOKEN}}
 
-      - name: Create release
-        uses: ncipollo/release-action@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          name: OpenCal ${{ env.VERSION }}
-
       - name: Determine highest major version
         id: check_highest_major
         run: |
@@ -121,3 +115,12 @@ jobs:
           if [ "${{ env.IS_HIGHEST_MAJOR }}" = "true" ]; then
             docker push ghcr.io/var-lab-it/opencal:latest
           fi
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.VERSION }}
+          release_name: Release ${{ github.ref }}
