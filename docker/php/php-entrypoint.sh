@@ -28,11 +28,6 @@ if grep -q DATABASE_URL= .env; then
   if ls -A migrations/*.php >/dev/null 2>&1; then
     php bin/console doctrine:migrations:migrate --no-interaction
   fi
-
-  if grep -q '^APP_ENV=dev' .env; then
-    echo "Loading fixtures in dev environment..."
-    php bin/console doctrine:fixtures:load --no-interaction || echo "Fixtures could not be loaded."
-  fi
 fi
 
 if [ -f ".env.test" ]; then
