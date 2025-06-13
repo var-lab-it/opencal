@@ -6,6 +6,9 @@ on:
     branches:
       - main
 
+env:
+  OPENCAL_VERSION: dev
+
 jobs:
   api_unit_tests:
     runs-on: ubuntu-latest
@@ -179,9 +182,9 @@ jobs:
         run: composer install --prefer-dist --no-interaction --no-progress
 
       - name: Export openapi-temp.yml
-        run: php bin/console api:openapi:export -y -o openapi-temp.yml
+        run: OPENCAL_VERSION=dev php bin/console api:openapi:export -y -o openapi-temp.yml
 
-      - name: Lint OpenAPI YAML-Files
+      - name: Lint OpenAPI YAML- Files
         run: php bin/console lint:yaml openapi.yml && php bin/console lint:yaml openapi-temp.yml
 
       - name: Check if differs

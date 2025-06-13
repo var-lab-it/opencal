@@ -1,6 +1,6 @@
 api_platform:
   title: OpenCal API
-  version: 1.0.0
+  version: '%opencal_version%'
   formats:
     json: [ 'application/json' ]
     jsonld: [ 'application/ld+json' ]
