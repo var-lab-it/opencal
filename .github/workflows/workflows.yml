@@ -215,9 +215,9 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          target: build_prod
+          target: php
           push: true
-          tags: ghcr.io/var-lab-it/opencal:api-latest-unstable
+          tags: ghcr.io/var-lab-it/opencal:dev-latest
 
   build_api_nginx:
     runs-on: ubuntu-latest
@@ -246,4 +246,4 @@ jobs:
           context: .
           target: nginx
           push: true
-          tags: ghcr.io/var-lab-it/opencal:api-nginx-latest-unstable
+          tags: ghcr.io/var-lab-it/opencal:nginx-dev-latest
